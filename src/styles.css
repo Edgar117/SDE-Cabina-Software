@@ -5,15 +5,29 @@
 }
 
 :root {
-  --curtain-deep: #4a0612;
-  --gold: #d4af37;
-  --gold-light: #f0d78c;
-  --btn-inner: #c41e3a;
-  --btn-outer: #4a0612;
-  --stage-bg: repeating-linear-gradient(90deg, #5c0818 0px, #7a1020 6px, #8b1530 12px);
-  --text-light: #faf8f5;
-  --text-muted: rgba(255, 255, 255, 0.65);
-  font-family: Georgia, "Times New Roman", serif;
+  /* Los valores reales los inyecta applyTheme() desde src/themes.js.
+     Esto es solo el fallback antes de que cargue el tema. */
+  --curtain-deep: #3d0510;
+  --gold: #e0bb4d;
+  --gold-light: #ffe9a8;
+  --ink: #fff6e6;
+  --ink-soft: rgba(255, 240, 214, 0.72);
+  --frame-border: #f3e2b4;
+  --frame-glow: rgba(224, 187, 77, 0.45);
+  --scrim: rgba(45, 4, 14, 0.8);
+  --slot-idle: rgba(30, 3, 10, 0.62);
+  --btn-inner: #e0324f;
+  --btn-outer: #5c0610;
+  --stage-bg: repeating-linear-gradient(90deg, #4d0714 0px, #6e0f1e 7px, #8b1530 14px);
+  --fold-opacity: 0.62;
+  --vignette: 0.35;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-script: 'Dancing Script', 'Segoe Script', cursive;
+
+  /* Alias heredados: el resto del CSS los sigue usando */
+  --text-light: var(--ink);
+  --text-muted: var(--ink-soft);
+  font-family: 'Manrope', 'Segoe UI', system-ui, sans-serif;
 }
 
 html,
@@ -55,6 +69,11 @@ body {
   z-index: 0;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   DECORACIÓN DE ESCENARIO
+   El estilo se elige con body[data-deco="..."] desde themes.js,
+   así un tema nuevo reutiliza cualquier decoración existente.
+   ══════════════════════════════════════════════════════════════ */
 .theme-deco {
   position: absolute;
   inset: 0;
@@ -63,124 +82,442 @@ body {
   overflow: hidden;
 }
 
-/* Boda Premium: bokeh dorado + seda */
-body[data-theme="boda"] .theme-deco {
+/* —— curtain: teatro, terciopelo con reflejo —— */
+body[data-deco="curtain"] .theme-deco {
   background:
-    radial-gradient(circle 80px at 12% 25%, rgba(255, 220, 160, 0.55) 0%, transparent 70%),
-    radial-gradient(circle 60px at 88% 18%, rgba(255, 235, 200, 0.5) 0%, transparent 70%),
-    radial-gradient(circle 100px at 75% 72%, rgba(212, 175, 100, 0.35) 0%, transparent 70%),
-    radial-gradient(circle 50px at 25% 80%, rgba(255, 248, 220, 0.45) 0%, transparent 70%),
-    radial-gradient(circle 40px at 50% 45%, rgba(255, 255, 255, 0.35) 0%, transparent 70%),
-    radial-gradient(circle 70px at 90% 55%, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.34) 0px,
+      rgba(255, 255, 255, 0.05) 26px,
+      rgba(0, 0, 0, 0.30) 54px
+    );
+  mask-image: linear-gradient(90deg, #000 0%, transparent 26%, transparent 74%, #000 100%);
 }
 
-body[data-theme="boda"] .theme-deco::before {
+body[data-deco="curtain"] .theme-deco::before {
+  content: "";
+  position: absolute;
+  top: -14%;
+  left: 50%;
+  width: 62%;
+  height: 58%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 226, 160, 0.30), transparent 68%);
+  filter: blur(24px);
+}
+
+/* —— bokeh: boda, luces cálidas fuera de foco —— */
+body[data-deco="bokeh"] .theme-deco,
+body[data-deco="confetti"] .theme-deco,
+body[data-deco="stars"] .theme-deco,
+body[data-deco="botanical"] .theme-deco {
+  /* el centro es del video: los adornos viven en las orillas */
+  mask-image: radial-gradient(ellipse 62% 58% at 50% 52%, transparent 40%, #000 100%);
+}
+
+body[data-deco="bokeh"] .theme-deco {
+  background:
+    radial-gradient(circle 88px at 11% 24%, rgba(255, 214, 150, 0.55) 0%, transparent 70%),
+    radial-gradient(circle 62px at 89% 17%, rgba(255, 236, 200, 0.50) 0%, transparent 70%),
+    radial-gradient(circle 108px at 76% 74%, rgba(212, 168, 88, 0.34) 0%, transparent 70%),
+    radial-gradient(circle 52px at 23% 82%, rgba(255, 248, 224, 0.48) 0%, transparent 70%),
+    radial-gradient(circle 44px at 47% 44%, rgba(255, 255, 255, 0.36) 0%, transparent 70%),
+    radial-gradient(circle 74px at 92% 56%, rgba(212, 175, 55, 0.26) 0%, transparent 70%);
+  animation: decoDrift 22s ease-in-out infinite alternate;
+}
+
+body[data-deco="bokeh"] .theme-deco::before {
   content: "";
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
     105deg,
-    transparent 0px,
-    transparent 40px,
-    rgba(255, 255, 255, 0.04) 40px,
-    rgba(255, 255, 255, 0.04) 80px
+    transparent 0 42px,
+    rgba(255, 255, 255, 0.05) 42px 84px
   );
 }
 
-/* XV Premium: filigrana dorada en esquinas */
-body[data-theme="xv"] .theme-deco::before,
-body[data-theme="xv"] .theme-deco::after {
-  content: "";
-  position: absolute;
-  width: clamp(100px, 18vw, 180px);
-  height: clamp(100px, 18vw, 180px);
-  border: 2px solid var(--gold);
-  opacity: 0.55;
-}
-
-body[data-theme="xv"] .theme-deco::before {
-  top: 8px;
-  left: 8px;
-  border-right: none;
-  border-bottom: none;
-  border-radius: 4px 0 0 0;
-  box-shadow:
-    inset 8px 8px 0 -4px rgba(232, 200, 120, 0.3),
-    0 0 30px rgba(232, 200, 120, 0.15);
-}
-
-body[data-theme="xv"] .theme-deco::after {
-  bottom: 8px;
-  right: 8px;
-  border-left: none;
-  border-top: none;
-  border-radius: 0 0 4px 0;
-  box-shadow:
-    inset -8px -8px 0 -4px rgba(232, 200, 120, 0.3),
-    0 0 30px rgba(232, 200, 120, 0.15);
-}
-
-/* Fiesta Infantil: confeti y burbujas de color */
-body[data-theme="fiesta-infantil"] .theme-deco {
+/* ══════════════════════════════════════════════════════════════
+   DECORACIÓN FLORAL (guirnalda + 4 racimos de esquina)
+   Una sola regla para todas las variantes: cada tema solo declara
+   sus 5 url() en variables. Los SVG los genera
+   tools/generar_deco_pantalla.py
+   ══════════════════════════════════════════════════════════════ */
+body[data-deco^="floral"] .theme-deco,
+body[data-deco="tropical"] .theme-deco {
   background-image:
-    radial-gradient(circle 6px at 10% 20%, #ff9ecd 99%, transparent 100%),
-    radial-gradient(circle 5px at 25% 65%, #7ec8e8 99%, transparent 100%),
-    radial-gradient(circle 7px at 40% 35%, #ffe066 99%, transparent 100%),
-    radial-gradient(circle 5px at 55% 80%, #ff8c69 99%, transparent 100%),
-    radial-gradient(circle 6px at 70% 25%, #b5e8a0 99%, transparent 100%),
-    radial-gradient(circle 8px at 85% 60%, #c9a0ff 99%, transparent 100%),
-    radial-gradient(circle 4px at 15% 90%, #7ec8e8 99%, transparent 100%),
-    radial-gradient(circle 5px at 92% 15%, #ffe066 99%, transparent 100%),
-    radial-gradient(circle 6px at 60% 10%, #ff9ecd 99%, transparent 100%),
-    radial-gradient(circle 4px at 35% 50%, #ffb347 99%, transparent 100%);
-  background-size: 100% 100%;
+    var(--deco-garland),
+    var(--deco-tl),
+    var(--deco-tr),
+    var(--deco-bl),
+    var(--deco-br);
+  background-position: center top, left top, right top, left bottom, right bottom;
+  background-size:
+    100% auto,
+    clamp(190px, 23vw, 400px) auto,
+    clamp(190px, 23vw, 400px) auto,
+    clamp(170px, 20vw, 340px) auto,
+    clamp(170px, 20vw, 340px) auto;
+  background-repeat: no-repeat;
+  opacity: 0.95;
 }
 
-body[data-theme="fiesta-infantil"] .theme-deco::before {
+/* Luz de fondo cálida detrás de las flores */
+body[data-deco^="floral"] .theme-deco::before,
+body[data-deco="tropical"] .theme-deco::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 120% 40% at 50% -10%, rgba(255, 200, 220, 0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 30% at 80% 100%, rgba(126, 200, 232, 0.2) 0%, transparent 50%);
+    radial-gradient(circle 92px at 14% 40%, var(--deco-glow-a, rgba(255, 216, 158, 0.42)) 0%, transparent 70%),
+    radial-gradient(circle 66px at 88% 44%, var(--deco-glow-b, rgba(255, 238, 206, 0.40)) 0%, transparent 70%),
+    radial-gradient(circle 78px at 30% 70%, var(--deco-glow-a, rgba(246, 208, 208, 0.34)) 0%, transparent 70%),
+    radial-gradient(circle 56px at 72% 22%, var(--deco-glow-b, rgba(255, 255, 255, 0.40)) 0%, transparent 70%);
+  animation: decoDrift 24s ease-in-out infinite alternate;
 }
 
-/* Fiesta Moderna: neón y líneas */
-body[data-theme="fiesta-moderna"] .theme-deco {
+/* Hilo metálico que enmarca la pantalla: el detalle "premium" */
+body[data-deco^="floral"] .theme-deco::after,
+body[data-deco="tropical"] .theme-deco::after {
+  content: "";
+  position: absolute;
+  inset: clamp(10px, 1.4vw, 20px);
+  border: 1px solid color-mix(in srgb, var(--gold) 62%, transparent);
+  box-shadow:
+    inset 0 0 0 4px color-mix(in srgb, var(--frame-border) 45%, transparent),
+    inset 0 0 0 5px color-mix(in srgb, var(--gold) 25%, transparent);
+}
+
+body[data-deco^="floral"] .preview-frame,
+body[data-deco="tropical"] .preview-frame {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--gold) 60%, transparent),
+    0 0 0 7px color-mix(in srgb, var(--frame-border) 78%, transparent),
+    0 0 0 8px color-mix(in srgb, var(--gold) 38%, transparent),
+    0 22px 54px rgba(20, 12, 6, 0.34);
+}
+
+body[data-deco^="floral"] .rail-slot,
+body[data-deco="tropical"] .rail-slot {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--gold) 38%, transparent),
+    0 6px 18px rgba(20, 12, 6, 0.22);
+}
+
+/* —— Juegos de assets por variante —— */
+body[data-deco="floral"] {
+  --deco-garland: url("/deco/boda-garland.svg");
+  --deco-tl: url("/deco/boda-top-left.svg");
+  --deco-tr: url("/deco/boda-top-right.svg");
+  --deco-bl: url("/deco/boda-bottom-left.svg");
+  --deco-br: url("/deco/boda-bottom-right.svg");
+}
+
+body[data-deco="floral-jardin"] {
+  --deco-garland: url("/deco/boda-jardin-garland.svg");
+  --deco-tl: url("/deco/boda-jardin-top-left.svg");
+  --deco-tr: url("/deco/boda-jardin-top-right.svg");
+  --deco-bl: url("/deco/boda-jardin-bottom-left.svg");
+  --deco-br: url("/deco/boda-jardin-bottom-right.svg");
+  --deco-glow-a: rgba(198, 226, 190, 0.40);
+  --deco-glow-b: rgba(255, 255, 255, 0.55);
+}
+
+body[data-deco="floral-borgona"] {
+  --deco-garland: url("/deco/boda-borgona-garland.svg");
+  --deco-tl: url("/deco/boda-borgona-top-left.svg");
+  --deco-tr: url("/deco/boda-borgona-top-right.svg");
+  --deco-bl: url("/deco/boda-borgona-bottom-left.svg");
+  --deco-br: url("/deco/boda-borgona-bottom-right.svg");
+  --deco-glow-a: rgba(212, 175, 55, 0.26);
+  --deco-glow-b: rgba(180, 60, 80, 0.22);
+}
+
+body[data-deco="floral-lila"] {
+  --deco-garland: url("/deco/xv-lila-garland.svg");
+  --deco-tl: url("/deco/xv-lila-top-left.svg");
+  --deco-tr: url("/deco/xv-lila-top-right.svg");
+  --deco-bl: url("/deco/xv-lila-bottom-left.svg");
+  --deco-br: url("/deco/xv-lila-bottom-right.svg");
+  --deco-glow-a: rgba(214, 196, 240, 0.42);
+  --deco-glow-b: rgba(255, 255, 255, 0.50);
+}
+
+body[data-deco="tropical"] {
+  --deco-garland: url("/deco/tropical-garland.svg");
+  --deco-tl: url("/deco/tropical-top-left.svg");
+  --deco-tr: url("/deco/tropical-top-right.svg");
+  --deco-bl: url("/deco/tropical-bottom-left.svg");
+  --deco-br: url("/deco/tropical-bottom-right.svg");
+  --deco-glow-a: rgba(255, 209, 102, 0.34);
+  --deco-glow-b: rgba(47, 169, 138, 0.28);
+}
+
+/* —— disco: fiesta dorada, destellos y rayos —— */
+body[data-deco="disco"] .theme-deco {
   background:
-    linear-gradient(90deg, transparent 49.5%, rgba(0, 229, 255, 0.12) 50%, transparent 50.5%),
-    linear-gradient(0deg, transparent 49.5%, rgba(255, 0, 128, 0.1) 50%, transparent 50.5%),
-    linear-gradient(45deg, transparent 49%, rgba(0, 229, 255, 0.08) 50%, transparent 51%),
-    linear-gradient(-45deg, transparent 49%, rgba(255, 100, 200, 0.08) 50%, transparent 51%);
-  background-size: 80px 80px, 80px 80px, 120px 120px, 120px 120px;
+    repeating-conic-gradient(from 0deg at 50% 12%,
+      rgba(255, 214, 102, 0.10) 0deg 5deg, transparent 5deg 14deg),
+    radial-gradient(circle 3px at 12% 30%, rgba(255, 236, 170, 0.95) 99%, transparent 100%),
+    radial-gradient(circle 2.4px at 26% 72%, rgba(255, 255, 255, 0.8) 99%, transparent 100%),
+    radial-gradient(circle 3.4px at 78% 26%, rgba(255, 236, 170, 1) 99%, transparent 100%),
+    radial-gradient(circle 2.6px at 90% 66%, rgba(255, 255, 255, 0.85) 99%, transparent 100%),
+    radial-gradient(circle 2.2px at 60% 88%, rgba(255, 236, 170, 0.8) 99%, transparent 100%);
+  animation: decoTwinkle 4.5s ease-in-out infinite alternate;
 }
 
-body[data-theme="fiesta-moderna"] .theme-deco::before {
+body[data-deco="disco"] .theme-deco::before {
   content: "";
   position: absolute;
-  top: 15%;
-  left: -10%;
-  width: 50%;
+  top: -12%;
+  left: 50%;
+  width: clamp(150px, 20vw, 280px);
+  height: clamp(150px, 20vw, 280px);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg,
+      rgba(255, 226, 140, 0.55) 0deg 9deg, rgba(120, 92, 20, 0.35) 9deg 18deg);
+  filter: blur(1px);
+  opacity: 0.45;
+}
+
+body[data-deco="disco"] .theme-deco::after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(226, 194, 92, 0.42);
+}
+
+/* —— filigree: XV, esquinas doradas + destellos —— */
+body[data-deco="filigree"] .theme-deco::before,
+body[data-deco="filigree"] .theme-deco::after {
+  content: "";
+  position: absolute;
+  width: clamp(70px, 11vw, 140px);
+  height: clamp(70px, 11vw, 140px);
+  border: 2px solid var(--gold);
+  opacity: 0.5;
+}
+
+body[data-deco="filigree"] .theme-deco::before {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 6px 0 0 0;
+  box-shadow: inset 10px 10px 0 -5px rgba(240, 205, 132, 0.34), 0 0 34px rgba(240, 205, 132, 0.18);
+}
+
+body[data-deco="filigree"] .theme-deco::after {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 6px 0;
+  box-shadow: inset -10px -10px 0 -5px rgba(240, 205, 132, 0.34), 0 0 34px rgba(240, 205, 132, 0.18);
+}
+
+/* —— artdeco: negro y oro, marco geométrico —— */
+body[data-deco="floral"] .preview-frame {
+  box-shadow:
+    0 0 0 1px rgba(158, 119, 20, 0.55),
+    0 0 0 7px rgba(255, 255, 255, 0.75),
+    0 0 0 8px rgba(158, 119, 20, 0.35),
+    0 22px 54px rgba(90, 62, 40, 0.30);
+}
+
+body[data-deco="floral"] .rail-slot {
+  box-shadow:
+    0 0 0 1px rgba(158, 119, 20, 0.35),
+    0 6px 18px rgba(90, 62, 40, 0.20);
+}
+
+body[data-deco="artdeco"] .theme-deco {
+  background:
+    linear-gradient(90deg, transparent 0 calc(50% - 1px), rgba(226, 194, 92, 0.05) 50%, transparent calc(50% + 1px) 100%),
+    repeating-linear-gradient(90deg, transparent 0 58px, rgba(226, 194, 92, 0.05) 58px 59px);
+}
+
+body[data-deco="artdeco"] .theme-deco::before,
+body[data-deco="artdeco"] .theme-deco::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  height: 0;
+  border-top: 1px solid rgba(226, 194, 92, 0.55);
+  box-shadow: 0 4px 0 -3px rgba(226, 194, 92, 0.45);
+}
+
+body[data-deco="artdeco"] .theme-deco::before { top: 18px; }
+body[data-deco="artdeco"] .theme-deco::after { bottom: 18px; }
+
+/* —— botanical: verde salvia, hojas suaves —— */
+body[data-deco="botanical"] .theme-deco {
+  background:
+    radial-gradient(ellipse 160px 58px at 4% 14%, rgba(104, 144, 100, 0.52) 0%, transparent 72%),
+    radial-gradient(ellipse 132px 50px at 97% 28%, rgba(104, 144, 100, 0.46) 0%, transparent 72%),
+    radial-gradient(ellipse 180px 62px at 8% 90%, rgba(104, 144, 100, 0.48) 0%, transparent 72%),
+    radial-gradient(ellipse 146px 54px at 94% 82%, rgba(104, 144, 100, 0.42) 0%, transparent 72%),
+    radial-gradient(circle 8px at 30% 12%, rgba(255, 255, 255, 0.75) 99%, transparent 100%),
+    radial-gradient(circle 6px at 72% 90%, rgba(255, 255, 255, 0.7) 99%, transparent 100%);
+  animation: decoDrift 26s ease-in-out infinite alternate;
+}
+
+body[data-deco="botanical"] .theme-deco::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(156, 124, 28, 0.55);
+  border-radius: 4px;
+}
+
+/* —— confetti: fiesta infantil —— */
+body[data-deco="confetti"] .theme-deco {
+  background-image:
+    radial-gradient(circle 7px at 10% 20%, #ff9ecd 99%, transparent 100%),
+    radial-gradient(circle 6px at 25% 66%, #6cc4ea 99%, transparent 100%),
+    radial-gradient(circle 8px at 40% 34%, #ffd93d 99%, transparent 100%),
+    radial-gradient(circle 6px at 55% 82%, #ff8c69 99%, transparent 100%),
+    radial-gradient(circle 7px at 70% 24%, #8fdc7a 99%, transparent 100%),
+    radial-gradient(circle 9px at 86% 60%, #c9a0ff 99%, transparent 100%),
+    radial-gradient(circle 5px at 15% 91%, #6cc4ea 99%, transparent 100%),
+    radial-gradient(circle 6px at 93% 14%, #ffd93d 99%, transparent 100%),
+    radial-gradient(circle 7px at 60% 9%, #ff9ecd 99%, transparent 100%),
+    radial-gradient(circle 5px at 34% 50%, #ffb347 99%, transparent 100%);
+  animation: decoFloat 9s ease-in-out infinite alternate;
+}
+
+body[data-deco="confetti"] .theme-deco::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 40% at 50% -10%, rgba(255, 205, 225, 0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 32% at 82% 100%, rgba(120, 200, 235, 0.26) 0%, transparent 52%);
+}
+
+/* —— neon: fiesta moderna —— */
+body[data-deco="neon"] .theme-deco {
+  background:
+    linear-gradient(90deg, transparent 49.6%, rgba(47, 240, 255, 0.13) 50%, transparent 50.4%),
+    linear-gradient(0deg, transparent 49.6%, rgba(255, 0, 140, 0.11) 50%, transparent 50.4%);
+  background-size: 82px 82px, 82px 82px;
+}
+
+body[data-deco="neon"] .theme-deco::before,
+body[data-deco="neon"] .theme-deco::after {
+  content: "";
+  position: absolute;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #00e5ff, #ff00aa, transparent);
+  filter: blur(1px);
+  opacity: 0.75;
+}
+
+body[data-deco="neon"] .theme-deco::before {
+  top: 14%;
+  left: -8%;
+  width: 52%;
+  background: linear-gradient(90deg, transparent, #2ff0ff, #ff2e88, transparent);
   transform: rotate(-8deg);
-  filter: blur(1px);
-  opacity: 0.7;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 22px rgba(47, 240, 255, 0.55);
 }
 
-body[data-theme="fiesta-moderna"] .theme-deco::after {
+body[data-deco="neon"] .theme-deco::after {
+  bottom: 18%;
+  right: -6%;
+  width: 48%;
+  background: linear-gradient(90deg, transparent, #ffe95c, #2ff0ff, transparent);
+  transform: rotate(6deg);
+  box-shadow: 0 0 22px rgba(255, 233, 92, 0.45);
+}
+
+/* —— retrogrid: neón retro, rejilla en perspectiva —— */
+body[data-deco="retrogrid"] .theme-deco {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 58px, rgba(61, 245, 255, 0.20) 58px 60px),
+    repeating-linear-gradient(0deg, transparent 0 44px, rgba(255, 46, 136, 0.16) 44px 46px);
+  background-position: center bottom;
+  transform-origin: 50% 100%;
+  mask-image: linear-gradient(180deg, transparent 58%, #000 100%);
+}
+
+body[data-deco="retrogrid"] .theme-deco::before {
   content: "";
   position: absolute;
-  bottom: 20%;
-  right: -5%;
-  width: 45%;
+  left: 50%;
+  bottom: 26%;
+  width: clamp(180px, 26vw, 320px);
+  height: clamp(180px, 26vw, 320px);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffe95c 0%, #ff8ad0 48%, #ff2e88 100%);
+  opacity: 0.30;
+  filter: blur(2px);
+  mask-image: repeating-linear-gradient(0deg, #000 0 12px, transparent 12px 18px);
+}
+
+/* —— grid: corporativo, retícula sobria —— */
+body[data-deco="grid"] .theme-deco {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 62px, rgba(214, 230, 245, 0.07) 62px 63px),
+    repeating-linear-gradient(0deg, transparent 0 62px, rgba(214, 230, 245, 0.07) 62px 63px);
+}
+
+body[data-deco="grid"] .theme-deco::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #ffe566, #00e5ff, transparent);
-  transform: rotate(6deg);
-  filter: blur(1px);
-  opacity: 0.65;
-  box-shadow: 0 0 20px rgba(255, 229, 102, 0.4);
+  background: linear-gradient(90deg, transparent, #4fd1c5 32%, #2f7dbf 68%, transparent);
+  opacity: 0.75;
+}
+
+/* —— stars: graduación, cielo estrellado —— */
+body[data-deco="stars"] .theme-deco {
+  background-image:
+    radial-gradient(circle 3px at 8% 16%, rgba(255, 255, 255, 0.95) 99%, transparent 100%),
+    radial-gradient(circle 2.4px at 17% 58%, rgba(255, 255, 255, 0.8) 99%, transparent 100%),
+    radial-gradient(circle 3.6px at 33% 12%, rgba(251, 238, 192, 1) 99%, transparent 100%),
+    radial-gradient(circle 2.2px at 24% 86%, rgba(255, 255, 255, 0.75) 99%, transparent 100%),
+    radial-gradient(circle 3px at 84% 22%, rgba(255, 255, 255, 0.9) 99%, transparent 100%),
+    radial-gradient(circle 2.6px at 93% 62%, rgba(251, 238, 192, 0.9) 99%, transparent 100%),
+    radial-gradient(circle 2.2px at 76% 90%, rgba(255, 255, 255, 0.7) 99%, transparent 100%),
+    radial-gradient(circle 3.2px at 66% 8%, rgba(255, 255, 255, 0.85) 99%, transparent 100%);
+  animation: decoTwinkle 5.5s ease-in-out infinite alternate;
+}
+
+body[data-deco="stars"] .theme-deco::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(227, 193, 99, 0.36);
+}
+
+@keyframes decoDrift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-14px, 10px, 0) scale(1.03); }
+}
+
+@keyframes decoFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-12px); }
+}
+
+@keyframes decoTwinkle {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-deco,
+  .theme-deco::before,
+  .theme-deco::after {
+    animation: none !important;
+  }
 }
 
 .curtain-fold {
@@ -195,13 +532,14 @@ body[data-theme="fiesta-moderna"] .theme-deco::after {
 
 .curtain-fold-left {
   left: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.55), transparent);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), transparent);
 }
 
 .curtain-fold-right {
   right: 0;
-  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.55), transparent);
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.6), transparent);
 }
+
 
 .stage-header {
   position: relative;
@@ -211,95 +549,97 @@ body[data-theme="fiesta-moderna"] .theme-deco::after {
 }
 
 .stage-header-compact {
-  padding: 0.35rem 0.5rem 0.25rem;
+  padding: 0.5rem 0.75rem 0.35rem;
 }
 
 .stage-header-compact .stage-brand {
-  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-size: clamp(1rem, 2.2vw, 1.45rem);
 }
 
 .stage-header-compact .stage-welcome-sm {
-  font-size: clamp(1.25rem, 3vw, 1.85rem);
+  font-size: clamp(1.4rem, 3.2vw, 2.1rem);
   margin: 0;
 }
 
 .stage-brand {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 700;
-  color: var(--gold-light);
-  letter-spacing: 0.2em;
+  color: var(--ink);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   margin: 0;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  text-shadow: var(--text-shadow-soft);
+}
+
+/* Filete decorativo bajo la marca: ancla visual sin robar espacio */
+.stage-brand::after {
+  content: "";
+  display: block;
+  width: clamp(60px, 9vw, 120px);
+  height: 2px;
+  margin: 0.45rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.9;
 }
 
 .stage-welcome {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-script);
   font-size: clamp(2.5rem, 7vw, 4.5rem);
-  font-weight: 500;
-  font-style: italic;
+  font-weight: 700;
   color: var(--gold);
-  margin: 0.15rem 0 0;
-  text-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+  margin: 0.2rem 0 0;
+  line-height: 1.08;
+  text-shadow: var(--text-shadow-glow);
 }
 
 .stage-welcome-sm {
   font-size: clamp(1.75rem, 4vw, 2.75rem);
 }
 
-body[data-theme="boda"] .stage-brand,
-body[data-theme="boda"] .stage-welcome {
-  color: #8b6914;
-  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+/* Sombras según claridad del tema: en temas claros la sombra negra ensucia */
+body[data-mood="dark"] {
+  --text-shadow-soft: 0 2px 14px rgba(0, 0, 0, 0.55);
+  --text-shadow-glow: 0 4px 26px rgba(0, 0, 0, 0.5);
+  --panel-bg: rgba(0, 0, 0, 0.42);
+  --panel-border: rgba(255, 255, 255, 0.16);
+  --overlay-ink: var(--gold-light);
+  --overlay-accent: var(--gold);
 }
 
-body[data-theme="boda"] .stage-brand {
-  color: #6b5344;
-}
-
-body[data-theme="fiesta-infantil"] .stage-brand {
-  color: #ff6b9d;
-  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
-}
-
-body[data-theme="fiesta-infantil"] .stage-welcome {
-  color: #ff8c42;
-}
-
-body[data-theme="fiesta-moderna"] .stage-welcome {
-  color: var(--gold-light);
-  font-style: normal;
-  font-weight: 700;
-}
-
-body[data-theme="boda"] .stage-tagline,
-body[data-theme="fiesta-infantil"] .stage-tagline {
-  color: rgba(70, 50, 35, 0.75);
-}
-
-body[data-theme="boda"] .operator-hint,
-body[data-theme="fiesta-infantil"] .operator-hint {
-  color: rgba(70, 50, 35, 0.7);
-}
-
-body[data-theme="boda"] .operator-hint kbd,
-body[data-theme="fiesta-infantil"] .operator-hint kbd {
-  color: #6b5344;
-  border-color: rgba(107, 83, 68, 0.4);
-  background: rgba(255, 255, 255, 0.5);
+body[data-mood="light"] {
+  --text-shadow-soft: 0 1px 2px rgba(255, 255, 255, 0.85);
+  --text-shadow-glow: 0 2px 10px rgba(255, 255, 255, 0.7);
+  --panel-bg: rgba(255, 255, 255, 0.62);
+  --panel-border: rgba(0, 0, 0, 0.12);
+  /* sobre el velo oscuro no sirve el dorado oscuro del tema claro */
+  --overlay-ink: #fff3d2;
+  --overlay-accent: color-mix(in srgb, var(--gold) 40%, #fff8e2);
 }
 
 .stage-tagline {
-  color: var(--text-muted);
-  font-size: 1.05rem;
-  margin: 0.35rem 0 0;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+  margin: 0.4rem 0 0;
 }
 
-/* —— Layout cámara —— */
+
+/* ══════════════════════════════════════════════════════════════
+   LAYOUT DE CÁMARA
+   Pensado para verse desde lejos en una TV: tipografía grande,
+   estados muy evidentes y jerarquía clara (video > progreso > ayuda).
+   ══════════════════════════════════════════════════════════════ */
 .theater-stage-camera {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.theater-stage-camera > .stage-header,
+.theater-stage-camera > .camera-hint-bottom {
+  flex: 0 0 auto;
 }
 
 .stage-layout {
@@ -309,11 +649,10 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  gap: clamp(10px, 1.5vw, 18px);
-  padding: 0.25rem 0.65rem 0.35rem;
+  gap: clamp(12px, 1.6vw, 22px);
+  padding: 0.25rem 0.75rem 0.4rem;
   min-height: 0;
   width: 100%;
-  max-height: calc(100vh - 70px);
 }
 
 .photo-rail {
@@ -322,38 +661,90 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
   width: clamp(150px, 24vw, 240px);
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1vh, 12px);
+  gap: clamp(10px, 1.2vh, 16px);
   justify-content: stretch;
-  align-self: center;
-  height: calc(100vh - 85px);
-  max-height: 100%;
+  align-self: stretch;
   min-height: 0;
   z-index: 2;
 }
 
+/* —— Slot de la tira lateral: vacío / en turno / capturado —— */
 .rail-slot {
+  position: relative;
   flex: 1;
   min-height: 0;
-  background: rgba(0, 0, 0, 0.55);
-  border: 3px solid rgba(255, 255, 255, 0.92);
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.5),
-    inset 0 0 0 1px var(--gold);
+  border-radius: 6px;
+  background: var(--slot-idle);
+  border: 3px solid var(--frame-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.42);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease,
+    opacity 0.28s ease;
+}
+
+.rail-slot.empty {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--frame-border) 55%, transparent);
+  opacity: 0.55;
 }
 
 .rail-slot.empty span {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--ink-soft);
+  line-height: 1;
+}
+
+/* El slot que se va a llenar ahora: lo único que late en pantalla */
+.rail-slot.next {
+  opacity: 1;
+  border-style: solid;
+  border-color: var(--gold);
+  transform: scale(1.03);
+  animation: slotNext 1.6s ease-in-out infinite;
+}
+
+body[data-mood="light"] .rail-slot.next {
+  border-width: 4px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
+
+body[data-mood="light"] .rail-slot.empty {
+  opacity: 0.72;
+}
+
+.rail-slot.next span {
+  color: var(--gold);
 }
 
 .rail-slot.filled {
+  opacity: 1;
+  border-color: var(--frame-border);
   animation: slotPop 0.45s ease;
+}
+
+/* Palomita de confirmación al capturar */
+.rail-slot.filled::after {
+  content: "✓";
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: clamp(22px, 2.4vw, 30px);
+  height: clamp(22px, 2.4vw, 30px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+  font-weight: 700;
+  background: var(--gold);
+  color: var(--curtain-deep);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  animation: checkPop 0.4s 0.1s ease both;
 }
 
 .rail-slot img {
@@ -364,14 +755,22 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
 }
 
 @keyframes slotPop {
-  from {
-    transform: scale(0.9);
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6);
+  from { transform: scale(0.9); }
+  to { transform: scale(1); }
+}
+
+@keyframes slotNext {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.42), 0 0 0 0 var(--frame-glow);
   }
-  to {
-    transform: scale(1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  50% {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.42), 0 0 0 10px transparent;
   }
+}
+
+@keyframes checkPop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
 }
 
 .main-stage {
@@ -381,21 +780,43 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: calc(100% - clamp(150px, 24vw, 240px) - 18px);
+  min-height: 0;
 }
 
 .preview-frame {
   position: relative;
-  width: 100%;
-  height: auto;
-  max-height: calc(100vh - 85px);
+  height: 100%;
+  width: auto;
+  max-width: 100%;
   aspect-ratio: 4 / 3;
-  background: #111;
-  border: 4px solid rgba(255, 255, 255, 0.95);
+  background: #0b0b0b;
+  border-radius: 8px;
+  border: 4px solid var(--frame-border);
   box-shadow:
-    0 0 0 2px var(--gold),
-    0 16px 40px rgba(0, 0, 0, 0.65),
-    inset 0 0 60px rgba(0, 0, 0, 0.2);
+    0 0 0 1px rgba(0, 0, 0, 0.25),
+    0 0 38px var(--frame-glow),
+    0 20px 52px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  transition: box-shadow 0.4s ease;
+}
+
+/* Viñeteado: hunde las orillas y centra la atención en la gente */
+.preview-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(ellipse 78% 78% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.85) 100%);
+  opacity: var(--vignette, 0.3);
+}
+
+/* Mientras cuenta, el marco “respira” para avisar que ya va a disparar */
+body[data-capture="counting"] .preview-frame {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.25),
+    0 0 60px var(--frame-glow),
+    0 20px 52px rgba(0, 0, 0, 0.6);
 }
 
 #video {
@@ -407,57 +828,98 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
 
 .frame-badge {
   position: absolute;
-  top: 12px;
-  width: 36px;
-  height: 36px;
+  top: 14px;
+  width: clamp(30px, 3vw, 40px);
+  height: clamp(30px, 3vw, 40px);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold));
   color: var(--curtain-deep);
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 1.4vw, 1.15rem);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
   z-index: 3;
   pointer-events: none;
 }
 
-.frame-badge-left {
-  left: 12px;
+.frame-badge-left { left: 14px; }
+.frame-badge-right { right: 14px; }
+
+/* —— Marca de agua FIJA de SDE ——
+   Va dentro del marco, en la esquina baja derecha (la barra de progreso
+   ocupa el centro). Opacidad baja + drop-shadow para que se lea sobre
+   cualquier escena sin robarle protagonismo a la gente.
+   Ojo: el logo que se sube en el panel es el DEL EVENTO y va en la tira
+   impresa, no aquí. Esta marca de agua no cambia entre eventos. */
+.stage-watermark {
+  position: absolute;
+  right: clamp(12px, 1.5vw, 26px);
+  bottom: clamp(12px, 1.5vw, 26px);
+  width: clamp(84px, 9.5vw, 165px);
+  height: auto;
+  z-index: 3;
+  opacity: 0.32;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+  transition: opacity 0.4s ease;
 }
 
-.frame-badge-right {
-  right: 12px;
+/* Durante la cuenta regresiva se apaga un poco más: manda el número */
+body[data-capture="counting"] .stage-watermark {
+  opacity: 0.2;
 }
+
+
 
 /* —— Botón INICIAR circular —— */
 .btn-iniciar-circle {
   position: relative;
-  width: clamp(100px, 14vw, 150px);
-  height: clamp(100px, 14vw, 150px);
+  width: clamp(120px, 15vw, 178px);
+  height: clamp(120px, 15vw, 178px);
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  background: radial-gradient(circle at 35% 30%, var(--btn-inner), var(--btn-outer));
+  background: radial-gradient(circle at 35% 28%, var(--btn-inner), var(--btn-outer));
   color: #fff;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(0.85rem, 2vw, 1.1rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(0.95rem, 2.1vw, 1.3rem);
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.55),
-    inset 0 2px 0 rgba(255, 255, 255, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    0 10px 38px rgba(0, 0, 0, 0.55),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   z-index: 5;
 }
 
 .btn-iniciar-ring {
   position: absolute;
-  inset: -8px;
+  inset: -9px;
   border-radius: 50%;
   border: 5px solid var(--gold);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 26px var(--frame-glow);
   pointer-events: none;
+}
+
+/* Anillo exterior que pulsa: dice "tócame" sin instrucciones */
+.btn-iniciar-circle::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  opacity: 0;
+  animation: btnHalo 2.4s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes btnHalo {
+  0% { transform: scale(1); opacity: 0.65; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
 }
 
 .btn-iniciar-label {
@@ -467,9 +929,12 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
 
 .btn-iniciar-circle:hover {
   transform: scale(1.05);
-  box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 14px 46px rgba(0, 0, 0, 0.6), 0 0 36px var(--frame-glow);
+}
+
+.btn-iniciar-circle:focus-visible {
+  outline: 4px solid var(--gold-light);
+  outline-offset: 6px;
 }
 
 .btn-iniciar-circle:active {
@@ -487,19 +952,20 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  z-index: 5;
 }
 
-.btn-iniciar-overlay:hover {
-  transform: translate(-50%, -50%) scale(1.05);
+.btn-iniciar-overlay:hover { transform: translate(-50%, -50%) scale(1.05); }
+.btn-iniciar-overlay:active { transform: translate(-50%, -50%) scale(0.97); }
+.btn-iniciar-overlay.hidden { transform: translate(-50%, -50%) scale(0.8); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-iniciar-circle::before,
+  .rail-slot.next {
+    animation: none;
+  }
 }
 
-.btn-iniciar-overlay:active {
-  transform: translate(-50%, -50%) scale(0.97);
-}
-
-.btn-iniciar-overlay.hidden {
-  transform: translate(-50%, -50%) scale(0.8);
-}
 
 /* —— Welcome operador —— */
 #screen-welcome .theater-stage {
@@ -587,8 +1053,8 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
 }
 
 .config-panel summary {
-  font-family: Georgia, "Times New Roman", serif;
-  color: var(--gold-light);
+  font-family: var(--font-display);
+  color: var(--gold);
   cursor: pointer;
   padding: 0.5rem 0;
   font-size: 0.9rem;
@@ -602,9 +1068,8 @@ body[data-theme="fiesta-infantil"] .operator-hint kbd {
   font-style: italic;
 }
 
-body[data-theme="boda"] .template-desc,
-body[data-theme="fiesta-infantil"] .template-desc {
-  color: rgba(70, 50, 35, 0.75);
+.template-desc {
+  color: var(--ink-soft);
 }
 
 .visually-hidden {
@@ -753,7 +1218,11 @@ body[data-theme="fiesta-infantil"] .template-desc {
   color: #9fd4a8;
 }
 
-/* —— Overlays cámara —— */
+/* ══════════════════════════════════════════════════════════════
+   OVERLAYS DE CÁMARA
+   Reglas: un solo mensaje a la vez, siempre centrado, siempre
+   con contraste suficiente para leerse desde el otro lado del salón.
+   ══════════════════════════════════════════════════════════════ */
 .countdown-overlay {
   position: absolute;
   inset: 0;
@@ -761,23 +1230,78 @@ body[data-theme="fiesta-infantil"] .template-desc {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(0, 0, 0, 0.30) 0%, var(--scrim) 100%);
   z-index: 4;
   pointer-events: none;
-  gap: 0.5rem;
+  gap: 0.35rem;
+}
+
+.countdown-overlay.hidden {
+  display: none;
 }
 
 .countdown-prep {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-style: italic;
-  color: var(--gold-light);
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 5.5vw, 3.6rem);
+  font-weight: 700;
+  color: var(--overlay-ink);
   margin: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
   animation: cheerPop 0.4s ease;
 }
 
 .countdown-prep.hidden {
   display: none;
+}
+
+/* Número dentro de un anillo que se vacía: el invitado ve
+   cuánto falta sin tener que leer nada. */
+#countdown-number {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(180px, 26vw, 300px);
+  height: clamp(180px, 26vw, 300px);
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 16vw, 10rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--overlay-ink);
+  text-shadow: 0 6px 44px rgba(0, 0, 0, 0.65);
+  animation: countPulse 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#countdown-number:empty {
+  display: none;
+}
+
+#countdown-number::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: clamp(5px, 0.7vw, 9px) solid var(--overlay-accent);
+  opacity: 0.85;
+}
+
+#countdown-number::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: clamp(5px, 0.7vw, 9px) solid var(--overlay-ink);
+  animation: countRing 1s linear;
+}
+
+@keyframes countPulse {
+  0% { transform: scale(1.3); opacity: 0.35; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes countRing {
+  from { transform: scale(1.45); opacity: 0.9; }
+  to { transform: scale(1); opacity: 0; }
 }
 
 .capture-preview-overlay {
@@ -803,38 +1327,8 @@ body[data-theme="fiesta-infantil"] .template-desc {
 }
 
 @keyframes captureReveal {
-  from {
-    opacity: 0;
-    transform: scale(1.03);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.countdown-overlay.hidden {
-  display: none;
-}
-
-#countdown-number {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(6rem, 18vw, 11rem);
-  font-weight: 700;
-  color: var(--gold-light);
-  text-shadow: 0 4px 40px rgba(212, 175, 55, 0.6);
-  animation: pulse 0.5s ease;
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(1.25);
-    opacity: 0.6;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .cheer-overlay {
@@ -843,7 +1337,7 @@ body[data-theme="fiesta-infantil"] .template-desc {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(74, 6, 18, 0.82);
+  background: var(--scrim);
   z-index: 6;
   padding: 2rem;
   pointer-events: none;
@@ -854,26 +1348,20 @@ body[data-theme="fiesta-infantil"] .template-desc {
 }
 
 #cheer-text {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.5rem, 4.5vw, 2.75rem);
-  font-weight: 600;
-  font-style: italic;
-  color: var(--gold-light);
+  font-family: var(--font-script);
+  font-size: clamp(1.9rem, 5.5vw, 3.4rem);
+  font-weight: 700;
+  color: var(--overlay-ink);
   text-align: center;
-  line-height: 1.35;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  line-height: 1.3;
+  max-width: 16ch;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6);
   animation: cheerPop 0.45s ease;
 }
 
 @keyframes cheerPop {
-  from {
-    transform: scale(0.88);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { transform: scale(0.88); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .flash-overlay {
@@ -890,44 +1378,74 @@ body[data-theme="fiesta-infantil"] .template-desc {
 }
 
 @keyframes flash {
-  0% {
-    opacity: 0.92;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0.95; }
+  100% { opacity: 0; }
 }
 
 .flash-overlay.hidden:not(.flash) {
   display: none;
 }
 
+/* —— Progreso 1·2·3: puntos + texto, legible de lejos —— */
 .photo-progress {
   position: absolute;
-  bottom: 16px;
+  bottom: clamp(14px, 2vh, 24px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1rem;
-  color: var(--gold-light);
-  background: rgba(0, 0, 0, 0.55);
-  padding: 0.4rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--overlay-ink);
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(6px);
+  padding: 0.5rem 1.25rem;
   border-radius: 999px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--overlay-accent);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
 }
 
 .photo-progress.hidden {
   display: none;
 }
 
+.progress-dots {
+  display: inline-flex;
+  gap: 0.4rem;
+}
+
+.progress-dot {
+  width: clamp(9px, 1.1vw, 13px);
+  height: clamp(9px, 1.1vw, 13px);
+  border-radius: 50%;
+  border: 2px solid var(--overlay-accent);
+  background: transparent;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.progress-dot.done {
+  background: var(--overlay-accent);
+}
+
+.progress-dot.active {
+  background: var(--overlay-ink);
+  border-color: var(--overlay-ink);
+  transform: scale(1.3);
+}
+
 .camera-hint-bottom {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.6rem;
   margin: 0;
 }
+
 
 /* —— Review —— */
 .theater-stage-review {
@@ -946,7 +1464,7 @@ body[data-theme="fiesta-infantil"] .template-desc {
 }
 
 .strip-preview-wrap {
-  background: var(--cream);
+  background: #ffffff;
   padding: 10px;
   border: 3px solid var(--gold);
   display: inline-block;
@@ -970,15 +1488,20 @@ body[data-theme="fiesta-infantil"] .template-desc {
 }
 
 .btn-stage {
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 700;
   letter-spacing: 0.06em;
-  padding: 0.85rem 1.5rem;
-  border-radius: 8px;
+  padding: 0.95rem 1.7rem;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: transform 0.15s, box-shadow 0.15s;
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
   border: 2px solid transparent;
+}
+
+.btn-stage:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 3px;
 }
 
 .btn-stage:active {
@@ -986,33 +1509,35 @@ body[data-theme="fiesta-infantil"] .template-desc {
 }
 
 .btn-stage-gold {
-  background: linear-gradient(180deg, var(--gold-light), var(--gold));
-  color: var(--curtain-deep);
-  border-color: var(--gold-dark);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(180deg, var(--btn-inner), var(--btn-outer));
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  border-color: color-mix(in srgb, var(--btn-outer) 75%, #000);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
 .btn-stage-gold:hover {
-  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.45);
+  box-shadow: 0 8px 28px var(--frame-glow);
 }
 
 .btn-stage-ghost {
-  background: rgba(0, 0, 0, 0.4);
-  color: var(--gold-light);
-  border-color: rgba(212, 175, 55, 0.5);
+  background: var(--panel-bg);
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--gold) 55%, transparent);
 }
 
 .btn-stage-ghost:hover {
   border-color: var(--gold);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
 }
 
 .btn-secondary {
-  background: rgba(0, 0, 0, 0.35);
-  color: var(--gold-light);
-  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: var(--panel-bg);
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent);
   border-radius: 8px;
   cursor: pointer;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
 }
 
 .save-status {
@@ -1022,7 +1547,7 @@ body[data-theme="fiesta-infantil"] .template-desc {
 }
 
 .save-status.warn {
-  color: var(--gold-light);
+  color: var(--gold);
 }
 
 .individual-photos {
@@ -1053,24 +1578,27 @@ body[data-theme="fiesta-infantil"] .template-desc {
 
 /* —— Utilidades —— */
 .hint {
-  color: var(--text-muted);
+  color: var(--ink-soft);
   font-size: 0.9rem;
   line-height: 1.5;
 }
 
 .operator-hint {
-  font-size: 0.8rem;
+  font-size: clamp(0.85rem, 1.25vw, 1.05rem);
+  letter-spacing: 0.02em;
 }
 
 kbd {
   display: inline-block;
-  padding: 0.1em 0.45em;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  border-radius: 4px;
+  padding: 0.15em 0.55em;
+  background: var(--panel-bg);
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+  border-radius: 5px;
   font-family: inherit;
-  font-size: 0.85em;
-  color: var(--gold-light);
+  font-weight: 700;
+  font-size: 0.9em;
+  color: var(--gold);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--gold) 30%, transparent);
 }
 
 .btn-kbd {
@@ -1078,17 +1606,23 @@ kbd {
   font-size: 0.65rem;
   opacity: 0.75;
   margin-top: 0.2rem;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
 }
 
 @media (max-width: 640px) {
   .photo-rail {
     flex: 0 0 clamp(100px, 28vw, 130px);
     width: clamp(100px, 28vw, 130px);
-    height: calc(100vh - 80px);
+  }
+}
+
+/* Pantallas anchas y bajas (TV 16:9): el video manda sobre el alto */
+@media (min-aspect-ratio: 16 / 10) {
+  .stage-header-compact {
+    padding: 0.35rem 0.75rem 0.2rem;
   }
 
-  .main-stage {
-    max-width: calc(100% - clamp(100px, 28vw, 130px) - 12px);
+  .stage-brand::after {
+    margin-top: 0.3rem;
   }
 }
