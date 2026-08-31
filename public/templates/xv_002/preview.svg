@@ -7,6 +7,6 @@
   <circle cx="260" cy="85" r="16" fill="#E85A5A" opacity="0.8"/>
   <circle cx="340" cy="85" r="16" fill="#E85A5A" opacity="0.8"/>
   <text x="300" y="1405" text-anchor="middle" font-family="cursive" font-size="40" fill="#9B1B30">Nombre</text>
-  <text x="300" y="1490" text-anchor="middle" font-family="Georgia,serif" font-size="28" fill="#6E0F1F" font-weight="bold">QUINCEAÑERA</text>
+  <text x="300" y="1490" text-anchor="middle" font-family="Georgia,serif" font-size="28" fill="#6E0F1F" font-weight="bold">QUINCEAÃ‘ERA</text>
   <text x="300" y="1560" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#8B1530">Fecha</text>
 </svg>

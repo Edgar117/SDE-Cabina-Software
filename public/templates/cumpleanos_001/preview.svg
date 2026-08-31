@@ -3,5 +3,5 @@
   <rect x="55" y="260" width="490" height="400" fill="#ddd" rx="10"/>
   <rect x="55" y="690" width="490" height="400" fill="#ccc" rx="10"/>
   <rect x="55" y="1120" width="490" height="400" fill="#bbb" rx="10"/>
-  <text x="300" y="130" text-anchor="middle" font-family="Georgia" font-size="36" fill="#8c712d" font-weight="bold">Cumpleaños</text>
+  <text x="300" y="130" text-anchor="middle" font-family="Georgia" font-size="36" fill="#8c712d" font-weight="bold">CumpleaÃ±os</text>
 </svg>
