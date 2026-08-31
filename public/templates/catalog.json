@@ -2,20 +2,6 @@
   "version": 1,
   "templates": [
     {
-      "id": "cumpleanos_001",
-      "folder": "cumpleanos_001",
-      "name": "Cumpleaños — Elegante Dorado",
-      "category": "cumpleanos",
-      "preview": "preview.svg"
-    },
-    {
-      "id": "boda_001",
-      "folder": "boda_001",
-      "name": "Boda — Flores Románticas",
-      "category": "boda",
-      "preview": "preview.svg"
-    },
-    {
       "id": "xv_001",
       "folder": "xv_001",
       "name": "XV Años — Magia Rose Gold",
@@ -27,6 +13,76 @@
       "folder": "xv_002",
       "name": "XV Años — Rosas Rojas",
       "category": "xv_anos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "xv_003",
+      "folder": "xv_003",
+      "name": "XV Años — Verde Salvia y Dorado",
+      "category": "xv_anos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "xv_004",
+      "folder": "xv_004",
+      "name": "XV Años — Rosa y Oro Rosa",
+      "category": "xv_anos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "xv_005",
+      "folder": "xv_005",
+      "name": "XV Años — Azul Real y Plata",
+      "category": "xv_anos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "boda_001",
+      "folder": "boda_001",
+      "name": "Boda — Flores Románticas",
+      "category": "boda",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "boda_002",
+      "folder": "boda_002",
+      "name": "Boda — Acuarela Verde",
+      "category": "boda",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "boda_003",
+      "folder": "boda_003",
+      "name": "Boda — Negro y Oro",
+      "category": "boda",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "cumpleanos_001",
+      "folder": "cumpleanos_001",
+      "name": "Cumpleaños — Elegante Dorado",
+      "category": "cumpleanos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "cumpleanos_002",
+      "folder": "cumpleanos_002",
+      "name": "Cumpleaños — Confeti Fiesta",
+      "category": "cumpleanos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "graduacion_001",
+      "folder": "graduacion_001",
+      "name": "Graduación — Toga y Oro",
+      "category": "graduacion",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "corporativo_001",
+      "folder": "corporativo_001",
+      "name": "Corporativo — Minimalista",
+      "category": "corporativo",
       "preview": "preview.svg"
     }
   ]

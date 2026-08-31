@@ -13,6 +13,10 @@ const CATEGORY_LABELS = {
   xv: 'XV Años',
   xv_anos: 'XV Años',
   corporativo: 'Corporativo',
+  graduacion: 'Graduación',
+  bautizo: 'Bautizo',
+  babyshower: 'Baby Shower',
+  navidad: 'Navidad',
   general: 'General',
 };
 

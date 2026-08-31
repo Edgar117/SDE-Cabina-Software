@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="600" viewBox="0 0 600 1800">
+
+  <defs>
+    <linearGradient id="pawc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7FA98B"/><stop offset="55%" stop-color="#3F6E52"/>
+      <stop offset="100%" stop-color="#264A38"/>
+    </linearGradient>
+    <filter id="pablur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="pablur2" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <rect width="600" height="1800" fill="#FCFCFA"/>
+  <g fill="url(#pawc)">
+    <path filter="url(#pablur2)" opacity="0.30"
+      d="M-30,-20 C120,-40 250,40 300,20 C360,-4 430,60 520,30 C580,10 620,60 620,90 C560,140 470,110 380,130 C280,152 150,120 40,140 C-10,148 -40,90 -30,-20Z"/>
+    <path filter="url(#pablur)" opacity="0.55"
+      d="M-10,10 C90,-24 200,50 268,26 C330,4 380,54 452,34 C510,18 560,46 560,72 C500,112 420,86 340,104 C250,124 140,98 50,114 C6,122 -20,80 -10,10Z"/>
+    <path opacity="0.85"
+      d="M20,34 C90,10 170,58 226,40 C280,22 320,60 372,46 C420,34 462,54 460,70 C408,96 340,78 274,92 C204,108 122,90 58,100 C24,105 10,72 20,34Z"/>
+  </g>
+  <g fill="url(#pawc)">
+    <path filter="url(#pablur)" opacity="0.35"
+      d="M600,1720 C520,1700 470,1746 400,1734 C330,1722 290,1760 300,1800 L620,1800Z"/>
+    <path opacity="0.7"
+      d="M600,1748 C540,1734 500,1768 448,1760 C398,1752 372,1780 380,1800 L620,1800Z"/>
+  </g><g><clipPath id="pc0"><rect x="48" y="176" width="504" height="348"/></clipPath><rect x="48" y="176" width="504" height="348" fill="#E8E8E8"/><g clip-path="url(#pc0)" fill="#C4C4C4"><circle cx="300.0" cy="315" r="45"/><ellipse cx="300.0" cy="531" rx="94" ry="84"/></g><clipPath id="pc1"><rect x="48" y="546" width="504" height="348"/></clipPath><rect x="48" y="546" width="504" height="348" fill="#DCDCDC"/><g clip-path="url(#pc1)" fill="#C4C4C4"><circle cx="300.0" cy="685" r="45"/><ellipse cx="300.0" cy="901" rx="94" ry="84"/></g><clipPath id="pc2"><rect x="48" y="916" width="504" height="348"/></clipPath><rect x="48" y="916" width="504" height="348" fill="#D0D0D0"/><g clip-path="url(#pc2)" fill="#C4C4C4"><circle cx="300.0" cy="1055" r="45"/><ellipse cx="300.0" cy="1271" rx="94" ry="84"/></g></g>
+  <g stroke="#3F6E52" stroke-width="1" opacity="0.55">
+    <line x1="238" y1="1372" x2="362" y2="1372"/>
+  </g>
+  <g opacity="0.9">
+    <g transform="translate(44,1690) rotate(-12) scale(0.9)"><path d="M0,0 C32,-6 54,-10 84,-16" stroke="#5C8567" stroke-width="1.6" fill="none" opacity="0.8"/><ellipse cx="8" cy="-9" rx="8.0" ry="6.4" fill="#5C8567" opacity="0.85"/><ellipse cx="8" cy="5" rx="8.0" ry="6.4" fill="#5C8567" opacity="0.7"/><ellipse cx="20" cy="-11" rx="7.5" ry="6.0" fill="#5C8567" opacity="0.85"/><ellipse cx="20" cy="3" rx="7.5" ry="6.0" fill="#5C8567" opacity="0.7"/><ellipse cx="32" cy="-13" rx="7.0" ry="5.6" fill="#5C8567" opacity="0.85"/><ellipse cx="32" cy="1" rx="7.0" ry="5.6" fill="#5C8567" opacity="0.7"/><ellipse cx="44" cy="-16" rx="6.5" ry="5.2" fill="#5C8567" opacity="0.85"/><ellipse cx="44" cy="-2" rx="6.5" ry="5.2" fill="#5C8567" opacity="0.7"/><ellipse cx="56" cy="-18" rx="6.0" ry="4.8" fill="#5C8567" opacity="0.85"/><ellipse cx="56" cy="-4" rx="6.0" ry="4.8" fill="#5C8567" opacity="0.7"/><ellipse cx="68" cy="-20" rx="5.5" ry="4.4" fill="#5C8567" opacity="0.85"/><ellipse cx="68" cy="-6" rx="5.5" ry="4.4" fill="#5C8567" opacity="0.7"/><ellipse cx="80" cy="-22" rx="5.0" ry="4.0" fill="#5C8567" opacity="0.85"/><ellipse cx="80" cy="-8" rx="5.0" ry="4.0" fill="#5C8567" opacity="0.7"/></g>
+    <g transform="translate(556,1620) rotate(168) scale(0.9)"><path d="M0,0 C32,-6 54,-10 84,-16" stroke="#5C8567" stroke-width="1.6" fill="none" opacity="0.8"/><ellipse cx="8" cy="-9" rx="8.0" ry="6.4" fill="#5C8567" opacity="0.85"/><ellipse cx="8" cy="5" rx="8.0" ry="6.4" fill="#5C8567" opacity="0.7"/><ellipse cx="20" cy="-11" rx="7.5" ry="6.0" fill="#5C8567" opacity="0.85"/><ellipse cx="20" cy="3" rx="7.5" ry="6.0" fill="#5C8567" opacity="0.7"/><ellipse cx="32" cy="-13" rx="7.0" ry="5.6" fill="#5C8567" opacity="0.85"/><ellipse cx="32" cy="1" rx="7.0" ry="5.6" fill="#5C8567" opacity="0.7"/><ellipse cx="44" cy="-16" rx="6.5" ry="5.2" fill="#5C8567" opacity="0.85"/><ellipse cx="44" cy="-2" rx="6.5" ry="5.2" fill="#5C8567" opacity="0.7"/><ellipse cx="56" cy="-18" rx="6.0" ry="4.8" fill="#5C8567" opacity="0.85"/><ellipse cx="56" cy="-4" rx="6.0" ry="4.8" fill="#5C8567" opacity="0.7"/><ellipse cx="68" cy="-20" rx="5.5" ry="4.4" fill="#5C8567" opacity="0.85"/><ellipse cx="68" cy="-6" rx="5.5" ry="4.4" fill="#5C8567" opacity="0.7"/><ellipse cx="80" cy="-22" rx="5.0" ry="4.0" fill="#5C8567" opacity="0.85"/><ellipse cx="80" cy="-8" rx="5.0" ry="4.0" fill="#5C8567" opacity="0.7"/></g>
+  </g><g><text x="300" y="1348" text-anchor="middle" font-family="'Dancing Script', cursive" font-size="54" fill="#2F4A38">Ana &amp; Luis</text><text x="300" y="1424" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="19" fill="#5C7A66" letter-spacing="4">15 mar 2026</text><text x="300" y="1471" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="16" fill="#7C8F82" letter-spacing="5">EVENTO</text></g>
+</svg>

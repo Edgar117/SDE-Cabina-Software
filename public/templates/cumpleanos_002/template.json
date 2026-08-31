@@ -1,0 +1,126 @@
+{
+  "id": "cumpleanos_002",
+  "name": "Cumpleaños — Confeti Fiesta",
+  "category": "cumpleanos",
+  "description": "Confeti multicolor, globos y marcos naranjas; ideal para fiestas infantiles",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 14,
+      "border": "#FFFFFF",
+      "borderWidth": 6
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 14,
+      "border": "#FFFFFF",
+      "borderWidth": 6
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 14,
+      "border": "#FFFFFF",
+      "borderWidth": 6
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 1690,
+      "width": 130,
+      "height": 58
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Sofía",
+      "x": 300,
+      "y": 1420,
+      "font": "'Dancing Script', cursive",
+      "size": 68,
+      "color": "#E8503A",
+      "align": "center",
+      "weight": "bold"
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "FELIZ CUMPLEAÑOS",
+      "x": 300,
+      "y": 1508,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 25,
+      "color": "#2F7DBF",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 4
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1566,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 19,
+      "color": "#7A8B99",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerHashtag",
+      "text": "",
+      "x": 300,
+      "y": 1622,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 16,
+      "color": "#E8503A",
+      "align": "center",
+      "weight": "bold"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1672,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 14,
+      "color": "#7A8B99",
+      "align": "center"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="600" viewBox="0 0 600 1800">
+
+  <defs>
+    <linearGradient id="paband" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#16202E"/><stop offset="100%" stop-color="#25384F"/>
+    </linearGradient>
+    <linearGradient id="paacc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0FB5A5"/><stop offset="100%" stop-color="#2F7DBF"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="1800" fill="#F6F8FA"/>
+  <rect x="0" y="0" width="600" height="168" fill="url(#paband)"/>
+  <rect x="0" y="168" width="600" height="6" fill="url(#paacc)"/>
+  <rect x="0" y="1620" width="600" height="180" fill="url(#paband)"/>
+  <rect x="0" y="1614" width="600" height="6" fill="url(#paacc)"/>
+  <rect x="0" y="1560" width="600" height="1" fill="#DCE3EC"/><g><clipPath id="pc0"><rect x="48" y="208" width="504" height="344"/></clipPath><rect x="48" y="208" width="504" height="344" fill="#E8E8E8"/><g clip-path="url(#pc0)" fill="#C4C4C4"><circle cx="300.0" cy="346" r="45"/><ellipse cx="300.0" cy="559" rx="93" ry="83"/></g><rect x="48" y="208" width="504" height="344" fill="none" stroke="#E2E8F0" stroke-width="5"/><clipPath id="pc1"><rect x="48" y="576" width="504" height="344"/></clipPath><rect x="48" y="576" width="504" height="344" fill="#DCDCDC"/><g clip-path="url(#pc1)" fill="#C4C4C4"><circle cx="300.0" cy="714" r="45"/><ellipse cx="300.0" cy="927" rx="93" ry="83"/></g><rect x="48" y="576" width="504" height="344" fill="none" stroke="#E2E8F0" stroke-width="5"/><clipPath id="pc2"><rect x="48" y="944" width="504" height="344"/></clipPath><rect x="48" y="944" width="504" height="344" fill="#D0D0D0"/><g clip-path="url(#pc2)" fill="#C4C4C4"><circle cx="300.0" cy="1082" r="45"/><ellipse cx="300.0" cy="1295" rx="93" ry="83"/></g><rect x="48" y="944" width="504" height="344" fill="none" stroke="#E2E8F0" stroke-width="5"/></g>
+  <defs>
+    <linearGradient id="pbacc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0FB5A5"/><stop offset="100%" stop-color="#2F7DBF"/>
+    </linearGradient>
+  </defs>
+  <g><rect x="41" y="201" width="518" height="358" fill="none" stroke="#CBD5E1" stroke-width="1" opacity="0.9"/><rect x="41" y="569" width="518" height="358" fill="none" stroke="#CBD5E1" stroke-width="1" opacity="0.9"/><rect x="41" y="937" width="518" height="358" fill="none" stroke="#CBD5E1" stroke-width="1" opacity="0.9"/></g>
+  <rect x="250" y="1404" width="100" height="4" rx="2" fill="url(#pbacc)"/><g><text x="300" y="1365" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="32" fill="#16202E" font-weight="bold" letter-spacing="1">SDE Eventos</text><text x="300" y="1457" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="20" fill="#516175" letter-spacing="3">Nombre</text><text x="300" y="1506" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="17" fill="#7C8A9A">15 mar 2026</text></g>
+</svg>

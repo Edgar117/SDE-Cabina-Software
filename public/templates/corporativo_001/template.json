@@ -1,0 +1,137 @@
+{
+  "id": "corporativo_001",
+  "name": "Corporativo — Minimalista",
+  "category": "corporativo",
+  "description": "Limpio y profesional, banda superior para logo y pie con datos de contacto",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 48,
+      "y": 208,
+      "width": 504,
+      "height": 344,
+      "fit": "cover",
+      "radius": 6,
+      "border": "#FFFFFF",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 48,
+      "y": 576,
+      "width": 504,
+      "height": 344,
+      "fit": "cover",
+      "radius": 6,
+      "border": "#FFFFFF",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 48,
+      "y": 944,
+      "width": 504,
+      "height": 344,
+      "fit": "cover",
+      "radius": 6,
+      "border": "#FFFFFF",
+      "borderWidth": 5
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 44,
+      "width": 200,
+      "height": 84
+    },
+    {
+      "type": "text",
+      "binding": "headerText",
+      "text": "SDE Eventos",
+      "x": 300,
+      "y": 1354,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 32,
+      "color": "#16202E",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 1
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "",
+      "x": 300,
+      "y": 1450,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 20,
+      "color": "#516175",
+      "align": "center",
+      "letterSpacing": 3
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1500,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 17,
+      "color": "#7C8A9A",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1676,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 17,
+      "color": "#E6EDF5",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerHashtag",
+      "text": "",
+      "x": 300,
+      "y": 1722,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 16,
+      "color": "#4FD1C5",
+      "align": "center",
+      "weight": "bold"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1762,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 15,
+      "color": "#A9BACB",
+      "align": "center"
+    }
+  ]
+}

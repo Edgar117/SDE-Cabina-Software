@@ -1,0 +1,124 @@
+{
+  "id": "graduacion_001",
+  "name": "Graduación — Toga y Oro",
+  "category": "graduacion",
+  "description": "Azul noche con birrete, laureles dorados y tipografía clásica",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 4,
+      "border": "#D4AF37",
+      "borderWidth": 3
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 4,
+      "border": "#D4AF37",
+      "borderWidth": 3
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 4,
+      "border": "#D4AF37",
+      "borderWidth": 3
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 44,
+      "width": 150,
+      "height": 68
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Generación",
+      "x": 300,
+      "y": 1452,
+      "font": "'Dancing Script', cursive",
+      "size": 54,
+      "color": "#F2E4B0",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "GRADUACIÓN",
+      "x": 300,
+      "y": 1534,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 28,
+      "color": "#D4AF37",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 8
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1590,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#B9C7DE",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1690,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 15,
+      "color": "#9FB0CC",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1734,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#9FB0CC",
+      "align": "center"
+    }
+  ]
+}

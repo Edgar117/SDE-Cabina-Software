@@ -1,0 +1,126 @@
+{
+  "id": "boda_003",
+  "name": "Boda — Negro y Oro",
+  "category": "boda",
+  "description": "Art decó negro con líneas doradas, elegante y formal",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A227",
+      "borderWidth": 3
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A227",
+      "borderWidth": 3
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A227",
+      "borderWidth": 3
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 48,
+      "width": 150,
+      "height": 70
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Ana & Luis",
+      "x": 300,
+      "y": 1400,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 42,
+      "color": "#E8CE7A",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 5
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "NUESTRA BODA",
+      "x": 300,
+      "y": 1478,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 18,
+      "color": "#BFA35A",
+      "align": "center",
+      "letterSpacing": 7
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1610,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#D4AF37",
+      "align": "center",
+      "letterSpacing": 4
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1690,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 14,
+      "color": "#9C8850",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1734,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#9C8850",
+      "align": "center"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "id": "boda_002",
+  "name": "Boda — Acuarela Verde",
+  "category": "boda",
+  "description": "Minimalista blanco con acuarela verde y tipografía caligráfica",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 48,
+      "y": 176,
+      "width": 504,
+      "height": 348,
+      "fit": "cover",
+      "radius": 0
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 48,
+      "y": 546,
+      "width": 504,
+      "height": 348,
+      "fit": "cover",
+      "radius": 0
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 48,
+      "y": 916,
+      "width": 504,
+      "height": 348,
+      "fit": "cover",
+      "radius": 0
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 1660,
+      "width": 120,
+      "height": 54
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Ana & Luis",
+      "x": 300,
+      "y": 1330,
+      "font": "'Dancing Script', cursive",
+      "size": 54,
+      "color": "#2F4A38",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1418,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 19,
+      "color": "#5C7A66",
+      "align": "center",
+      "letterSpacing": 4
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "",
+      "x": 300,
+      "y": 1466,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 16,
+      "color": "#7C8F82",
+      "align": "center",
+      "letterSpacing": 5
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1540,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 14,
+      "color": "#8A9A90",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1585,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#8A9A90",
+      "align": "center"
+    }
+  ]
+}

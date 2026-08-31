@@ -1,0 +1,126 @@
+{
+  "id": "xv_005",
+  "name": "XV Años — Azul Real y Plata",
+  "category": "xv_anos",
+  "description": "Noche azul con estrellas plateadas, corona y tipografía elegante",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 8,
+      "border": "#C9D4E4",
+      "borderWidth": 3
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 8,
+      "border": "#C9D4E4",
+      "borderWidth": 3
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 8,
+      "border": "#C9D4E4",
+      "borderWidth": 3
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 42,
+      "width": 150,
+      "height": 72
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Valeria",
+      "x": 300,
+      "y": 1428,
+      "font": "'Dancing Script', cursive",
+      "size": 62,
+      "color": "#F2F6FF",
+      "align": "center",
+      "weight": "bold",
+      "shadow": true
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "MIS XV AÑOS",
+      "x": 300,
+      "y": 1524,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 26,
+      "color": "#C6D3E8",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 8
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1584,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#9FB0CC",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1700,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 15,
+      "color": "#8FA2C0",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1745,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#8FA2C0",
+      "align": "center"
+    }
+  ]
+}
