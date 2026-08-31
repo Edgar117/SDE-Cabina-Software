@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDE Eventos — Cabina de Fotos</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <link rel="stylesheet" href="/src/welcome.css" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        corePlugins: { preflight: false },
+        theme: {
+          extend: {
+            colors: {
+              surface: '#fbf9f4',
+              tertiary: '#68594a',
+              'on-primary': '#ffffff',
+              'outline-variant': '#d0c5b4',
+              secondary: '#665d52',
+              'on-surface': '#1b1c19',
+              'surface-container-highest': '#e4e2dd',
+              outline: '#7e7667',
+              'on-surface-variant': '#4d4639',
+              'primary-container': '#8c712d',
+              primary: '#715915',
+              'surface-container-lowest': '#ffffff',
+              'surface-container-low': '#f5f3ee',
+              'surface-container-high': '#eae8e3',
+              background: '#fbf9f4',
+            },
+            spacing: {
+              gutter: '16px',
+              'margin-mobile': '12px',
+              'container-padding': '24px',
+              'max-width': '1200px',
+            },
+            fontFamily: {
+              'label-md': ['Manrope', 'sans-serif'],
+              'body-md': ['Manrope', 'sans-serif'],
+              'headline-lg': ['Playfair Display', 'serif'],
+              'label-sm': ['Manrope', 'sans-serif'],
+              'headline-xl': ['Playfair Display', 'serif'],
+              'headline-lg-mobile': ['Playfair Display', 'serif'],
+            },
+            fontSize: {
+              'label-md': ['14px', { lineHeight: '20px', letterSpacing: '0.05em', fontWeight: '600' }],
+              'body-md': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+              'headline-lg': ['32px', { lineHeight: '40px', fontWeight: '600' }],
+              'label-sm': ['12px', { lineHeight: '16px', fontWeight: '500' }],
+              'headline-xl': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+              'headline-lg-mobile': ['28px', { lineHeight: '36px', fontWeight: '600' }],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="app-welcome">
+    <div id="app">
+      <!-- Pantalla operador / configuración -->
+      <section id="screen-welcome" class="screen active flex flex-col md:flex-row md:min-h-screen md:overflow-hidden">
+        <!-- TopAppBar Mobile -->
+        <header
+          class="md:hidden flex justify-between items-center w-full px-margin-mobile py-3 bg-surface shadow-sm fixed top-0 z-50"
+        >
+          <h1 class="font-headline-lg-mobile text-headline-lg-mobile font-semibold text-primary">
+            SDE Eventos
+          </h1>
+        </header>
+
+        <!-- SideNavBar Desktop -->
+        <nav
+          class="hidden md:flex flex-col flex-shrink-0 h-screen w-56 bg-surface-container-low shadow-md py-4 px-2 z-40"
+        >
+          <div class="mb-4 px-1 flex flex-col items-center justify-center pt-2">
+            <div
+              class="w-14 h-14 rounded-full bg-primary-container text-on-primary flex items-center justify-center mb-3"
+            >
+              <span class="font-headline-lg text-headline-lg">S</span>
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-primary text-center">SDE Eventos</h2>
+            <p class="font-label-sm text-label-sm text-secondary text-center mt-1">
+              Modern Luxe Management
+            </p>
+          </div>
+          <ul class="flex flex-col gap-1 mt-2 flex-grow">
+            <li>
+              <a
+                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-primary font-bold border-r-4 border-primary bg-primary-container/10 font-label-md text-label-md"
+                href="#"
+                aria-current="page"
+              >
+                <span
+                  class="material-symbols-outlined"
+                  style="font-variation-settings: 'FILL' 1"
+                  >settings</span
+                >
+                Configuración
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-secondary opacity-50 cursor-not-allowed font-label-md text-label-md"
+                href="#"
+                aria-disabled="true"
+              >
+                <span class="material-symbols-outlined">photo_library</span>
+                Galería
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-secondary opacity-50 cursor-not-allowed font-label-md text-label-md"
+                href="#"
+                aria-disabled="true"
+              >
+                <span class="material-symbols-outlined">dashboard_customize</span>
+                Plantillas
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-secondary opacity-50 cursor-not-allowed font-label-md text-label-md"
+                href="#"
+                aria-disabled="true"
+              >
+                <span class="material-symbols-outlined">analytics</span>
+                Estadísticas
+              </a>
+            </li>
+          </ul>
+          <div class="mt-auto px-1 pb-3">
+            <button
+              type="button"
+              id="btn-start-sidebar"
+              class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm"
+            >
+              <span class="material-symbols-outlined">play_circle</span>
+              Iniciar Evento
+            </button>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="flex-1 min-w-0 pt-14 md:pt-0 min-h-screen flex flex-col w-full overflow-x-hidden">
+          <main class="flex-1 w-full min-w-0 px-margin-mobile md:px-5 py-4 md:py-5">
+            <div class="mb-4 md:mb-6">
+              <h2 class="font-headline-xl text-headline-xl text-primary font-bold">
+                Configuración del evento
+              </h2>
+              <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+                Personaliza los detalles y la plantilla para tu próximo evento.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_320px] gap-4 lg:gap-5 items-start min-w-0">
+              <!-- Columna izquierda -->
+              <div class="min-w-0 flex flex-col gap-4 lg:gap-5">
+                <!-- Detalles básicos -->
+                <section
+                  class="bg-surface-container-lowest rounded-xl p-4 md:p-5 soft-card border border-outline-variant/30 relative overflow-hidden"
+                >
+                  <div
+                    class="absolute top-0 right-0 w-48 h-48 bg-primary-container/5 rounded-full blur-3xl -mr-24 -mt-24 pointer-events-none"
+                  ></div>
+                  <h3
+                    class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-4 flex items-center gap-2 border-b border-surface-container-highest pb-2"
+                  >
+                    <span class="material-symbols-outlined text-primary">tune</span>
+                    Detalles Básicos
+                  </h3>
+                  <div class="space-y-4 relative z-10">
+                    <div>
+                      <label
+                        class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                        for="input-header-text"
+                        >Texto de Cabecera</label
+                      >
+                      <input
+                        class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                        type="text"
+                        id="input-header-text"
+                        placeholder="SDE Eventos"
+                        maxlength="40"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                        for="input-footer-text"
+                        >Texto de Pie de Página</label
+                      >
+                      <input
+                        class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                        type="text"
+                        id="input-footer-text"
+                        placeholder="¡Gracias por celebrar con nosotros!"
+                        maxlength="50"
+                      />
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                          for="input-footer-hashtag"
+                          >Hashtag del Evento</label
+                        >
+                        <div class="relative">
+                          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+                            >#</span
+                          >
+                          <input
+                            class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-8 pr-3 py-2.5 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                            type="text"
+                            id="input-footer-hashtag"
+                            placeholder="SDE Eventos"
+                            maxlength="40"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                          for="input-footer-phone"
+                          >Teléfono de Contacto</label
+                        >
+                        <div class="relative">
+                          <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-sm"
+                            >call</span
+                          >
+                          <input
+                            class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-3 py-2.5 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                            type="tel"
+                            id="input-footer-phone"
+                            placeholder="99-92-15-90-77"
+                            maxlength="20"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label
+                        class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                        for="select-theme"
+                        >Plantilla del evento (pantalla)</label
+                      >
+                      <select
+                        id="select-theme"
+                        class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      ></select>
+                    </div>
+                    <div class="pt-2">
+                      <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2"
+                        >Logo del Evento (Opcional)</label
+                      >
+                      <label
+                        for="input-logo"
+                        class="border-2 border-dashed border-outline-variant rounded-xl p-5 flex flex-col items-center justify-center text-center bg-surface-container-low/50 hover:bg-surface-container-low transition-colors cursor-pointer group"
+                      >
+                        <div
+                          class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center mb-3 group-hover:bg-primary-container/20 transition-colors"
+                        >
+                          <span
+                            class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors"
+                            >cloud_upload</span
+                          >
+                        </div>
+                        <p class="font-body-md text-body-md text-on-surface mb-1">
+                          Arrastra tu logo aquí o
+                          <span class="text-primary font-medium">explora</span>
+                        </p>
+                        <p class="font-label-sm text-label-sm text-outline">
+                          PNG, JPG o WebP — máx. 2 MB
+                        </p>
+                      </label>
+                      <input
+                        type="file"
+                        id="input-logo"
+                        accept="image/png,image/jpeg,image/webp"
+                      />
+                      <img id="logo-preview" class="logo-preview hidden" alt="Logo" />
+                    </div>
+                    <div class="pt-2">
+                      <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                        >Fondo del área de fotos (Opcional)</label
+                      >
+                      <p class="font-label-sm text-label-sm text-outline mb-2">
+                        Imagen decorativa detrás de las fotos. Cabecera, pie y textos de la plantilla se
+                        mantienen.
+                      </p>
+                      <label
+                        for="input-strip-background"
+                        class="border-2 border-dashed border-outline-variant rounded-xl p-5 flex flex-col items-center justify-center text-center bg-surface-container-low/50 hover:bg-surface-container-low transition-colors cursor-pointer group"
+                      >
+                        <div
+                          class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center mb-3 group-hover:bg-primary-container/20 transition-colors"
+                        >
+                          <span
+                            class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors"
+                            >wallpaper</span
+                          >
+                        </div>
+                        <p class="font-body-md text-body-md text-on-surface mb-1">
+                          Sube tu fondo o <span class="text-primary font-medium">explora</span>
+                        </p>
+                        <p class="font-label-sm text-label-sm text-outline">
+                          PNG o JPG — hojas, flores, texturas, etc.
+                        </p>
+                      </label>
+                      <input
+                        type="file"
+                        id="input-strip-background"
+                        accept="image/png,image/jpeg,image/webp"
+                      />
+                      <div id="strip-bg-preview-wrap" class="strip-bg-preview-wrap hidden">
+                        <img id="strip-bg-preview" class="strip-bg-preview" alt="Vista previa del fondo" />
+                        <button
+                          type="button"
+                          id="btn-remove-strip-bg"
+                          class="mt-2 font-label-sm text-label-sm text-primary hover:underline"
+                        >
+                          Quitar fondo
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Plantillas strip -->
+                <section
+                  class="bg-surface-container-lowest rounded-xl p-4 md:p-5 soft-card border border-outline-variant/30"
+                >
+                  <div
+                    class="flex justify-between items-end mb-2 border-b border-surface-container-highest pb-2"
+                  >
+                    <h3
+                      class="font-label-md text-label-md text-secondary tracking-widest uppercase flex items-center gap-2"
+                    >
+                      <span class="material-symbols-outlined text-primary">style</span>
+                      Plantilla del Strip
+                    </h3>
+                  </div>
+                  <p id="strip-template-desc" class="font-label-sm text-label-sm text-outline italic mb-1"></p>
+                  <p
+                    id="strip-preview-status"
+                    class="font-label-sm text-label-sm text-on-surface-variant mb-4 min-h-[1em]"
+                  ></p>
+                  <div
+                    id="strip-template-grid"
+                    class="flex overflow-x-auto gap-3 pb-3 template-scroll snap-x min-w-0 max-w-full"
+                  ></div>
+                  <select
+                    id="select-strip-template"
+                    class="sr-only"
+                    tabindex="-1"
+                    aria-hidden="true"
+                  ></select>
+                </section>
+              </div>
+
+              <!-- Columna derecha -->
+              <div class="min-w-0 flex flex-col gap-4 lg:sticky lg:top-4">
+                <div
+                  class="bg-surface-container-lowest rounded-xl p-5 soft-card border border-outline-variant/30 flex flex-col items-center justify-center text-center"
+                >
+                  <div
+                    class="w-16 h-16 rounded-full bg-primary-container/10 flex items-center justify-center mb-4"
+                  >
+                    <span
+                      class="material-symbols-outlined text-4xl text-primary"
+                      style="font-variation-settings: 'FILL' 1"
+                      >camera</span
+                    >
+                  </div>
+                  <h3 class="font-headline-lg text-headline-lg text-on-surface mb-2">
+                    ¿Todo listo?
+                  </h3>
+                  <p class="font-body-md text-body-md text-on-surface-variant mb-5">
+                    El fotomatón está configurado y listo para capturar momentos inolvidables.
+                  </p>
+                  <button type="button" class="relative group w-full max-w-[240px]" id="btn-start-welcome">
+                    <div
+                      class="absolute -inset-1 bg-primary/30 rounded-full blur-md opacity-70 group-hover:opacity-100 transition duration-500"
+                    ></div>
+                    <div
+                      class="relative w-full py-4 bg-primary text-on-primary rounded-full font-label-md text-label-md tracking-widest flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(113,89,21,0.3)] group-hover:scale-[1.02] transition-transform overflow-hidden"
+                    >
+                      <div
+                        class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1.5s_ease-in-out]"
+                      ></div>
+                      <span
+                        class="material-symbols-outlined z-10"
+                        style="font-variation-settings: 'FILL' 1"
+                        >play_arrow</span
+                      >
+                      <span class="z-10 text-lg">INICIAR!</span>
+                    </div>
+                  </button>
+                  <p class="font-label-sm text-label-sm text-on-surface-variant mt-6">
+                    Operador: <kbd class="px-1.5 py-0.5 rounded bg-surface-container-high text-xs">ESPACIO</kbd>
+                    o
+                    <kbd class="px-1.5 py-0.5 rounded bg-surface-container-high text-xs">ENTER</kbd>
+                  </p>
+                </div>
+
+                <div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/20">
+                  <h4 class="font-label-sm text-label-sm text-secondary uppercase mb-3">
+                    Atajos Rápidos
+                  </h4>
+                  <ul class="space-y-3">
+                    <li>
+                      <button
+                        type="button"
+                        id="btn-pick-folder"
+                        class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md text-left w-full"
+                      >
+                        <span class="material-symbols-outlined text-lg">folder_open</span>
+                        <span>Elegir carpeta de guardado</span>
+                      </button>
+                    </li>
+                  </ul>
+                  <p id="folder-status" class="folder-status font-label-sm text-label-sm text-outline mt-4">
+                    Sin carpeta: las fotos solo se descargan al final en ZIP/PDF.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <footer class="bg-surface mt-auto border-t border-outline-variant w-full min-w-0">
+            <div
+              class="w-full px-margin-mobile md:px-5 py-3 flex flex-col md:flex-row justify-between items-center gap-3"
+            >
+              <p class="font-body-md text-body-md text-tertiary">
+                SDE Eventos © 2024. Gracias por confiar en nosotros.
+              </p>
+              <div class="flex items-center gap-6">
+                <span class="font-label-md text-label-md text-primary" data-brand-hashtag
+                  >#SDEEventos</span
+                >
+                <span class="font-body-md text-body-md text-on-surface-variant" data-brand-phone
+                  >99-92-15-90-77</span
+                >
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+
+      <!-- Vista previa + captura (TV) -->
+      <section id="screen-camera" class="screen">
+        <div class="theater-stage theater-stage-camera">
+          <div class="curtain-bg" aria-hidden="true"></div>
+          <div class="theme-deco" aria-hidden="true"></div>
+          <div class="curtain-fold curtain-fold-left" aria-hidden="true"></div>
+          <div class="curtain-fold curtain-fold-right" aria-hidden="true"></div>
+
+          <header class="stage-header stage-header-compact">
+            <p class="stage-brand" data-brand-header>SDE Eventos</p>
+            <h1 class="stage-welcome stage-welcome-sm">Bienvenido!</h1>
+          </header>
+
+          <div class="stage-layout">
+            <aside class="photo-rail" id="photo-rail" aria-label="Fotos tomadas">
+              <div class="rail-slot empty"><span>1</span></div>
+              <div class="rail-slot empty"><span>2</span></div>
+              <div class="rail-slot empty"><span>3</span></div>
+            </aside>
+
+            <main class="main-stage">
+              <div class="preview-frame">
+                <video id="video" autoplay playsinline muted></video>
+                <canvas id="capture-canvas" hidden></canvas>
+
+                <div class="frame-badge frame-badge-left" aria-hidden="true">✦</div>
+                <div class="frame-badge frame-badge-right" aria-hidden="true">✦</div>
+
+                <div id="countdown-overlay" class="countdown-overlay hidden">
+                  <p id="countdown-prep" class="countdown-prep hidden">¡Prepárate!</p>
+                  <span id="countdown-number"></span>
+                </div>
+
+                <div id="capture-preview-overlay" class="capture-preview-overlay hidden">
+                  <img id="capture-preview-img" alt="Tu foto" />
+                </div>
+
+                <div id="cheer-overlay" class="cheer-overlay hidden">
+                  <p id="cheer-text"></p>
+                </div>
+
+                <div id="flash-overlay" class="flash-overlay hidden"></div>
+
+                <div id="photo-progress" class="photo-progress hidden">
+                  Foto <span id="photo-current">1</span> de 3
+                </div>
+
+                <button
+                  type="button"
+                  class="btn-iniciar-circle btn-iniciar-overlay"
+                  id="btn-start-photos"
+                >
+                  <span class="btn-iniciar-ring"></span>
+                  <span class="btn-iniciar-label">INICIAR!</span>
+                </button>
+              </div>
+            </main>
+          </div>
+
+          <p id="camera-hint" class="hint operator-hint camera-hint-bottom">
+            Operador: <kbd>ESPACIO</kbd> para tomar las 3 fotos
+          </p>
+        </div>
+      </section>
+
+      <!-- Revisión -->
+      <section id="screen-review" class="screen">
+        <div class="theater-stage theater-stage-review">
+          <div class="curtain-bg" aria-hidden="true"></div>
+          <div class="theme-deco" aria-hidden="true"></div>
+          <div class="curtain-fold curtain-fold-left" aria-hidden="true"></div>
+          <div class="curtain-fold curtain-fold-right" aria-hidden="true"></div>
+
+          <header class="stage-header stage-header-compact">
+            <p class="stage-brand" data-brand-header>SDE Eventos</p>
+            <h2 class="stage-welcome stage-welcome-sm">¡Listo para imprimir!</h2>
+            <p class="stage-tagline">2 strips iguales — corta por el centro</p>
+          </header>
+
+          <div class="review-body">
+            <p id="save-status" class="save-status"></p>
+            <div id="individual-photos" class="individual-photos"></div>
+            <div class="strip-preview-wrap">
+              <img id="strip-preview" alt="Hoja con 2 strips" />
+            </div>
+            <div class="review-actions">
+              <button type="button" class="btn-stage btn-stage-ghost" id="btn-retry">
+                Otra vez <span class="btn-kbd">ESPACIO</span>
+              </button>
+              <button type="button" class="btn-stage btn-stage-ghost" id="btn-download-zip">
+                ZIP digital <span class="btn-kbd">D</span>
+              </button>
+              <button type="button" class="btn-stage btn-stage-gold" id="btn-download">
+                PDF imprimir <span class="btn-kbd">ENTER</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

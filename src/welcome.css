@@ -1,0 +1,137 @@
+/* Pantalla de configuración — estilos complementarios al mockup */
+
+body.app-welcome {
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fbf9f4;
+  color: #1b1c19;
+  font-family: Manrope, system-ui, sans-serif;
+}
+
+body.app-welcome #app {
+  height: auto;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#screen-welcome.screen {
+  display: none;
+  height: auto;
+  min-height: 100vh;
+  width: 100%;
+}
+
+#screen-welcome.screen.active {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  #screen-welcome.screen.active {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.soft-card {
+  box-shadow: 0 4px 20px rgba(74, 66, 56, 0.05);
+}
+
+.template-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.template-scroll::-webkit-scrollbar-track {
+  background: #f5f3ee;
+  border-radius: 4px;
+}
+
+.template-scroll::-webkit-scrollbar-thumb {
+  background: #d0c5b4;
+  border-radius: 4px;
+}
+
+.strip-thumb-skeleton {
+  width: 100%;
+  flex: 1;
+  min-height: 120px;
+  background: linear-gradient(90deg, #e4e2dd 25%, #f0eee9 50%, #e4e2dd 75%);
+  background-size: 200% 100%;
+  animation: welcome-shimmer 1.2s infinite;
+  border-radius: 4px;
+}
+
+@keyframes welcome-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+.logo-preview:not(.hidden) {
+  max-height: 64px;
+  max-width: 160px;
+  margin-top: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #d0c5b4;
+}
+
+#input-logo,
+#input-strip-background {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.strip-bg-preview-wrap {
+  margin-top: 0.75rem;
+}
+
+.strip-bg-preview {
+  width: 100%;
+  max-height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #d0c5b4;
+  display: block;
+}
+
+.strip-bg-preview-wrap.hidden {
+  display: none;
+}
+
+.folder-status.ready {
+  color: #4a7c59;
+}
+
+#strip-preview-status.loading {
+  color: #715915;
+}
+
+body.app-booth {
+  overflow: hidden;
+  height: 100%;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+body.app-booth #app {
+  height: 100vh;
+  width: 100vw;
+}
