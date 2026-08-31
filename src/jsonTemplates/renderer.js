@@ -18,6 +18,7 @@ function resolveBinding(binding, branding) {
   const map = {
     headerText: branding.headerText || 'SDE Eventos',
     subtitleText: branding.subtitleText || '',
+    eventLabel: branding.eventLabel || '',
     footerText: branding.footerText || '',
     footerHashtag: branding.footerHashtag || '',
     footerPhone: branding.footerPhone || '',
@@ -250,9 +251,34 @@ function drawTextElement(ctx, element, context) {
     ctx.fillStyle = element.color || '#000000';
   }
 
-  const letterSpacing = element.letterSpacing ? sx(element.letterSpacing) : 0;
+  let letterSpacing = element.letterSpacing ? sx(element.letterSpacing) : 0;
+  const maxWidth = element.maxWidth ? sx(element.maxWidth) : outW - sx(40);
+
+  // El texto lo escribe el usuario, así que puede ser mucho más largo de lo
+  // que la plantilla previó. Antes se desbordaba (el camino con letterSpacing
+  // ignoraba maxWidth) o se deformaba (fillText comprime horizontalmente).
+  // Aquí se reduce el tamaño de letra —y el tracking, en proporción— hasta
+  // que quepa, que es lo que se ve bien impreso.
+  let fontSize = size;
+  const setFont = (px) => {
+    ctx.font = `${style}${weight}${px}px ${element.font || 'Georgia, serif'}`;
+  };
+  const anchoDe = (spacing) =>
+    ctx.measureText(text).width + (text.length > 1 ? (text.length - 1) * spacing : 0);
+
+  if (maxWidth > 0) {
+    const minSize = size * 0.5;
+    let ancho = anchoDe(letterSpacing);
+    while (ancho > maxWidth && fontSize > minSize) {
+      fontSize = Math.max(minSize, fontSize - Math.max(1, fontSize * 0.04));
+      letterSpacing = element.letterSpacing ? sx(element.letterSpacing) * (fontSize / size) : 0;
+      setFont(fontSize);
+      ancho = anchoDe(letterSpacing);
+    }
+  }
+
   if (letterSpacing > 0 && text.length > 1 && element.align === 'center') {
-    const chars = text.split('');
+    const chars = Array.from(text);
     const totalWidth =
       chars.reduce((sum, char) => sum + ctx.measureText(char).width, 0) +
       (chars.length - 1) * letterSpacing;
@@ -264,7 +290,6 @@ function drawTextElement(ctx, element, context) {
     }
   } else {
     if (letterSpacing > 0) ctx.letterSpacing = `${letterSpacing}px`;
-    const maxWidth = element.maxWidth ? sx(element.maxWidth) : outW - 40;
     ctx.fillText(text, x, y, maxWidth);
   }
 

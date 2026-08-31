@@ -47,6 +47,7 @@ const cheerText = document.getElementById('cheer-text');
 const flashOverlay = document.getElementById('flash-overlay');
 const photoProgress = document.getElementById('photo-progress');
 const photoCurrent = document.getElementById('photo-current');
+const progressDots = document.getElementById('progress-dots');
 const cameraHint = document.getElementById('camera-hint');
 const btnStartPhotos = document.getElementById('btn-start-photos');
 const stripPreview = document.getElementById('strip-preview');
@@ -55,6 +56,7 @@ const saveStatus = document.getElementById('save-status');
 const individualPhotos = document.getElementById('individual-photos');
 const inputHeaderText = document.getElementById('input-header-text');
 const inputSubtitleText = document.getElementById('input-subtitle-text');
+const inputEventLabel = document.getElementById('input-event-label');
 const inputFooterText = document.getElementById('input-footer-text');
 const inputFooterHashtag = document.getElementById('input-footer-hashtag');
 const inputFooterPhone = document.getElementById('input-footer-phone');
@@ -104,6 +106,7 @@ function updateFolderStatus() {
 function syncBrandingFromForm(refreshPreviews = true) {
   branding.headerText = inputHeaderText.value.trim() || 'SDE Eventos';
   branding.subtitleText = inputSubtitleText?.value.trim() || '';
+  branding.eventLabel = inputEventLabel?.value.trim() || '';
   branding.footerText = inputFooterText.value.trim() || '¡Gracias por celebrar con nosotros!';
   branding.footerHashtag = inputFooterHashtag.value.trim() || '#SDE Eventos';
   branding.footerPhone = inputFooterPhone.value.trim() || '99-92-15-90-77';
@@ -202,7 +205,8 @@ function clearPhotoRail() {
   photoRail.innerHTML = '';
   for (let i = 0; i < PHOTO_COUNT; i++) {
     const slot = document.createElement('div');
-    slot.className = 'rail-slot empty';
+    // el primer slot va marcado como "el que sigue" para guiar la mirada
+    slot.className = i === 0 ? 'rail-slot empty next' : 'rail-slot empty';
     slot.innerHTML = `<span>${i + 1}</span>`;
     photoRail.appendChild(slot);
   }
@@ -222,10 +226,24 @@ function updatePhotoRail() {
       slot.appendChild(img);
     } else {
       slot.classList.add('empty');
+      if (i === capturedPhotos.length) slot.classList.add('next');
       slot.innerHTML = `<span>${i + 1}</span>`;
     }
     photoRail.appendChild(slot);
   }
+}
+
+function updateProgressDots(currentIndex) {
+  if (!progressDots) return;
+  const dots = progressDots.querySelectorAll('.progress-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('done', i < currentIndex);
+    dot.classList.toggle('active', i === currentIndex);
+  });
+}
+
+function setCaptureState(state) {
+  document.body.dataset.capture = state;
 }
 
 function toggleIniciarButton(show) {
@@ -239,6 +257,7 @@ function applyBrandingToForm() {
   scheduleStripPreviewRefresh();
   inputHeaderText.value = branding.headerText;
   inputSubtitleText.value = branding.subtitleText || '';
+  if (inputEventLabel) inputEventLabel.value = branding.eventLabel || '';
   inputFooterText.value = branding.footerText;
   inputFooterHashtag.value = branding.footerHashtag || '#SDE Eventos';
   inputFooterPhone.value = branding.footerPhone || '99-92-15-90-77';
@@ -379,6 +398,8 @@ async function startSession() {
   sessionId = null;
   sessionDirHandle = null;
   isCapturing = false;
+  setCaptureState('idle');
+  updateProgressDots(0);
   toggleIniciarButton(true);
   cameraHint.classList.remove('hidden');
   photoProgress.classList.add('hidden');
@@ -406,6 +427,7 @@ function captureFrame() {
 }
 
 async function runCountdown(seconds) {
+  setCaptureState('counting');
   countdownOverlay.classList.remove('hidden');
   countdownNumber.textContent = '';
   countdownPrep.classList.remove('hidden');
@@ -418,6 +440,7 @@ async function runCountdown(seconds) {
   }
   countdownOverlay.classList.add('hidden');
   countdownNumber.textContent = '';
+  setCaptureState('shooting');
 }
 
 async function showCapturePreview(dataUrl) {
@@ -451,6 +474,7 @@ function triggerFlash() {
 async function capturePhotoSequence() {
   if (isCapturing) return;
   isCapturing = true;
+  setCaptureState('counting');
   toggleIniciarButton(false);
   cameraHint.classList.add('hidden');
   photoProgress.classList.remove('hidden');
@@ -469,6 +493,7 @@ async function capturePhotoSequence() {
 
   for (let i = 0; i < PHOTO_COUNT; i++) {
     photoCurrent.textContent = String(i + 1);
+    updateProgressDots(i);
     await runCountdown(3);
     triggerFlash();
     const frame = captureFrame();
@@ -490,6 +515,7 @@ async function capturePhotoSequence() {
   }
 
   photoProgress.classList.add('hidden');
+  setCaptureState('done');
   await showCheer(finalCheerMessage);
 
   try {
@@ -623,6 +649,7 @@ function handleKeydown(e) {
 
 inputHeaderText.addEventListener('input', syncBrandingFromForm);
 inputSubtitleText?.addEventListener('input', syncBrandingFromForm);
+inputEventLabel?.addEventListener('input', syncBrandingFromForm);
 inputFooterText.addEventListener('input', syncBrandingFromForm);
 inputFooterHashtag.addEventListener('input', syncBrandingFromForm);
 inputFooterPhone.addEventListener('input', syncBrandingFromForm);

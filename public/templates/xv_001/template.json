@@ -3,9 +3,15 @@
   "name": "XV Años — Magia Rose Gold",
   "category": "xv_anos",
   "description": "Estilo moderno y elegante con detalles en oro rosado y fondo oscuro",
-  "canvas": { "width": 600, "height": 1800 },
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
   "elements": [
-    { "type": "background", "src": "bg_rosegold_stars.svg" },
+    {
+      "type": "background",
+      "src": "bg_rosegold_stars.svg"
+    },
     {
       "type": "photo",
       "id": "photo1",
@@ -36,7 +42,14 @@
       "fit": "cover",
       "radius": 12
     },
-    { "type": "overlay", "src": "overlay_sparkles.svg", "x": 0, "y": 0, "width": 600, "height": 1800 },
+    {
+      "type": "overlay",
+      "src": "overlay_sparkles.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
     {
       "type": "logo",
       "x": 300,
@@ -91,6 +104,17 @@
       "color": "#D4AF37",
       "align": "center",
       "weight": "bold"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1730,
+      "font": "Arial, sans-serif",
+      "size": 15,
+      "color": "#D4AF37",
+      "align": "center"
     }
   ]
 }

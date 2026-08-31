@@ -207,6 +207,20 @@
                     <div>
                       <label
                         class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                        for="input-event-label"
+                        >Etiqueta del evento (plantillas JSON)</label
+                      >
+                      <input
+                        class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                        type="text"
+                        id="input-event-label"
+                        placeholder="Vacío = usa el texto de la plantilla"
+                        maxlength="40"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
                         for="input-footer-text"
                         >Texto de Pie de Página</label
                       >
@@ -519,6 +533,15 @@
                 <div class="frame-badge frame-badge-left" aria-hidden="true">✦</div>
                 <div class="frame-badge frame-badge-right" aria-hidden="true">✦</div>
 
+                <!-- Marca de agua FIJA de SDE. El logo del panel es el del
+                     evento y solo va en la tira impresa, no aquí. -->
+                <img
+                  class="stage-watermark"
+                  src="/brand/logo-sde.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+
                 <div id="countdown-overlay" class="countdown-overlay hidden">
                   <p id="countdown-prep" class="countdown-prep hidden">¡Prepárate!</p>
                   <span id="countdown-number"></span>
@@ -535,7 +558,12 @@
                 <div id="flash-overlay" class="flash-overlay hidden"></div>
 
                 <div id="photo-progress" class="photo-progress hidden">
-                  Foto <span id="photo-current">1</span> de 3
+                  <span class="progress-dots" id="progress-dots" aria-hidden="true">
+                    <span class="progress-dot"></span>
+                    <span class="progress-dot"></span>
+                    <span class="progress-dot"></span>
+                  </span>
+                  <span>Foto <span id="photo-current">1</span> de 3</span>
                 </div>
 
                 <button

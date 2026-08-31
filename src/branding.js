@@ -5,6 +5,7 @@ export const defaultBranding = {
   stripTemplateId: 'clasico',
   headerText: 'SDE Eventos',
   subtitleText: 'Valeria',
+  eventLabel: '',
   footerText: '¡Gracias por celebrar con nosotros!',
   footerHashtag: '#SDE Eventos',
   footerPhone: '99-92-15-90-77',
