@@ -1,6 +1,7 @@
 import { loadImage } from './utils.js';
 import { getStripColors } from './themes.js';
 import { getStripTemplate } from './stripTemplates.js';
+import { renderJsonTemplateStrip } from './jsonTemplates/renderer.js';
 
 /** Impresión: hoja 10×15 cm, dos strips de 5×15 cm */
 const PRINT_DPI = 300;
@@ -487,6 +488,10 @@ const LAYOUTS = {
 };
 
 export async function renderStrip(capturedPhotos, branding) {
+  if (branding.templateMode === 'json' && branding.jsonTemplateId) {
+    return renderJsonTemplateStrip(capturedPhotos, branding, STRIP_WIDTH, STRIP_HEIGHT);
+  }
+
   const template = getStripTemplate(branding.stripTemplateId);
   const colors = resolveColors(branding, template);
   const canvas = document.createElement('canvas');

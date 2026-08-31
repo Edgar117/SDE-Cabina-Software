@@ -125,6 +125,56 @@ body.app-welcome #app {
   color: #715915;
 }
 
+.nav-link-active {
+  color: #715915;
+  font-weight: 700;
+  border-right: 4px solid #715915;
+  background: rgba(140, 113, 45, 0.1);
+}
+
+.nav-link-idle {
+  color: #665d52;
+  background: transparent;
+  border-right: 4px solid transparent;
+}
+
+.nav-link-idle:hover {
+  color: #715915;
+  background: rgba(140, 113, 45, 0.06);
+}
+
+.admin-panel.hidden {
+  display: none !important;
+}
+
+.config-strip-preview,
+.json-template-live-preview {
+  max-height: 360px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.config-strip-preview.hidden,
+.json-template-live-preview.hidden {
+  display: none;
+}
+
+.json-help-block {
+  margin: 0;
+  padding: 0.75rem;
+  background: #f5f3ee;
+  border-radius: 8px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+#config-preview-status.loading,
+#json-template-preview-status.loading {
+  color: #715915;
+}
+
 body.app-booth {
   overflow: hidden;
   height: 100%;

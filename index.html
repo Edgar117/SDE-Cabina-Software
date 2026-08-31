@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/src/welcome.css" />
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Dancing+Script:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -94,10 +94,10 @@
           </div>
           <ul class="flex flex-col gap-1 mt-2 flex-grow">
             <li>
-              <a
-                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-primary font-bold border-r-4 border-primary bg-primary-container/10 font-label-md text-label-md"
-                href="#"
-                aria-current="page"
+              <button
+                type="button"
+                data-admin-panel="config"
+                class="nav-link nav-link-active w-full flex items-center gap-2 px-3 py-2 rounded-r-full font-label-md text-label-md"
               >
                 <span
                   class="material-symbols-outlined"
@@ -105,37 +105,33 @@
                   >settings</span
                 >
                 Configuración
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-secondary opacity-50 cursor-not-allowed font-label-md text-label-md"
-                href="#"
-                aria-disabled="true"
-              >
-                <span class="material-symbols-outlined">photo_library</span>
-                Galería
-              </a>
-            </li>
-            <li>
-              <a
-                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-secondary opacity-50 cursor-not-allowed font-label-md text-label-md"
-                href="#"
-                aria-disabled="true"
+              <button
+                type="button"
+                data-admin-panel="templates"
+                class="nav-link nav-link-idle w-full flex items-center gap-2 px-3 py-2 rounded-r-full font-label-md text-label-md"
               >
                 <span class="material-symbols-outlined">dashboard_customize</span>
                 Plantillas
-              </a>
+              </button>
             </li>
             <li>
-              <a
+              <span
                 class="flex items-center gap-2 px-3 py-2 rounded-r-full text-secondary opacity-50 cursor-not-allowed font-label-md text-label-md"
-                href="#"
-                aria-disabled="true"
+              >
+                <span class="material-symbols-outlined">photo_library</span>
+                Galería
+              </span>
+            </li>
+            <li>
+              <span
+                class="flex items-center gap-2 px-3 py-2 rounded-r-full text-secondary opacity-50 cursor-not-allowed font-label-md text-label-md"
               >
                 <span class="material-symbols-outlined">analytics</span>
                 Estadísticas
-              </a>
+              </span>
             </li>
           </ul>
           <div class="mt-auto px-1 pb-3">
@@ -152,6 +148,7 @@
 
         <!-- Main Content -->
         <div class="flex-1 min-w-0 pt-14 md:pt-0 min-h-screen flex flex-col w-full overflow-x-hidden">
+          <div id="panel-config" class="admin-panel flex-1 flex flex-col min-w-0">
           <main class="flex-1 w-full min-w-0 px-margin-mobile md:px-5 py-4 md:py-5">
             <div class="mb-4 md:mb-6">
               <h2 class="font-headline-xl text-headline-xl text-primary font-bold">
@@ -190,6 +187,20 @@
                         type="text"
                         id="input-header-text"
                         placeholder="SDE Eventos"
+                        maxlength="40"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block font-label-sm text-label-sm text-on-surface-variant mb-1"
+                        for="input-subtitle-text"
+                        >Subtítulo / Nombre (plantillas JSON)</label
+                      >
+                      <input
+                        class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                        type="text"
+                        id="input-subtitle-text"
+                        placeholder="Valeria"
                         maxlength="40"
                       />
                     </div>
@@ -335,37 +346,6 @@
                     </div>
                   </div>
                 </section>
-
-                <!-- Plantillas strip -->
-                <section
-                  class="bg-surface-container-lowest rounded-xl p-4 md:p-5 soft-card border border-outline-variant/30"
-                >
-                  <div
-                    class="flex justify-between items-end mb-2 border-b border-surface-container-highest pb-2"
-                  >
-                    <h3
-                      class="font-label-md text-label-md text-secondary tracking-widest uppercase flex items-center gap-2"
-                    >
-                      <span class="material-symbols-outlined text-primary">style</span>
-                      Plantilla del Strip
-                    </h3>
-                  </div>
-                  <p id="strip-template-desc" class="font-label-sm text-label-sm text-outline italic mb-1"></p>
-                  <p
-                    id="strip-preview-status"
-                    class="font-label-sm text-label-sm text-on-surface-variant mb-4 min-h-[1em]"
-                  ></p>
-                  <div
-                    id="strip-template-grid"
-                    class="flex overflow-x-auto gap-3 pb-3 template-scroll snap-x min-w-0 max-w-full"
-                  ></div>
-                  <select
-                    id="select-strip-template"
-                    class="sr-only"
-                    tabindex="-1"
-                    aria-hidden="true"
-                  ></select>
-                </section>
               </div>
 
               <!-- Columna derecha -->
@@ -415,6 +395,20 @@
 
                 <div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/20">
                   <h4 class="font-label-sm text-label-sm text-secondary uppercase mb-3">
+                    Vista previa del strip
+                  </h4>
+                  <p id="config-preview-status" class="font-label-sm text-label-sm text-outline mb-3 min-h-[1em]"></p>
+                  <div class="bg-surface-container-high rounded-lg p-3 flex justify-center">
+                    <img
+                      id="config-strip-preview"
+                      class="config-strip-preview hidden"
+                      alt="Vista previa del strip configurado"
+                    />
+                  </div>
+                </div>
+
+                <div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/20">
+                  <h4 class="font-label-sm text-label-sm text-secondary uppercase mb-3">
                     Atajos Rápidos
                   </h4>
                   <ul class="space-y-3">
@@ -436,6 +430,89 @@
               </div>
             </div>
           </main>
+          </div>
+
+          <div id="panel-templates" class="admin-panel hidden flex-1 flex flex-col min-w-0">
+            <main class="flex-1 w-full min-w-0 px-margin-mobile md:px-5 py-4 md:py-5">
+              <div class="mb-4 md:mb-6">
+                <h2 class="font-headline-xl text-headline-xl text-primary font-bold">Plantillas JSON</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+                  Plantillas cargadas desde <code class="text-primary">public/templates/</code>. Cada carpeta
+                  incluye <code>template.json</code>, fondo, overlay y preview.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-4 min-w-0">
+                <section class="bg-surface-container-lowest rounded-xl p-4 md:p-5 soft-card border border-outline-variant/30 min-w-0">
+                  <h3 class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-4 flex items-center gap-2 border-b border-surface-container-highest pb-2">
+                    <span class="material-symbols-outlined text-primary">collections</span>
+                    Catálogo
+                  </h3>
+                  <div
+                    id="json-templates-grid"
+                    class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 min-w-0"
+                  ></div>
+                </section>
+
+                <aside class="min-w-0 flex flex-col gap-4">
+                  <section class="bg-surface-container-lowest rounded-xl p-4 md:p-5 soft-card border border-outline-variant/30">
+                    <h3 class="font-label-md text-label-md text-secondary tracking-widest uppercase mb-3">
+                      Detalle
+                    </h3>
+                    <p id="json-template-detail-name" class="font-headline-lg text-headline-lg text-on-surface mb-1">
+                      Selecciona una plantilla
+                    </p>
+                    <p id="json-template-detail-category" class="font-label-sm text-label-sm text-primary mb-2"></p>
+                    <p id="json-template-detail-desc" class="font-body-md text-body-md text-on-surface-variant mb-3"></p>
+                    <p id="json-template-detail-path" class="font-label-sm text-label-sm text-outline break-all mb-4"></p>
+                    <button
+                      type="button"
+                      id="btn-use-json-template"
+                      class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-full hover:opacity-90 transition-opacity"
+                    >
+                      Usar en el evento
+                    </button>
+                  </section>
+
+                  <section class="bg-surface-container-lowest rounded-xl p-4 md:p-5 soft-card border border-outline-variant/30">
+                    <div class="flex items-center justify-between mb-3">
+                      <h3 class="font-label-md text-label-md text-secondary tracking-widest uppercase">
+                        Vista previa
+                      </h3>
+                      <button
+                        type="button"
+                        id="btn-refresh-json-preview"
+                        class="font-label-sm text-label-sm text-primary hover:underline"
+                      >
+                        Actualizar
+                      </button>
+                    </div>
+                    <p id="json-template-preview-status" class="font-label-sm text-label-sm text-outline mb-3 min-h-[1em]"></p>
+                    <div class="bg-surface-container-high rounded-lg p-3 flex justify-center min-h-[280px]">
+                      <img
+                        id="json-template-live-preview"
+                        class="json-template-live-preview hidden"
+                        alt="Vista previa de plantilla"
+                      />
+                    </div>
+                  </section>
+
+                  <section class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/20">
+                    <h4 class="font-label-sm text-label-sm text-secondary uppercase mb-2">Estructura JSON</h4>
+                    <pre class="json-help-block font-label-sm text-label-sm text-on-surface-variant overflow-x-auto">{
+  "canvas": { "width": 600, "height": 1800 },
+  "elements": [
+    { "type": "background", "src": "background.jpg" },
+    { "type": "photo", "id": "photo1", ... },
+    { "type": "overlay", "src": "overlay.png" },
+    { "type": "text", "binding": "headerText" }
+  ]
+}</pre>
+                  </section>
+                </aside>
+              </div>
+            </main>
+          </div>
 
           <footer class="bg-surface mt-auto border-t border-outline-variant w-full min-w-0">
             <div

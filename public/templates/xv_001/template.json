@@ -1,0 +1,96 @@
+{
+  "id": "xv_001",
+  "name": "XV Años — Magia Rose Gold",
+  "category": "xv_anos",
+  "description": "Estilo moderno y elegante con detalles en oro rosado y fondo oscuro",
+  "canvas": { "width": 600, "height": 1800 },
+  "elements": [
+    { "type": "background", "src": "bg_rosegold_stars.svg" },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 30,
+      "y": 250,
+      "width": 540,
+      "height": 400,
+      "fit": "cover",
+      "radius": 12
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 30,
+      "y": 680,
+      "width": 540,
+      "height": 400,
+      "fit": "cover",
+      "radius": 12
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 30,
+      "y": 1110,
+      "width": 540,
+      "height": 400,
+      "fit": "cover",
+      "radius": 12
+    },
+    { "type": "overlay", "src": "overlay_sparkles.svg", "x": 0, "y": 0, "width": 600, "height": 1800 },
+    {
+      "type": "logo",
+      "x": 300,
+      "y": 24,
+      "width": 100,
+      "height": 52,
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "headerText",
+      "text": "Mis XV Años",
+      "x": 300,
+      "y": 100,
+      "font": "'Dancing Script', cursive",
+      "size": 52,
+      "color": "#D4AF37",
+      "align": "center",
+      "style": "normal"
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Valeria",
+      "x": 300,
+      "y": 170,
+      "font": "Arial, sans-serif",
+      "size": 28,
+      "color": "#FFF0F5",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 4
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "¡Gracias por hacer esta noche mágica!",
+      "x": 300,
+      "y": 1600,
+      "font": "Arial, sans-serif",
+      "size": 18,
+      "color": "#FADADD",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1680,
+      "font": "Arial, sans-serif",
+      "size": 16,
+      "color": "#D4AF37",
+      "align": "center",
+      "weight": "bold"
+    }
+  ]
+}

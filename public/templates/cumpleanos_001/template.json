@@ -1,0 +1,95 @@
+{
+  "id": "cumpleanos_001",
+  "name": "Cumpleaños — Elegante Dorado",
+  "category": "cumpleanos",
+  "description": "Fondo dorado con marco decorativo y 3 espacios para fotos",
+  "canvas": { "width": 600, "height": 1800 },
+  "elements": [
+    { "type": "background", "src": "background.svg" },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 55,
+      "y": 260,
+      "width": 490,
+      "height": 400,
+      "fit": "cover",
+      "radius": 10
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 55,
+      "y": 690,
+      "width": 490,
+      "height": 400,
+      "fit": "cover",
+      "radius": 10
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 55,
+      "y": 1120,
+      "width": 490,
+      "height": 400,
+      "fit": "cover",
+      "radius": 10
+    },
+    { "type": "overlay", "src": "overlay.svg", "x": 0, "y": 0, "width": 600, "height": 1800 },
+    {
+      "type": "text",
+      "binding": "headerText",
+      "text": "¡Feliz Cumpleaños!",
+      "x": 300,
+      "y": 130,
+      "font": "Georgia, serif",
+      "size": 40,
+      "color": "#8c712d",
+      "align": "center",
+      "weight": "bold"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "¡Gracias por festejar conmigo!",
+      "x": 300,
+      "y": 1620,
+      "font": "Georgia, serif",
+      "size": 20,
+      "color": "#5a4300",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerHashtag",
+      "text": "#MiCumple",
+      "x": 300,
+      "y": 1660,
+      "font": "Georgia, serif",
+      "size": 18,
+      "color": "#715915",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "x": 300,
+      "y": 1695,
+      "font": "Georgia, serif",
+      "size": 16,
+      "color": "#715915",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1735,
+      "font": "Georgia, serif",
+      "size": 15,
+      "color": "#8c712d",
+      "align": "center"
+    }
+  ]
+}

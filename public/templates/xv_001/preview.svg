@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="600" viewBox="0 0 600 1800">
+  <rect width="600" height="1800" fill="#1a0a14"/>
+  <rect x="30" y="250" width="540" height="400" fill="#333" rx="12"/>
+  <rect x="30" y="680" width="540" height="400" fill="#444" rx="12"/>
+  <rect x="30" y="1110" width="540" height="400" fill="#555" rx="12"/>
+  <text x="300" y="100" text-anchor="middle" font-family="cursive" font-size="48" fill="#D4AF37">Mis XV Años</text>
+  <text x="300" y="170" text-anchor="middle" font-family="Arial" font-size="26" fill="#FFF0F5" font-weight="bold">Valeria</text>
+</svg>

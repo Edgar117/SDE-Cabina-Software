@@ -1,0 +1,95 @@
+{
+  "id": "boda_001",
+  "name": "Boda — Flores Románticas",
+  "category": "boda",
+  "description": "Rosa suave con marco floral y tipografía elegante",
+  "canvas": { "width": 600, "height": 1800 },
+  "elements": [
+    { "type": "background", "src": "background.svg" },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 60,
+      "y": 270,
+      "width": 480,
+      "height": 390,
+      "fit": "cover",
+      "radius": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 60,
+      "y": 690,
+      "width": 480,
+      "height": 390,
+      "fit": "cover",
+      "radius": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 60,
+      "y": 1110,
+      "width": 480,
+      "height": 390,
+      "fit": "cover",
+      "radius": 4
+    },
+    { "type": "overlay", "src": "overlay.svg", "x": 0, "y": 0, "width": 600, "height": 1800 },
+    {
+      "type": "text",
+      "binding": "headerText",
+      "text": "Nuestra Boda",
+      "x": 300,
+      "y": 140,
+      "font": "Georgia, serif",
+      "size": 38,
+      "color": "#8b5a6a",
+      "align": "center",
+      "style": "italic"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "Con amor, gracias por acompañarnos",
+      "x": 300,
+      "y": 1610,
+      "font": "Georgia, serif",
+      "size": 18,
+      "color": "#6b4a5a",
+      "align": "center",
+      "style": "italic"
+    },
+    {
+      "type": "text",
+      "binding": "footerHashtag",
+      "x": 300,
+      "y": 1655,
+      "font": "Georgia, serif",
+      "size": 17,
+      "color": "#9b6a7a",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "x": 300,
+      "y": 1690,
+      "font": "Georgia, serif",
+      "size": 16,
+      "color": "#7a5a6a",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1735,
+      "font": "Georgia, serif",
+      "size": 15,
+      "color": "#8b6a7a",
+      "align": "center"
+    }
+  ]
+}

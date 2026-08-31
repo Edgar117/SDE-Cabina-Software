@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "cumpleanos_001",
+      "folder": "cumpleanos_001",
+      "name": "Cumpleaños — Elegante Dorado",
+      "category": "cumpleanos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "boda_001",
+      "folder": "boda_001",
+      "name": "Boda — Flores Románticas",
+      "category": "boda",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "xv_001",
+      "folder": "xv_001",
+      "name": "XV Años — Magia Rose Gold",
+      "category": "xv_anos",
+      "preview": "preview.svg"
+    }
+  ]
+}

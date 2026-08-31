@@ -19,8 +19,8 @@ import {
   downloadBlob,
 } from './utils.js';
 import { themes, getTheme, applyTheme } from './themes.js';
-import { listStripTemplates, getStripTemplate } from './stripTemplates.js';
-import { renderAllStripPreviews } from './stripPreview.js';
+import { renderActiveTemplatePreview } from './stripPreview.js';
+import { initTemplatesPanel } from './templatesPanel.js';
 
 const PHOTO_COUNT = 3;
 const COUNTDOWN_STEP_MS = 2000;
@@ -54,21 +54,22 @@ const folderStatus = document.getElementById('folder-status');
 const saveStatus = document.getElementById('save-status');
 const individualPhotos = document.getElementById('individual-photos');
 const inputHeaderText = document.getElementById('input-header-text');
+const inputSubtitleText = document.getElementById('input-subtitle-text');
 const inputFooterText = document.getElementById('input-footer-text');
 const inputFooterHashtag = document.getElementById('input-footer-hashtag');
 const inputFooterPhone = document.getElementById('input-footer-phone');
 const selectTheme = document.getElementById('select-theme');
-const stripTemplateSelect = document.getElementById('select-strip-template');
-const stripTemplateDesc = document.getElementById('strip-template-desc');
-const stripTemplateGrid = document.getElementById('strip-template-grid');
-const stripPreviewStatus = document.getElementById('strip-preview-status');
 const inputLogo = document.getElementById('input-logo');
 const logoPreview = document.getElementById('logo-preview');
 const inputStripBackground = document.getElementById('input-strip-background');
 const stripBgPreview = document.getElementById('strip-bg-preview');
 const stripBgPreviewWrap = document.getElementById('strip-bg-preview-wrap');
 const btnRemoveStripBg = document.getElementById('btn-remove-strip-bg');
+const configStripPreview = document.getElementById('config-strip-preview');
+const configPreviewStatus = document.getElementById('config-preview-status');
 const photoRail = document.getElementById('photo-rail');
+
+let templatesPanelApi = null;
 
 let mediaStream = null;
 let capturedPhotos = [];
@@ -117,6 +118,7 @@ function updateStripBackgroundPreview() {
 
 function syncBrandingFromForm(refreshPreviews = true) {
   branding.headerText = inputHeaderText.value.trim() || 'SDE Eventos';
+  branding.subtitleText = inputSubtitleText?.value.trim() || '';
   branding.footerText = inputFooterText.value.trim() || '¡Gracias por celebrar con nosotros!';
   branding.footerHashtag = inputFooterHashtag.value.trim() || '#SDE Eventos';
   branding.footerPhone = inputFooterPhone.value.trim() || '99-92-15-90-77';
@@ -125,180 +127,44 @@ function syncBrandingFromForm(refreshPreviews = true) {
     const theme = getTheme(branding.themeId);
     branding.themeId = theme.id;
   }
-  if (stripTemplateSelect?.value) {
-    branding.stripTemplateId = stripTemplateSelect.value;
-  }
   saveBranding(branding);
   updateStageBranding();
-  updateStripTemplateDesc();
   if (refreshPreviews) scheduleStripPreviewRefresh();
+  templatesPanelApi?.scheduleLivePreview();
 }
 
 let previewRefreshTimer = null;
-let previewGeneration = 0;
 
-function chooseStripTemplate(templateId) {
-  branding.stripTemplateId = templateId;
-  if (stripTemplateSelect) stripTemplateSelect.value = templateId;
-  saveBranding(branding);
-  updateStripTemplateDesc();
-  highlightSelectedStripCard();
-}
-
-function highlightSelectedStripCard() {
-  if (!stripTemplateGrid) return;
-  stripTemplateGrid.querySelectorAll('.strip-template-card').forEach((card) => {
-    const selected = card.dataset.templateId === branding.stripTemplateId;
-    card.querySelector('.strip-template-highlight')?.classList.toggle('hidden', !selected);
-    const check = card.querySelector('.strip-template-check');
-    check?.classList.toggle('hidden', !selected);
-    check?.classList.toggle('flex', selected);
-    const inner = card.querySelector('.strip-template-inner');
-    inner?.classList.toggle('border-2', selected);
-    inner?.classList.toggle('border-primary', selected);
-    inner?.classList.toggle('border', !selected);
-    inner?.classList.toggle('border-outline-variant', !selected);
-    const name = card.querySelector('.strip-template-name');
-    name?.classList.toggle('text-primary', selected);
-    name?.classList.toggle('font-bold', selected);
-    name?.classList.toggle('text-on-surface-variant', !selected);
-  });
-}
-
-function buildStripTemplateGrid() {
-  if (!stripTemplateGrid) return;
-  stripTemplateGrid.innerHTML = '';
-  listStripTemplates().forEach((tpl) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className =
-      'strip-template-card flex-none w-32 snap-start group cursor-pointer relative text-left';
-    btn.dataset.templateId = tpl.id;
-    btn.title = tpl.description || tpl.name;
-
-    const highlight = document.createElement('div');
-    highlight.className =
-      'strip-template-highlight absolute inset-0 bg-primary/10 rounded-lg scale-[1.03] transition-transform z-0 hidden';
-
-    const inner = document.createElement('div');
-    inner.className =
-      'strip-template-inner relative z-10 bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden h-48 flex flex-col items-center p-2 group-hover:border-primary/50 group-hover:shadow-md transition-all';
-
-    const check = document.createElement('div');
-    check.className =
-      'strip-template-check absolute top-2 right-2 bg-primary text-on-primary rounded-full w-6 h-6 items-center justify-center z-20 shadow-sm hidden';
-    check.innerHTML =
-      '<span class="material-symbols-outlined text-sm" style="font-variation-settings: \'FILL\' 1">check</span>';
-
-    const skeleton = document.createElement('div');
-    skeleton.className = 'strip-thumb-skeleton';
-
-    const img = document.createElement('img');
-    img.className = 'w-full h-full object-contain';
-    img.alt = `Vista previa ${tpl.name}`;
-    img.hidden = true;
-
-    const label = document.createElement('p');
-    label.className =
-      'strip-template-name text-center font-label-sm text-label-sm text-on-surface-variant mt-3 group-hover:text-primary transition-colors';
-    label.textContent = tpl.name;
-
-    inner.appendChild(check);
-    inner.appendChild(skeleton);
-    inner.appendChild(img);
-    btn.appendChild(highlight);
-    btn.appendChild(inner);
-    btn.appendChild(label);
-
-    btn.addEventListener('click', () => {
-      chooseStripTemplate(tpl.id);
-    });
-
-    stripTemplateGrid.appendChild(btn);
-  });
-  highlightSelectedStripCard();
-}
-
-function setPreviewImage(templateId, dataUrl) {
-  if (!stripTemplateGrid) return;
-  const card = stripTemplateGrid.querySelector(`[data-template-id="${templateId}"]`);
-  if (!card) return;
-  const img = card.querySelector('img');
-  const skeleton = card.querySelector('.strip-thumb-skeleton');
-  if (img) {
-    img.src = dataUrl;
-    img.hidden = false;
+async function updateConfigStripPreview() {
+  if (!configStripPreview) return;
+  if (configPreviewStatus) {
+    configPreviewStatus.textContent = 'Generando vista previa...';
+    configPreviewStatus.classList.add('loading');
   }
-  if (skeleton) skeleton.remove();
+  try {
+    const dataUrl = await renderActiveTemplatePreview(branding);
+    configStripPreview.src = dataUrl;
+    configStripPreview.classList.remove('hidden');
+    if (configPreviewStatus) {
+      configPreviewStatus.textContent = 'Vista previa — plantilla JSON activa';
+    }
+  } catch (err) {
+    console.error(err);
+    if (configPreviewStatus) configPreviewStatus.textContent = 'No se pudo generar la vista previa';
+  } finally {
+    configPreviewStatus?.classList.remove('loading');
+  }
 }
 
 async function refreshStripPreviews() {
-  if (!stripTemplateGrid) return;
-  const generation = ++previewGeneration;
-
-  if (stripPreviewStatus) {
-    stripPreviewStatus.textContent = 'Generando vistas previa...';
-    stripPreviewStatus.classList.add('loading');
-  }
-
-  stripTemplateGrid.querySelectorAll('.strip-template-card').forEach((card) => {
-    const inner = card.querySelector('.strip-template-inner');
-    const img = card.querySelector('img');
-    if (img) {
-      img.hidden = true;
-      img.removeAttribute('src');
-    }
-    if (inner && !inner.querySelector('.strip-thumb-skeleton')) {
-      const skeleton = document.createElement('div');
-      skeleton.className = 'strip-thumb-skeleton';
-      const check = inner.querySelector('.strip-template-check');
-      if (check?.nextSibling) {
-        inner.insertBefore(skeleton, check.nextSibling);
-      } else {
-        inner.appendChild(skeleton);
-      }
-    }
-  });
-
   syncBrandingFromForm(false);
-
-  await renderAllStripPreviews(branding, (templateId, dataUrl) => {
-    if (generation !== previewGeneration) return;
-    setPreviewImage(templateId, dataUrl);
-  });
-
-  if (generation !== previewGeneration) return;
-
-  if (stripPreviewStatus) {
-    stripPreviewStatus.textContent = 'Clic en una plantilla para seleccionarla';
-    stripPreviewStatus.classList.remove('loading');
-  }
+  await updateConfigStripPreview();
+  templatesPanelApi?.scheduleLivePreview();
 }
 
 function scheduleStripPreviewRefresh() {
   clearTimeout(previewRefreshTimer);
   previewRefreshTimer = setTimeout(() => refreshStripPreviews(), 600);
-}
-
-function updateStripTemplateDesc() {
-  if (!stripTemplateDesc) return;
-  const tpl = getStripTemplate(branding.stripTemplateId || 'clasico');
-  stripTemplateDesc.textContent = tpl.description || '';
-}
-
-function populateStripTemplateSelect() {
-  if (!stripTemplateSelect) return;
-  stripTemplateSelect.innerHTML = '';
-  listStripTemplates().forEach((tpl) => {
-    const opt = document.createElement('option');
-    opt.value = tpl.id;
-    opt.textContent = tpl.name;
-    stripTemplateSelect.appendChild(opt);
-  });
-  stripTemplateSelect.value = branding.stripTemplateId || 'clasico';
-  updateStripTemplateDesc();
-  buildStripTemplateGrid();
-  refreshStripPreviews();
 }
 
 function applyThemeFromSelect(updateTexts = false) {
@@ -382,9 +248,12 @@ function toggleIniciarButton(show) {
 }
 
 function applyBrandingToForm() {
+  if (!branding.templateMode) branding.templateMode = 'json';
+  if (!branding.jsonTemplateId) branding.jsonTemplateId = 'xv_001';
   populateThemeSelect();
-  populateStripTemplateSelect();
+  scheduleStripPreviewRefresh();
   inputHeaderText.value = branding.headerText;
+  inputSubtitleText.value = branding.subtitleText || '';
   inputFooterText.value = branding.footerText;
   inputFooterHashtag.value = branding.footerHashtag || '#SDE Eventos';
   inputFooterPhone.value = branding.footerPhone || '99-92-15-90-77';
@@ -769,6 +638,7 @@ function handleKeydown(e) {
 }
 
 inputHeaderText.addEventListener('input', syncBrandingFromForm);
+inputSubtitleText?.addEventListener('input', syncBrandingFromForm);
 inputFooterText.addEventListener('input', syncBrandingFromForm);
 inputFooterHashtag.addEventListener('input', syncBrandingFromForm);
 inputFooterPhone.addEventListener('input', syncBrandingFromForm);
@@ -778,20 +648,17 @@ selectTheme?.addEventListener('change', () => {
   syncBrandingFromForm();
 });
 
-stripTemplateSelect?.addEventListener('change', () => {
-  chooseStripTemplate(stripTemplateSelect.value);
-});
-
 inputLogo.addEventListener('change', () => {
   const file = inputLogo.files?.[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = () => {
+    reader.onload = () => {
     branding.logoDataUrl = reader.result;
     logoPreview.src = branding.logoDataUrl;
     logoPreview.classList.remove('hidden');
     saveBranding(branding);
     scheduleStripPreviewRefresh();
+    templatesPanelApi?.scheduleLivePreview();
   };
   reader.readAsDataURL(file);
 });
@@ -833,6 +700,18 @@ window.addEventListener('load', () => {
   updateStageBranding();
   clearPhotoRail();
   updateFolderStatus();
+
+  templatesPanelApi = initTemplatesPanel({
+    branding,
+    saveBranding,
+    onTemplateApplied: (templateId) => {
+      branding.templateMode = 'json';
+      branding.jsonTemplateId = templateId;
+      scheduleStripPreviewRefresh();
+    },
+    scheduleStripPreviewRefresh,
+  });
+
   window.focus();
   document.body.focus();
 });

@@ -4,11 +4,14 @@ export const defaultBranding = {
   themeId: 'teatro',
   stripTemplateId: 'clasico',
   headerText: 'SDE Eventos',
+  subtitleText: 'Valeria',
   footerText: '¡Gracias por celebrar con nosotros!',
   footerHashtag: '#SDE Eventos',
   footerPhone: '99-92-15-90-77',
   logoDataUrl: null,
   stripBackgroundDataUrl: null,
+  jsonTemplateId: 'xv_001',
+  templateMode: 'json',
   accentColor: '#d4af37',
 };
 
