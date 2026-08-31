@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="600" viewBox="0 0 600 1800">
+  <rect width="600" height="1800" fill="#FEFEFE"/>
+  <rect x="42" y="176" width="516" height="348" fill="#ECECEC" stroke="#C9A227" stroke-width="4"/>
+  <rect x="42" y="551" width="516" height="348" fill="#E0E0E0" stroke="#C9A227" stroke-width="4"/>
+  <rect x="42" y="926" width="516" height="348" fill="#D4D4D4" stroke="#C9A227" stroke-width="4"/>
+  <circle cx="300" cy="70" r="22" fill="#D42B3A" opacity="0.85"/>
+  <circle cx="260" cy="85" r="16" fill="#E85A5A" opacity="0.8"/>
+  <circle cx="340" cy="85" r="16" fill="#E85A5A" opacity="0.8"/>
+  <text x="300" y="1405" text-anchor="middle" font-family="cursive" font-size="40" fill="#9B1B30">Nombre</text>
+  <text x="300" y="1490" text-anchor="middle" font-family="Georgia,serif" font-size="28" fill="#6E0F1F" font-weight="bold">QUINCEAÑERA</text>
+  <text x="300" y="1560" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#8B1530">Fecha</text>
+</svg>

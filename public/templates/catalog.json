@@ -21,6 +21,13 @@
       "name": "XV Años — Magia Rose Gold",
       "category": "xv_anos",
       "preview": "preview.svg"
+    },
+    {
+      "id": "xv_002",
+      "folder": "xv_002",
+      "name": "XV Años — Rosas Rojas",
+      "category": "xv_anos",
+      "preview": "preview.svg"
     }
   ]
 }

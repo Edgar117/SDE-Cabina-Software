@@ -88,8 +88,7 @@ body.app-welcome #app {
   border: 1px solid #d0c5b4;
 }
 
-#input-logo,
-#input-strip-background {
+#input-logo {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -98,23 +97,6 @@ body.app-welcome #app {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-}
-
-.strip-bg-preview-wrap {
-  margin-top: 0.75rem;
-}
-
-.strip-bg-preview {
-  width: 100%;
-  max-height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #d0c5b4;
-  display: block;
-}
-
-.strip-bg-preview-wrap.hidden {
-  display: none;
 }
 
 .folder-status.ready {

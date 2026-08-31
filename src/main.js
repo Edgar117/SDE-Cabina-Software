@@ -61,10 +61,6 @@ const inputFooterPhone = document.getElementById('input-footer-phone');
 const selectTheme = document.getElementById('select-theme');
 const inputLogo = document.getElementById('input-logo');
 const logoPreview = document.getElementById('logo-preview');
-const inputStripBackground = document.getElementById('input-strip-background');
-const stripBgPreview = document.getElementById('strip-bg-preview');
-const stripBgPreviewWrap = document.getElementById('strip-bg-preview-wrap');
-const btnRemoveStripBg = document.getElementById('btn-remove-strip-bg');
 const configStripPreview = document.getElementById('config-strip-preview');
 const configPreviewStatus = document.getElementById('config-preview-status');
 const photoRail = document.getElementById('photo-rail');
@@ -102,17 +98,6 @@ function updateFolderStatus() {
     folderStatus.textContent =
       'Sin carpeta: las fotos solo se descargan al final en ZIP/PDF.';
     folderStatus.classList.remove('ready');
-  }
-}
-
-function updateStripBackgroundPreview() {
-  if (!stripBgPreview || !stripBgPreviewWrap) return;
-  if (branding.stripBackgroundDataUrl) {
-    stripBgPreview.src = branding.stripBackgroundDataUrl;
-    stripBgPreviewWrap.classList.remove('hidden');
-  } else {
-    stripBgPreview.removeAttribute('src');
-    stripBgPreviewWrap.classList.add('hidden');
   }
 }
 
@@ -265,7 +250,6 @@ function applyBrandingToForm() {
   } else {
     logoPreview.classList.add('hidden');
   }
-  updateStripBackgroundPreview();
 }
 
 async function pickOutputFolder() {
@@ -661,27 +645,6 @@ inputLogo.addEventListener('change', () => {
     templatesPanelApi?.scheduleLivePreview();
   };
   reader.readAsDataURL(file);
-});
-
-inputStripBackground?.addEventListener('change', () => {
-  const file = inputStripBackground.files?.[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    branding.stripBackgroundDataUrl = reader.result;
-    saveBranding(branding);
-    updateStripBackgroundPreview();
-    scheduleStripPreviewRefresh();
-  };
-  reader.readAsDataURL(file);
-});
-
-btnRemoveStripBg?.addEventListener('click', () => {
-  branding.stripBackgroundDataUrl = null;
-  if (inputStripBackground) inputStripBackground.value = '';
-  saveBranding(branding);
-  updateStripBackgroundPreview();
-  scheduleStripPreviewRefresh();
 });
 
 document.getElementById('btn-start-welcome').addEventListener('click', () => startSession());

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="1800" viewBox="0 0 600 1800">
+  <defs>
+    <radialGradient id="sparkle" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E8C547" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#E8C547" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="petalLight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F06B6B"/>
+      <stop offset="100%" stop-color="#D42B3A"/>
+    </linearGradient>
+    <linearGradient id="petalMid" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E04555"/>
+      <stop offset="100%" stop-color="#B81830"/>
+    </linearGradient>
+    <linearGradient id="petalDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A81C32"/>
+      <stop offset="100%" stop-color="#6E0F1F"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3A8B5C"/>
+      <stop offset="100%" stop-color="#1A4D35"/>
+    </linearGradient>
+
+    <!-- Rosa roja reutilizable -->
+    <g id="rose">
+      <g fill="url(#petalLight)" opacity="0.95">
+        <ellipse cx="0" cy="-9" rx="10" ry="14" transform="rotate(0)"/>
+        <ellipse cx="0" cy="-9" rx="10" ry="14" transform="rotate(51)"/>
+        <ellipse cx="0" cy="-9" rx="10" ry="14" transform="rotate(102)"/>
+        <ellipse cx="0" cy="-9" rx="10" ry="14" transform="rotate(153)"/>
+        <ellipse cx="0" cy="-9" rx="10" ry="14" transform="rotate(204)"/>
+        <ellipse cx="0" cy="-9" rx="10" ry="14" transform="rotate(255)"/>
+        <ellipse cx="0" cy="-9" rx="10" ry="14" transform="rotate(306)"/>
+      </g>
+      <g fill="url(#petalMid)">
+        <ellipse cx="0" cy="-6" rx="7" ry="10" transform="rotate(25)"/>
+        <ellipse cx="0" cy="-6" rx="7" ry="10" transform="rotate(85)"/>
+        <ellipse cx="0" cy="-6" rx="7" ry="10" transform="rotate(145)"/>
+        <ellipse cx="0" cy="-6" rx="7" ry="10" transform="rotate(205)"/>
+        <ellipse cx="0" cy="-6" rx="7" ry="10" transform="rotate(265)"/>
+        <ellipse cx="0" cy="-6" rx="7" ry="10" transform="rotate(325)"/>
+      </g>
+      <circle cx="0" cy="0" r="5.5" fill="url(#petalDark)"/>
+      <path d="M0,1 C2,-3 4,-6 0,-9 C-4,-6 -2,-3 0,1Z" fill="#5A0818" opacity="0.75"/>
+    </g>
+
+    <g id="leaf">
+      <path d="M0,0 C12,-8 22,0 12,18 C6,10 0,0 0,0Z" fill="url(#leafGrad)"/>
+    </g>
+  </defs>
+
+  <rect width="600" height="1800" fill="#FEFEFE"/>
+
+  <!-- Brillo dorado sutil -->
+  <g fill="url(#sparkle)" opacity="0.5">
+    <circle cx="55" cy="30" r="1.2"/><circle cx="140" cy="18" r="0.9"/><circle cx="230" cy="42" r="1.1"/>
+    <circle cx="320" cy="15" r="1.3"/><circle cx="410" cy="35" r="1"/><circle cx="500" cy="22" r="1.2"/>
+    <circle cx="560" cy="48" r="0.8"/><circle cx="175" cy="1650" r="1"/><circle cx="320" cy="1720" r="1.1"/>
+    <circle cx="95" cy="1760" r="0.9"/><circle cx="460" cy="1745" r="1"/>
+  </g>
+
+  <!-- Guirnalda superior de rosas -->
+  <g id="top-garland">
+    <use href="#leaf" transform="translate(45,118) scale(1.8) rotate(-40)"/>
+    <use href="#leaf" transform="translate(75,95) scale(2) rotate(-20)"/>
+    <use href="#rose" transform="translate(95,88) scale(1.35)"/>
+    <use href="#leaf" transform="translate(130,78) scale(1.9) rotate(5)"/>
+    <use href="#rose" transform="translate(165,68) scale(1.55)"/>
+    <use href="#leaf" transform="translate(200,62) scale(2.1) rotate(15)"/>
+    <use href="#rose" transform="translate(235,55) scale(1.7)"/>
+    <use href="#leaf" transform="translate(270,50) scale(2.2) rotate(0)"/>
+    <use href="#rose" transform="translate(300,48) scale(1.85)"/>
+    <use href="#leaf" transform="translate(330,50) scale(2.2) rotate(-5)"/>
+    <use href="#rose" transform="translate(365,55) scale(1.7)"/>
+    <use href="#leaf" transform="translate(400,62) scale(2.1) rotate(-15)"/>
+    <use href="#rose" transform="translate(435,68) scale(1.55)"/>
+    <use href="#leaf" transform="translate(470,78) scale(1.9) rotate(-5)"/>
+    <use href="#rose" transform="translate(505,88) scale(1.35)"/>
+    <use href="#leaf" transform="translate(530,95) scale(2) rotate(20)"/>
+    <use href="#leaf" transform="translate(555,118) scale(1.8) rotate(40)"/>
+    <use href="#rose" transform="translate(55,105) scale(1.1)"/>
+    <use href="#rose" transform="translate(545,105) scale(1.1)"/>
+  </g>
+
+  <!-- Racimo inferior izquierdo -->
+  <g id="bottom-left-roses">
+    <use href="#leaf" transform="translate(25,1680) scale(2.4) rotate(-55)"/>
+    <use href="#leaf" transform="translate(55,1710) scale(2.8) rotate(-25)"/>
+    <use href="#rose" transform="translate(75,1695) scale(1.6)"/>
+    <use href="#leaf" transform="translate(100,1740) scale(2.2) rotate(10)"/>
+    <use href="#rose" transform="translate(130,1720) scale(1.45)"/>
+    <use href="#rose" transform="translate(55,1760) scale(1.25)"/>
+    <use href="#leaf" transform="translate(40,1785) scale(2) rotate(-35)"/>
+    <use href="#leaf" transform="translate(155,1775) scale(1.8) rotate(30)"/>
+  </g>
+
+  <!-- Racimo inferior derecho (detrás del texto) -->
+  <g id="bottom-right-roses" opacity="0.92">
+    <use href="#leaf" transform="translate(520,1700) scale(2.2) rotate(45)"/>
+    <use href="#rose" transform="translate(490,1720) scale(1.3)"/>
+    <use href="#leaf" transform="translate(555,1745) scale(2) rotate(60)"/>
+    <use href="#rose" transform="translate(530,1765) scale(1.15)"/>
+  </g>
+</svg>

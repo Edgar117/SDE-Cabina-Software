@@ -1,0 +1,101 @@
+{
+  "id": "xv_002",
+  "name": "XV Años — Rosas Rojas",
+  "category": "xv_anos",
+  "description": "Fondo blanco con rosas rojas, marcos dorados, corona y mariposas",
+  "canvas": { "width": 600, "height": 1800 },
+  "elements": [
+    { "type": "background", "src": "bg_white_emerald.svg" },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 42,
+      "y": 172,
+      "width": 516,
+      "height": 356,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A227",
+      "borderWidth": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 42,
+      "y": 547,
+      "width": 516,
+      "height": 356,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A227",
+      "borderWidth": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 42,
+      "y": 922,
+      "width": 516,
+      "height": 356,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A227",
+      "borderWidth": 4
+    },
+    { "type": "overlay", "src": "overlay_decor.svg", "x": 0, "y": 0, "width": 600, "height": 1800 },
+    {
+      "type": "logo",
+      "x": 300,
+      "y": 128,
+      "width": 110,
+      "height": 50,
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Valeria",
+      "x": 300,
+      "y": 1395,
+      "font": "'Dancing Script', cursive",
+      "size": 56,
+      "color": "#9B1B30",
+      "align": "center",
+      "weight": "bold"
+    },
+    {
+      "type": "text",
+      "binding": "headerText",
+      "text": "QUINCEAÑERA",
+      "x": 300,
+      "y": 1480,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 34,
+      "color": "#6E0F1F",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 6
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1550,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#8B1530",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1620,
+      "font": "Arial, sans-serif",
+      "size": 14,
+      "color": "#A81C32",
+      "align": "center"
+    }
+  ]
+}

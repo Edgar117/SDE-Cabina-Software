@@ -100,7 +100,7 @@ async function drawLogoElement(ctx, element, context, branding) {
     const sx = (v) => scale(v, context.srcW, context.outW);
     const sy = (v) => scale(v, context.srcH, context.outH);
 
-    const config = element || { x: 300, y: 28, width: 100, height: 48, align: 'center' };
+    const config = element || { x: 300, y: 20, width: 140, height: 68, align: 'center' };
     const anchorX = sx(config.x ?? 300);
     const y = sy(config.y ?? 28);
     let w = sx(config.width ?? 100);
@@ -160,6 +160,12 @@ async function drawElement(ctx, element, context) {
 
       if (!photo) {
         drawPhotoPlaceholder(ctx, x, y, w, h, radius);
+        if (element.border) {
+          ctx.strokeStyle = element.border;
+          ctx.lineWidth = sx(element.borderWidth || 3);
+          roundRect(ctx, x, y, w, h, radius);
+          ctx.stroke();
+        }
         break;
       }
 
@@ -198,7 +204,7 @@ async function drawElement(ctx, element, context) {
       break;
     }
     case 'logo':
-      break;
+    case 'text':
       break;
     default:
       break;
