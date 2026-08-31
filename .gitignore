@@ -52,3 +52,7 @@ ehthumbs.db
 output/
 capturas/
 sesiones/
+
+# Python (tools/)
+__pycache__/
+*.pyc
