@@ -1,0 +1,13 @@
+/* Fuentes empaquetadas localmente (antes se cargaban desde fonts.googleapis.com).
+   Así la app funciona sin internet en el lugar del evento. */
+@import '@fontsource/manrope/latin-400.css';
+@import '@fontsource/manrope/latin-500.css';
+@import '@fontsource/manrope/latin-600.css';
+@import '@fontsource/manrope/latin-700.css';
+@import '@fontsource/playfair-display/latin-400.css';
+@import '@fontsource/playfair-display/latin-500.css';
+@import '@fontsource/playfair-display/latin-600.css';
+@import '@fontsource/playfair-display/latin-700.css';
+@import '@fontsource/dancing-script/latin-400.css';
+@import '@fontsource/dancing-script/latin-700.css';
+@import 'material-symbols/outlined.css';

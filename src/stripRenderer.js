@@ -519,9 +519,9 @@ export async function renderPrintSheet(stripDataUrl) {
   ctx.drawImage(stripImg, 0, 0, STRIP_WIDTH, STRIP_HEIGHT);
   ctx.drawImage(stripImg, STRIP_WIDTH, 0, STRIP_WIDTH, STRIP_HEIGHT);
 
-  ctx.strokeStyle = '#cccccc';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([12, 8]);
+  ctx.strokeStyle = '#888888';
+  ctx.lineWidth = 3;
+  ctx.setLineDash([18, 10]);
   ctx.beginPath();
   ctx.moveTo(STRIP_WIDTH, 0);
   ctx.lineTo(STRIP_WIDTH, PRINT_PAGE_HEIGHT);
