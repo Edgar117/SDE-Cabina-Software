@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="1800" viewBox="0 0 600 1800">
+
+  <defs><linearGradient id="ogold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D3B79C"/><stop offset="45%" stop-color="#A78466"/><stop offset="100%" stop-color="#6F5540"/></linearGradient></defs>
+  <g><rect x="35" y="140" width="530" height="372" fill="none" stroke="url(#ogold)" stroke-width="2.2" opacity="0.9"/><rect x="35" y="512" width="530" height="372" fill="none" stroke="url(#ogold)" stroke-width="2.2" opacity="0.9"/><rect x="35" y="884" width="530" height="372" fill="none" stroke="url(#ogold)" stroke-width="2.2" opacity="0.9"/></g>
+  <g transform="translate(300,58) scale(1.1)" fill="none" stroke="url(#ogold)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M0,-20 L60,4 L0,28 L-60,4Z"/><path d="M-31,14 L-31,36 C-31,49 31,49 31,36 L31,14"/><circle cx="0" cy="4" r="3.4" fill="url(#ogold)"/><path d="M60,4 C62,14 60,22 58,28"/><g transform="translate(58,28)"><circle cx="0" cy="4" r="4.4" fill="url(#ogold)" stroke="none"/><g stroke-width="2.16"><path d="M-2.8,8 L-8,26"/><path d="M-1.4,8 L-4,26"/><path d="M0,8 L0,26"/><path d="M1.4,8 L4,26"/><path d="M2.8,8 L8,26"/></g></g></g>
+  <g stroke="url(#ogold)" stroke-width="3" stroke-linecap="round" opacity="0.85"><line x1="140" y1="96" x2="114" y2="82"/><line x1="150" y1="128" x2="120" y2="124"/><line x1="162" y1="62" x2="142" y2="40"/><line x1="460" y1="96" x2="486" y2="82"/><line x1="450" y1="128" x2="480" y2="124"/><line x1="438" y1="62" x2="458" y2="40"/></g>
+  <g opacity="0.9">
+    <g transform="translate(60,1392) scale(0.8,0.8)" fill="none" stroke="url(#ogold)" stroke-width="2.4" stroke-linecap="round"><path d="M0,0 C14,-10 30,-11 44,-6"/><path d="M4,12 C16,5 28,4 38,7"/></g>
+    <g transform="translate(540,1392) scale(-0.8,0.8)" fill="none" stroke="url(#ogold)" stroke-width="2.4" stroke-linecap="round"><path d="M0,0 C14,-10 30,-11 44,-6"/><path d="M4,12 C16,5 28,4 38,7"/></g>
+  </g>
+  <g fill="url(#ogold)" opacity="0.8">
+    <circle cx="84" cy="1376" r="3.4"/><circle cx="112" cy="1424" r="2.4"/>
+    <circle cx="74" cy="1462" r="2.8"/><circle cx="136" cy="1358" r="2"/>
+    <circle cx="516" cy="1376" r="3.4"/><circle cx="488" cy="1424" r="2.4"/>
+    <circle cx="526" cy="1462" r="2.8"/><circle cx="464" cy="1358" r="2"/>
+  </g>
+  <g stroke="#C4A183" stroke-width="2.6" stroke-linecap="round">
+    <line x1="150" y1="1522" x2="266" y2="1522"/>
+    <line x1="334" y1="1522" x2="450" y2="1522"/>
+  </g>
+  <g transform="translate(300,1518) scale(0.42)"><path d="M0,-16 L52,2 L0,20 L-52,2Z" fill="url(#ogold)"/><path d="M-30,9 L-30,30 C-30,40 30,40 30,30 L30,9 L0,22Z" fill="#0A0A0A"/><path d="M52,2 L52,34" stroke="url(#ogold)" stroke-width="2.6" fill="none"/><circle cx="52" cy="38" r="5" fill="url(#ogold)"/><path d="M52,42 L48,58 M52,42 L52,60 M52,42 L56,58" stroke="url(#ogold)" stroke-width="2"/></g>
+  <g transform="translate(486,1706) rotate(-22) scale(1.25)"><rect x="-34" y="-11" width="68" height="22" rx="4" fill="#E7D6C4"/><rect x="-34" y="-11" width="68" height="6" rx="3" fill="#A78466" opacity="0.55"/><ellipse cx="-34" cy="0" rx="6" ry="12" fill="#A78466"/><ellipse cx="34" cy="0" rx="6" ry="12" fill="#A78466"/><rect x="-5" y="-13" width="10" height="26" rx="2" fill="#A78466"/><path d="M0,10 L-8,22 L-1,20 L2,26 L8,16Z" fill="#A78466" opacity="0.9"/></g>
+  <g fill="url(#ogold)" opacity="0.75">
+    <circle cx="96" cy="1668" r="4"/><circle cx="122" cy="1700" r="2.6"/>
+    <circle cx="88" cy="1716" r="3"/><circle cx="140" cy="1662" r="2.2"/>
+  </g>
+</svg>

@@ -8,6 +8,10 @@ Cada plantilla produce en public/templates/<id>/:
   template.json   -> definicion que lee el renderer
 
 Uso:  python tools/generar_plantillas.py
+
+OJO: las plantillas de Halloween, Navidad, Fiesta Neon y graduacion_002
+viven en tools/generar_plantillas_extra.mjs (Node), porque la maquina de la
+cabina no tiene Python. Este script conserva las demas y respeta el catalogo.
 """
 import json, os, random, math
 

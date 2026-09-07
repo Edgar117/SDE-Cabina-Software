@@ -79,6 +79,48 @@
       "preview": "preview.svg"
     },
     {
+      "id": "graduacion_002",
+      "folder": "graduacion_002",
+      "name": "Graduación — Negro y Bronce",
+      "category": "graduacion",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "navidad_001",
+      "folder": "navidad_001",
+      "name": "Navidad — Clásica Rojo y Verde",
+      "category": "navidad",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "navidad_002",
+      "folder": "navidad_002",
+      "name": "Navidad — Noche Nevada",
+      "category": "navidad",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "halloween_001",
+      "folder": "halloween_001",
+      "name": "Halloween — Noche de Calabazas",
+      "category": "halloween",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "halloween_002",
+      "folder": "halloween_002",
+      "name": "Halloween — Pastel Fantasmas",
+      "category": "halloween",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "neon_001",
+      "folder": "neon_001",
+      "name": "Fiesta Neón — Glow Party",
+      "category": "neon",
+      "preview": "preview.svg"
+    },
+    {
       "id": "corporativo_001",
       "folder": "corporativo_001",
       "name": "Corporativo — Minimalista",

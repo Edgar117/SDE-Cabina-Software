@@ -17,6 +17,8 @@ const CATEGORY_LABELS = {
   bautizo: 'Bautizo',
   babyshower: 'Baby Shower',
   navidad: 'Navidad',
+  halloween: 'Halloween',
+  neon: 'Fiesta Neón',
   general: 'General',
 };
 

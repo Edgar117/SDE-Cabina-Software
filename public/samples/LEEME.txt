@@ -1,0 +1,16 @@
+Fotos de muestra para las vistas previas
+========================================
+
+Copia aquí tres fotos reales de la cabina con estos nombres:
+
+  1.jpg   2.jpg   3.jpg
+
+También sirven .jpeg, .png o .webp. Recomendado: horizontales
+(aprox. 3:2, aguantan bien 900x600 px o más).
+
+Si los tres archivos existen, el catálogo de plantillas y la vista
+previa del strip los usan tal cual. Si falta alguno, la app vuelve a
+las siluetas dibujadas y no se rompe nada.
+
+Después de copiarlas hay que recompilar (npm run build) para que
+también queden dentro de dist/.

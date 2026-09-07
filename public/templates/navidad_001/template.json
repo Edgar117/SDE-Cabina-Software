@@ -1,0 +1,127 @@
+{
+  "id": "navidad_001",
+  "name": "Navidad — Clásica Rojo y Verde",
+  "category": "navidad",
+  "description": "Papel crema con banderines, acebo, esferas, árbol y regalos",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#2E6B3A",
+      "borderWidth": 6
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#2E6B3A",
+      "borderWidth": 6
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#2E6B3A",
+      "borderWidth": 6
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 32,
+      "width": 110,
+      "height": 32
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Feliz Navidad",
+      "x": 300,
+      "y": 1398,
+      "font": "'Dancing Script', cursive",
+      "size": 70,
+      "color": "#C0272D",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 470
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "CHRISTMAS PARTY",
+      "x": 300,
+      "y": 1478,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 24,
+      "color": "#2E6B3A",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 6,
+      "maxWidth": 450
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1520,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#8A6A3A",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1584,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 14,
+      "color": "#7A5E36",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1618,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#8A6A3A",
+      "align": "center"
+    }
+  ]
+}

@@ -120,6 +120,22 @@ body.app-welcome #app {
   border-right: 4px solid transparent;
 }
 
+/* Pestañas de la barra superior en móvil: mismas clases de estado que el
+   sidebar, pero en forma de pastilla y sin la barra lateral derecha. */
+.nav-tab {
+  border: 0 !important;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.nav-tab.nav-link-idle {
+  background: rgba(140, 113, 45, 0.06);
+}
+
+.nav-tab.nav-link-active {
+  background: rgba(140, 113, 45, 0.18);
+}
+
 .nav-link-idle:hover {
   color: #715915;
   background: rgba(140, 113, 45, 0.06);

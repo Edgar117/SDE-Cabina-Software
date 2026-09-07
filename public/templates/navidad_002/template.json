@@ -1,0 +1,127 @@
+{
+  "id": "navidad_002",
+  "name": "Navidad — Noche Nevada",
+  "category": "navidad",
+  "description": "Azul noche con nieve, copos, esferas y árbol iluminado en dorado",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 4,
+      "border": "#D8B44A",
+      "borderWidth": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 4,
+      "border": "#D8B44A",
+      "borderWidth": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 4,
+      "border": "#D8B44A",
+      "borderWidth": 4
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 64,
+      "width": 116,
+      "height": 40
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "Feliz Navidad",
+      "x": 300,
+      "y": 1400,
+      "font": "'Dancing Script', cursive",
+      "size": 72,
+      "color": "#F6E4A8",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 470
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "NOCHEBUENA",
+      "x": 300,
+      "y": 1480,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 26,
+      "color": "#EAF2FF",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 8,
+      "maxWidth": 450
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1518,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#B9CBE4",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1584,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 14,
+      "color": "#A8BCD8",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1620,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#A8BCD8",
+      "align": "center"
+    }
+  ]
+}
