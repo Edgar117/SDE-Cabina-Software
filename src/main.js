@@ -418,10 +418,11 @@ function captureFrame() {
   captureCanvas.height = vh;
   const ctx = captureCanvas.getContext('2d');
 
-  ctx.translate(vw, 0);
-  ctx.scale(-1, 1);
+  // Se guarda el cuadro tal como lo ve la cámara, SIN espejo: antes se
+  // volteaba en horizontal y los letreros que sostienen los invitados salían
+  // al revés en la tira impresa. Como la pantalla tampoco va espejada, lo que
+  // se ve en la TV es exactamente lo que se imprime.
   ctx.drawImage(video, 0, 0, vw, vh);
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
 
   return captureCanvas.toDataURL('image/jpeg', 0.92);
 }
