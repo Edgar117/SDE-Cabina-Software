@@ -331,11 +331,27 @@ export async function renderJsonTemplateStrip(
     scaleY: outH / srcH,
   };
 
-  if (document.fonts?.ready) {
+  const elements = definition.elements || [];
+
+  if (document.fonts?.load) {
+    // `fonts.ready` no basta: una fuente que la página aún no ha usado no está
+    // "cargando", así que ready resuelve al instante y la primera tira de la
+    // sesión se dibujaba con la letra de respaldo. Se pide cada fuente (con su
+    // grosor, estilo y el texto real, para que baje el subset con ñ y acentos).
+    await Promise.all(
+      elements
+        .filter((el) => el.type === 'text' && el.font)
+        .map((el) => {
+          const weight = el.weight === 'bold' ? 'bold ' : '';
+          const style = el.style === 'italic' ? 'italic ' : '';
+          const muestra = resolveText(el, branding) || 'Aa';
+          return document.fonts
+            .load(`${style}${weight}${el.size || 24}px ${el.font}`, muestra)
+            .catch(() => null);
+        }),
+    );
     await document.fonts.ready;
   }
-
-  const elements = definition.elements || [];
   const textElements = [];
   const logoElements = [];
 

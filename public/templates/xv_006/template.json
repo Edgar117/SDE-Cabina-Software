@@ -1,0 +1,138 @@
+{
+  "id": "xv_006",
+  "name": "XV Años — Princesa y el Sapo",
+  "category": "xv_anos",
+  "description": "Pantano encantado de noche: quinceañera de espaldas en vestido esmeralda con bordado dorado, sapito con corona, luciérnagas, enredaderas, flores blancas, nenúfares y lotos",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#D4AF4F",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#D4AF4F",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#D4AF4F",
+      "borderWidth": 5
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "overlay",
+      "src": "quinceanera.png",
+      "x": 330,
+      "y": 1375,
+      "width": 264,
+      "height": 335
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 220,
+      "y": 1570,
+      "width": 100,
+      "height": 34
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "",
+      "x": 220,
+      "y": 1326,
+      "font": "'Dancing Script', cursive",
+      "size": 76,
+      "color": "#F4E3A1",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 300,
+      "shadow": true
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "MIS XV AÑOS",
+      "x": 220,
+      "y": 1406,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 26,
+      "color": "#D4AF4F",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 6,
+      "maxWidth": 280
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 220,
+      "y": 1490,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#BFE3C0",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 220,
+      "y": 1524,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 15,
+      "color": "#BFE3C0",
+      "align": "center",
+      "maxWidth": 220
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 220,
+      "y": 1556,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#9CC7A0",
+      "align": "center",
+      "maxWidth": 220
+    }
+  ]
+}

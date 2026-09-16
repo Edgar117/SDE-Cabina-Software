@@ -1,0 +1,138 @@
+{
+  "id": "babyshower_001",
+  "name": "Baby Shower — Osito y Miel",
+  "category": "babyshower",
+  "description": "Bosque tierno color miel: osito con pañuelo rojo, tarro de miel, abejitas, panales, globos y nubes. Arte original inspirado en el ambiente del bosque de la miel.",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C98A0E",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C98A0E",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C98A0E",
+      "borderWidth": 5
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "overlay",
+      "src": "ilustracion.png",
+      "x": 14,
+      "y": 1514,
+      "width": 186,
+      "height": 186
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 1596,
+      "width": 108,
+      "height": 36
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "",
+      "x": 300,
+      "y": 1356,
+      "font": "'Dancing Script', cursive",
+      "size": 74,
+      "color": "#8B5E34",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 440,
+      "shadow": true
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "BABY SHOWER",
+      "x": 300,
+      "y": 1424,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 26,
+      "color": "#D1462F",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 6,
+      "maxWidth": 420
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1504,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#7A4E27",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1538,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 15,
+      "color": "#7A4E27",
+      "align": "center",
+      "maxWidth": 190
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1568,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#A07A50",
+      "align": "center",
+      "maxWidth": 190
+    }
+  ]
+}

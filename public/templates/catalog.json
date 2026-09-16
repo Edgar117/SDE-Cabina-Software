@@ -37,6 +37,13 @@
       "preview": "preview.svg"
     },
     {
+      "id": "xv_006",
+      "folder": "xv_006",
+      "name": "XV Años — Princesa y el Sapo",
+      "category": "xv_anos",
+      "preview": "preview.svg"
+    },
+    {
       "id": "boda_001",
       "folder": "boda_001",
       "name": "Boda — Flores Románticas",
@@ -69,6 +76,20 @@
       "folder": "cumpleanos_002",
       "name": "Cumpleaños — Confeti Fiesta",
       "category": "cumpleanos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "babyshower_001",
+      "folder": "babyshower_001",
+      "name": "Baby Shower — Osito y Miel",
+      "category": "babyshower",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "babyshower_002",
+      "folder": "babyshower_002",
+      "name": "Baby Shower — Panal Celeste",
+      "category": "babyshower",
       "preview": "preview.svg"
     },
     {

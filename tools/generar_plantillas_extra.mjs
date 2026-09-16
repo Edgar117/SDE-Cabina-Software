@@ -638,7 +638,7 @@ const nav002Ov = (p) => `
   ${snowflake(540, 118, 2.0, '#EAF2FF', 0.85, 24)}
   ${snowflake(52, 1300, 1.5, '#EAF2FF', 0.7)}
   ${snowflake(548, 1300, 1.5, '#EAF2FF', 0.7, 30)}
-  <g stroke="url(#${p}gold)" stroke-width="1.4" opacity="0.9">
+  <g stroke="#D8B44A" stroke-width="1.8" opacity="0.9">
     <line x1="168" y1="1544" x2="256" y2="1544"/>
     <line x1="344" y1="1544" x2="432" y2="1544"/>
   </g>
@@ -701,7 +701,7 @@ const neon001Bg = (p) => `
 
 const neon001Ov = (p) => `
   <defs>
-    <linearGradient id="${p}nl" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="${p}nl" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="480" y2="0">
       <stop offset="0%" stop-color="#FF3FB4"/><stop offset="40%" stop-color="#9B5CFF"/>
       <stop offset="70%" stop-color="#31E6FF"/><stop offset="100%" stop-color="#4BFF9A"/>
     </linearGradient>
@@ -753,6 +753,667 @@ add({
   ],
 });
 
+// ---------------------------------------------------------------- XV 006
+// Temática "princesa y el sapo": pantano encantado de noche. Todo el arte es
+// propio (sapo, nenúfares, corona); no usa personajes ni logos con derechos.
+const XV6_ORO_CLARO = '#F4E3A1';
+const XV6_ORO = '#D4AF4F';
+const XV6_ORO_OSCURO = '#94701F';
+const XV6_MENTA = '#BFE3C0';
+const XV6_VERDES = ['#5E9E63', '#79B97A', '#3F7E4B'];
+const XV6_TALLO = '#3E6B43';
+
+/** Luciérnagas: halo difuso cálido + núcleo brillante. */
+function luciernagas(p, seed, count, ymin = 0, ymax = H) {
+  const r = rng(seed);
+  const halos = [];
+  const nucleos = [];
+  for (let i = 0; i < count; i += 1) {
+    const x = between(r, 0, W);
+    const y = between(r, ymin, ymax);
+    const rr = between(r, 2.2, 5.5);
+    const o = between(r, 0.35, 0.95);
+    halos.push(`<circle cx="${n1(x)}" cy="${n1(y)}" r="${n1(rr * 3.4)}" fill="#F7E27A" opacity="${n2(o * 0.4)}"/>`);
+    nucleos.push(`<circle cx="${n1(x)}" cy="${n1(y)}" r="${n1(rr * 0.55)}" fill="#FFF8CF" opacity="${n2(o)}"/>`);
+  }
+  return `<g filter="url(#${p}ff)">${halos.join('')}</g><g>${nucleos.join('')}</g>`;
+}
+
+const blurDef = (p, id = 'ff', dev = 4) =>
+  `<filter id="${p}${id}" x="-20%" y="-20%" width="140%" height="140%">` +
+  `<feGaussianBlur stdDeviation="${dev}"/></filter>`;
+
+const hoja = (x, y, s, rot, fill, vena) =>
+  `<g transform="translate(${x},${y}) rotate(${n1(rot)}) scale(${n2(s)})">` +
+  `<path d="M0,0 C8,-11 25,-11 36,0 C25,11 8,11 0,0Z" fill="${fill}"/>` +
+  `<path d="M3,0 L31,0" stroke="${vena}" stroke-width="1.1" opacity="0.55"/></g>`;
+
+/** Enredadera curva con hojas alternadas a lo largo del tallo. */
+function enredadera(x0, y0, x1, y1, curva, n, verdes = XV6_VERDES, tallo = XV6_TALLO) {
+  const c1x = x0 + (x1 - x0) * 0.33;
+  const c1y = y0 + curva;
+  const c2x = x0 + (x1 - x0) * 0.66;
+  const c2y = y1 + curva;
+  const punto = (t) => {
+    const u = 1 - t;
+    return [
+      u * u * u * x0 + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * x1,
+      u * u * u * y0 + 3 * u * u * t * c1y + 3 * u * t * t * c2y + t * t * t * y1,
+    ];
+  };
+  let out = `<path d="M${x0},${y0} C${n1(c1x)},${n1(c1y)} ${n1(c2x)},${n1(c2y)} ${x1},${y1}" ` +
+    `stroke="${tallo}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+  for (let i = 1; i <= n; i += 1) {
+    const t = i / (n + 1);
+    const [px, py] = punto(t);
+    const [qx, qy] = punto(t + 0.01);
+    const ang = (Math.atan2(qy - py, qx - px) * 180) / Math.PI;
+    const lado = i % 2 ? 1 : -1;
+    out += hoja(n1(px), n1(py), 0.95 - t * 0.35, ang + lado * 52, verdes[i % verdes.length], tallo);
+  }
+  return `<g>${out}</g>`;
+}
+
+/** Flor blanca de cinco pétalos. */
+function flor(x, y, s, petalo = '#FFFFFF', sombra = '#DDEFD8', centro = '#E8C85A') {
+  let out = '';
+  for (let a = 0; a < 360; a += 72) {
+    out += `<ellipse cx="0" cy="-10" rx="7.5" ry="11" fill="${petalo}" transform="rotate(${a})"/>`;
+  }
+  for (let a = 36; a < 360; a += 72) {
+    out += `<ellipse cx="0" cy="-6" rx="4.5" ry="7" fill="${sombra}" opacity="0.7" transform="rotate(${a})"/>`;
+  }
+  return `<g transform="translate(${x},${y}) scale(${s})">${out}` +
+    `<circle r="4.4" fill="${centro}"/><circle cx="-1.2" cy="-1.2" r="1.4" fill="#FFF6D6"/></g>`;
+}
+
+/** Flor de loto para el agua. */
+function loto(x, y, s) {
+  const petalo = 'M0,0 C-9,-10 -7,-30 0,-38 C7,-30 9,-10 0,0Z';
+  let atras = '';
+  for (const a of [-64, -32, 32, 64]) atras += `<path d="${petalo}" fill="#F3B9CC" transform="rotate(${a})"/>`;
+  let frente = '';
+  for (const a of [-18, 0, 18]) frente += `<path d="${petalo}" fill="#FCE4EC" transform="rotate(${a}) scale(0.86)"/>`;
+  return `<g transform="translate(${x},${y}) scale(${s})">${atras}${frente}` +
+    '<ellipse cx="0" cy="-4" rx="6" ry="3.5" fill="#F2C94C"/></g>';
+}
+
+/** Hoja de nenúfar vista en perspectiva, con su muesca. */
+function nenufar(x, y, s, fill = '#3F8A4E', vena = '#2D6A3A', rot = 0) {
+  let venas = '';
+  for (const a of [40, 80, 120, 160, 200, 240, 280, 320]) {
+    venas += `<line x1="0" y1="0" x2="${n1(33 * Math.cos(rad(a)))}" y2="${n1(33 * Math.sin(rad(a)))}"/>`;
+  }
+  return `<g transform="translate(${x},${y}) rotate(${rot}) scale(${s},${n2(s * 0.42)})">` +
+    `<path d="M0,0 L33.8,-12.3 A36,36 0 1,0 33.8,12.3 Z" fill="${fill}"/>` +
+    `<g stroke="${vena}" stroke-width="1.6" opacity="0.6">${venas}</g>` +
+    '<ellipse cx="-8" cy="-10" rx="14" ry="6" fill="#FFFFFF" opacity="0.08"/></g>';
+}
+
+/** Sapito con corona: diseño propio y amable para la temática. */
+function sapo(x, y, s, oro) {
+  return `<g transform="translate(${x},${y}) scale(${s})">` +
+    '<ellipse cx="-25" cy="12" rx="14" ry="8" fill="#4F9150"/>' +
+    '<ellipse cx="25" cy="12" rx="14" ry="8" fill="#4F9150"/>' +
+    '<ellipse cx="0" cy="0" rx="30" ry="22" fill="#6DB36B"/>' +
+    '<ellipse cx="0" cy="7" rx="19" ry="13" fill="#CDEBB0"/>' +
+    '<ellipse cx="-12" cy="20" rx="7" ry="4" fill="#4F9150"/>' +
+    '<ellipse cx="12" cy="20" rx="7" ry="4" fill="#4F9150"/>' +
+    '<circle cx="-14" cy="-19" r="10" fill="#6DB36B"/>' +
+    '<circle cx="14" cy="-19" r="10" fill="#6DB36B"/>' +
+    '<circle cx="-14" cy="-20" r="6.6" fill="#FFFFFF"/>' +
+    '<circle cx="14" cy="-20" r="6.6" fill="#FFFFFF"/>' +
+    '<circle cx="-13" cy="-19" r="3.6" fill="#1D2B1C"/>' +
+    '<circle cx="15" cy="-19" r="3.6" fill="#1D2B1C"/>' +
+    '<circle cx="-12" cy="-21" r="1.3" fill="#FFFFFF"/>' +
+    '<circle cx="16" cy="-21" r="1.3" fill="#FFFFFF"/>' +
+    '<path d="M-13,-3 Q0,8 13,-3" stroke="#2F5E3A" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="-19" cy="-2" rx="4" ry="2.4" fill="#F2A0A0" opacity="0.6"/>' +
+    '<ellipse cx="19" cy="-2" rx="4" ry="2.4" fill="#F2A0A0" opacity="0.6"/>' +
+    `<g transform="translate(0,-31) scale(0.3)">${coronaGemas(0, 0, 1, oro, XV6_ORO_OSCURO)}</g></g>`;
+}
+
+/** Corona dorada con gemas verdes. */
+function coronaGemas(x, y, s, oro, oroOscuro, gema = '#3FAF6A') {
+  return `<g transform="translate(${x},${y}) scale(${s})">` +
+    `<path d="M-50,10 L-44,-22 L-26,-4 L-12,-34 L0,-12 L12,-34 L26,-4 L44,-22 L50,10 Z" ` +
+    `fill="${oro}" stroke="${oroOscuro}" stroke-width="1.2" stroke-linejoin="round"/>` +
+    `<rect x="-53" y="8" width="106" height="13" rx="3" fill="${oro}" stroke="${oroOscuro}" stroke-width="1.2"/>` +
+    `<g fill="${oro}" stroke="${oroOscuro}" stroke-width="1">` +
+    '<circle cx="-44" cy="-25" r="4.2"/><circle cx="-12" cy="-37" r="4.2"/>' +
+    '<circle cx="12" cy="-37" r="4.2"/><circle cx="44" cy="-25" r="4.2"/></g>' +
+    `<ellipse cx="0" cy="-2" rx="5.5" ry="7.5" fill="${gema}"/>` +
+    `<circle cx="0" cy="14.5" r="5" fill="${gema}"/>` +
+    `<circle cx="-29" cy="14.5" r="3.6" fill="${gema}"/>` +
+    `<circle cx="29" cy="14.5" r="3.6" fill="${gema}"/>` +
+    '<circle cx="-1.6" cy="-5" r="1.6" fill="#FFFFFF" opacity="0.8"/>' +
+    '<circle cx="-1.4" cy="13" r="1.4" fill="#FFFFFF" opacity="0.8"/></g>';
+}
+
+function mariposa(x, y, s, rot, ala = '#9ED36A', ala2 = '#D2E88C', cuerpo = '#33461F', borde = '#5E7F2A') {
+  // media mariposa (lado izquierdo); el derecho es su reflejo
+  const mitad = `<path d="M0,-2 C-5,-21 -31,-30 -32,-11 C-32,1 -14,4 0,2Z" fill="${ala}"/>` +
+    `<path d="M0,3 C-10,4 -23,12 -19,23 C-13,29 -4,19 0,7Z" fill="${ala2}"/>` +
+    `<path d="M-2,0 C-10,-8 -20,-13 -27,-12 M-2,4 C-8,9 -13,14 -15,20" stroke="${borde}" ` +
+    'stroke-width="0.9" fill="none" opacity="0.7"/>' +
+    '<circle cx="-22" cy="-13" r="3" fill="#FFFFFF" opacity="0.45" stroke="none"/>' +
+    '<circle cx="-13" cy="16" r="2" fill="#FFFFFF" opacity="0.4" stroke="none"/>';
+  return `<g transform="translate(${x},${y}) rotate(${rot}) scale(${s})" stroke="${borde}" stroke-width="1.1">` +
+    `<g>${mitad}</g><g transform="scale(-1,1)">${mitad}</g>` +
+    `<ellipse cx="0" cy="2" rx="2.4" ry="12" fill="${cuerpo}" stroke="none"/>` +
+    `<path d="M0,-9 C-2,-17 -5,-20 -8,-22 M0,-9 C2,-17 5,-20 8,-22" stroke="${cuerpo}" ` +
+    'stroke-width="1.2" fill="none"/></g>';
+}
+
+const xv006Bg = (p) => {
+  const musgo = [18, 34, 52, 70, 548, 566, 584]
+    .map((x, i) => {
+      const largo = 160 + ((i * 53) % 120);
+      const dx = i % 2 ? 10 : -10;
+      return `<path d="M${x},0 Q${x + dx},${largo / 2} ${x - dx / 2},${largo}" />`;
+    }).join('');
+  return `
+  <defs>
+    <linearGradient id="${p}bg" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#0C241D"/><stop offset="40%" stop-color="#133A2C"/>
+      <stop offset="75%" stop-color="#0F2E24"/><stop offset="100%" stop-color="#081A14"/>
+    </linearGradient>
+    <radialGradient id="${p}glow" cx="0.5" cy="0.36" r="0.6">
+      <stop offset="0%" stop-color="#4C8C5C" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#4C8C5C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="${p}agua" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1D5142" stop-opacity="0"/><stop offset="30%" stop-color="#1D5142"/><stop offset="100%" stop-color="#0A231B"/>
+    </linearGradient>
+    ${blurDef(p)}
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#${p}bg)"/>
+  <rect width="${W}" height="${H}" fill="url(#${p}glow)"/>
+  <g stroke="#0A1F18" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.5">${musgo}</g>
+  ${luciernagas(p, 9701, 70)}
+  ${stars4(9702, '#FFF3C4', 16, 0, H, 3, 7, 0.6)}
+  <rect x="0" y="1628" width="${W}" height="${H - 1628}" fill="url(#${p}agua)"/>
+  <g stroke="#CFEFD9" stroke-width="1.4" opacity="0.14" stroke-linecap="round">
+    <line x1="40" y1="1690" x2="150" y2="1690"/><line x1="250" y1="1706" x2="380" y2="1706"/>
+    <line x1="430" y1="1682" x2="560" y2="1682"/><line x1="120" y1="1790" x2="260" y2="1790"/>
+  </g>`;
+};
+
+const xv006Ov = (p) => `
+  <defs>${goldDefs(p, XV6_ORO_CLARO, XV6_ORO, XV6_ORO_OSCURO)}${blurDef(p)}</defs>
+  ${frameLines(LAY_A, `url(#${p}gold)`, 2.2, 0.9, -10)}
+  ${frameLines(LAY_A, XV6_MENTA, 1, 0.45, -16)}
+  ${enredadera(0, 16, 200, 64, 34, 7)}
+  ${enredadera(600, 16, 400, 64, 34, 7)}
+  ${coronaGemas(300, 82, 0.92, `url(#${p}gold)`, XV6_ORO_OSCURO)}
+  ${flor(36, 40, 1.35)}${flor(84, 20, 1.0)}${flor(18, 94, 0.9)}
+  ${flor(564, 40, 1.35)}${flor(516, 20, 1.0)}${flor(582, 94, 0.9)}
+  ${enredadera(0, 500, 70, 560, 18, 3)}
+  ${enredadera(600, 870, 530, 930, 18, 3)}
+  ${flor(40, 512, 0.95)}${flor(560, 884, 0.95)}
+  ${mariposa(566, 518, 1.6, 18)}
+  ${mariposa(34, 888, 1.5, -16)}
+  ${mariposa(36, 1284, 1.1, -10)}
+  ${mariposa(566, 1300, 1.1, 14)}
+  <g stroke="${XV6_ORO}" stroke-width="2.4" stroke-linecap="round">
+    <line x1="90" y1="1452" x2="182" y2="1452"/>
+    <line x1="258" y1="1452" x2="350" y2="1452"/>
+  </g>
+  ${coronaGemas(220, 1450, 0.36, `url(#${p}gold)`, XV6_ORO_OSCURO)}
+  ${luciernagas(p, 9703, 14, 1260, 1660)}
+  ${nenufar(96, 1682, 1.45)}
+  ${nenufar(190, 1694, 1.0, '#357A45', '#24583A', -6)}
+  ${loto(186, 1682, 0.75)}${loto(30, 1696, 0.6)}
+  ${sapo(96, 1658, 1.0, `url(#${p}gold)`)}
+  <radialGradient id="${p}qhalo"><stop offset="0%" stop-color="#F7E27A" stop-opacity="0.3"/><stop offset="100%" stop-color="#F7E27A" stop-opacity="0"/></radialGradient>
+  <ellipse cx="462" cy="1530" rx="160" ry="220" fill="url(#${p}qhalo)"/>`;
+
+add({
+  id: 'xv_006',
+  category: 'xv_anos',
+  name: 'XV Años — Princesa y el Sapo',
+  description: 'Pantano encantado de noche: quinceañera de espaldas en vestido esmeralda con bordado dorado, sapito con corona, luciérnagas, enredaderas, flores blancas, nenúfares y lotos',
+  rects: LAY_A,
+  bg: xv006Bg,
+  ov: xv006Ov,
+  // ilustración PNG con transparencia, encima del overlay en la esquina inferior derecha
+  images: [{ src: 'quinceanera.png', x: 330, y: 1375, width: 264, height: 335 }],
+  photo: { radius: 0, border: XV6_ORO, borderWidth: 5 },
+  previewStroke: XV6_ORO,
+  logo: { x: 220, y: 1570, width: 100, height: 34 },
+  // todo lo de abajo termina antes de y=1710: la impresora recorta el borde inferior.
+  // texto a la izquierda; la quinceañera ocupa la esquina inferior derecha
+  texts: [
+    { binding: 'subtitleText', text: '', x: 220, y: 1326,
+      font: "'Dancing Script', cursive", size: 76, color: XV6_ORO_CLARO,
+      align: 'center', weight: 'bold', maxWidth: 300, shadow: true },
+    { binding: 'eventLabel', text: 'MIS XV AÑOS', x: 220, y: 1406,
+      font: "'Playfair Display', Georgia, serif", size: 26, color: XV6_ORO,
+      align: 'center', weight: 'bold', letterSpacing: 6, maxWidth: 280 },
+    { binding: 'date', x: 220, y: 1490,
+      font: "'Playfair Display', Georgia, serif", size: 20, color: XV6_MENTA, align: 'center' },
+    { binding: 'footerText', text: '', x: 220, y: 1524,
+      font: 'Manrope, Arial, sans-serif', size: 15, color: XV6_MENTA, align: 'center', maxWidth: 220 },
+    { binding: 'footerPhone', text: '', x: 220, y: 1556,
+      font: 'Manrope, Arial, sans-serif', size: 13, color: '#9CC7A0', align: 'center', maxWidth: 220 },
+  ],
+});
+
+// ---------------------------------------------------------------- BABY SHOWER 001
+// Tematica "osito y miel": bosque tierno con panales, abejitas y globos.
+// Arte propio inspirado en el ambiente miel/bosque; no usa personajes con
+// derechos (mismo criterio que xv_006).
+const BS_CREMA = '#FFF6E4';
+const BS_MIEL_CLARO = '#FBD46A';
+const BS_MIEL = '#F2B01E';
+const BS_MIEL_OSCURO = '#C98A0E';
+const BS_CAFE = '#8B5E34';
+const BS_CAFE_OSCURO = '#6A4524';
+const BS_ROJO = '#D1462F';
+const BS_HOJA = '#7FA05A';
+const BS_TEXTO = '#7A4E27';
+
+/** Hexagono (celda de panal) centrado en x,y. */
+function hexa(x, y, r, fill, op = 1, stroke = null, sw = 2) {
+  const pts = [];
+  for (let i = 0; i < 6; i += 1) {
+    const a = rad(60 * i - 30);
+    pts.push(`${n1(x + r * Math.cos(a))},${n1(y + r * Math.sin(a))}`);
+  }
+  const trazo = stroke ? ` stroke="${stroke}" stroke-width="${sw}"` : '';
+  return `<polygon points="${pts.join(' ')}" fill="${fill}" opacity="${n2(op)}"${trazo}/>`;
+}
+
+/** Rejilla de panal. Con seed, varia color y opacidad celda por celda. */
+function panal(x0, y0, cols, rows, r, fills, op = 1, stroke = null, sw = 0, seed = null) {
+  const dx = r * Math.sqrt(3);
+  const dy = r * 1.5;
+  const rr = seed === null ? null : rng(seed);
+  const arr = Array.isArray(fills) ? fills : [fills];
+  let out = '';
+  for (let j = 0; j < rows; j += 1) {
+    for (let i = 0; i < cols; i += 1) {
+      const f = rr ? pick(rr, arr) : arr[(i + j) % arr.length];
+      const o = rr ? op * between(rr, 0.6, 1) : op;
+      out += hexa(x0 + i * dx + (j % 2 ? dx / 2 : 0), y0 + j * dy, r * 0.92, f, o, stroke, sw);
+    }
+  }
+  return `<g>${out}</g>`;
+}
+
+/** Abejita: cuerpo a rayas, alitas translucidas y antenas. */
+function abeja(x, y, s, rot = 0, op = 1) {
+  return `<g transform="translate(${x},${y}) rotate(${n1(rot)}) scale(${n2(s)})" opacity="${n2(op)}">` +
+    '<ellipse cx="-1" cy="-11" rx="9.5" ry="6" fill="#FFFFFF" opacity="0.8" transform="rotate(-28,-1,-11)"/>' +
+    '<ellipse cx="9" cy="-11" rx="9.5" ry="6" fill="#FFFFFF" opacity="0.8" transform="rotate(24,9,-11)"/>' +
+    `<ellipse cx="0" cy="0" rx="13" ry="9.5" fill="${BS_MIEL}"/>` +
+    `<ellipse cx="0.5" cy="0" rx="2.4" ry="9.2" fill="${BS_CAFE_OSCURO}"/>` +
+    `<ellipse cx="7.5" cy="0" rx="2.2" ry="7.4" fill="${BS_CAFE_OSCURO}"/>` +
+    `<path d="M12.5,-3 Q17,0 12.5,3 Z" fill="${BS_CAFE_OSCURO}"/>` +
+    `<circle cx="-11.5" cy="-1.5" r="6.8" fill="${BS_CAFE_OSCURO}"/>` +
+    '<circle cx="-13.5" cy="-3.5" r="1.7" fill="#FFFFFF"/>' +
+    '<circle cx="-9.5" cy="-3.5" r="1.7" fill="#FFFFFF"/>' +
+    '<circle cx="-13.2" cy="-3.2" r="0.85" fill="#241608"/>' +
+    '<circle cx="-9.2" cy="-3.2" r="0.85" fill="#241608"/>' +
+    '<path d="M-14,2.5 Q-11.5,5 -9,2.5" stroke="#241608" stroke-width="1" fill="none" stroke-linecap="round"/>' +
+    `<g stroke="${BS_CAFE_OSCURO}" stroke-width="1.2" fill="none" stroke-linecap="round">` +
+    '<path d="M-14,-7.5 Q-17,-13 -20,-14"/><path d="M-9,-8 Q-9,-14 -6,-16"/></g>' +
+    `<circle cx="-20" cy="-14.5" r="1.8" fill="${BS_MIEL}"/>` +
+    `<circle cx="-5.5" cy="-16.5" r="1.8" fill="${BS_MIEL}"/></g>`;
+}
+
+/** Estelita punteada del vuelo de una abeja. */
+const vuelo = (d, color = BS_MIEL_OSCURO, op = 0.65, w = 2) =>
+  `<path d="${d}" stroke="${color}" stroke-width="${w}" fill="none" stroke-linecap="round" ` +
+  `stroke-dasharray="4 8" opacity="${op}"/>`;
+
+/** Nubecita redonda. */
+const nube = (x, y, s, fill = '#FFFFFF', op = 0.8) =>
+  `<g transform="translate(${x},${y}) scale(${n2(s)})" opacity="${n2(op)}" fill="${fill}">` +
+  '<ellipse cx="-24" cy="5" rx="22" ry="13"/><ellipse cx="2" cy="-6" rx="26" ry="19"/>' +
+  '<ellipse cx="28" cy="4" rx="21" ry="14"/><rect x="-24" y="2" width="52" height="16" rx="8"/></g>';
+
+/** Globo con hilito. */
+const globo = (x, y, s, color, rot = 0) =>
+  `<g transform="translate(${x},${y}) rotate(${n1(rot)}) scale(${n2(s)})">` +
+  `<path d="M0,0 C-23,-2 -27,-23 -15,-37 C-9,-44 9,-44 15,-37 C27,-23 23,-2 0,0Z" fill="${color}"/>` +
+  '<ellipse cx="-8" cy="-28" rx="4.5" ry="7.5" fill="#FFFFFF" opacity="0.35" transform="rotate(-18,-8,-28)"/>' +
+  `<path d="M-4.5,-1 L0,5 L4.5,-1 Z" fill="${color}"/>` +
+  `<path d="M0,5 q8,13 -3,25 q-9,11 1,25" stroke="${BS_CAFE}" stroke-width="1.3" fill="none" opacity="0.8"/></g>`;
+
+/** Tarro de miel con etiqueta. */
+const tarroMiel = (x, y, s) =>
+  `<g transform="translate(${x},${y}) scale(${n2(s)})">` +
+  '<path d="M-27,-18 Q-35,8 -23,32 L23,32 Q35,8 27,-18 Z" fill="#EFE3C6"/>' +
+  '<path d="M-27,-18 Q-35,8 -23,32 L-9,32 Q-20,6 -13,-18 Z" fill="#FBF3E0" opacity="0.8"/>' +
+  `<path d="M-25,4 Q0,12 25,4 L23,32 L-23,32 Z" fill="${BS_MIEL}" opacity="0.9"/>` +
+  `<rect x="-31" y="-25" width="62" height="13" rx="6" fill="${BS_CAFE}"/>` +
+  `<rect x="-31" y="-25" width="62" height="5" rx="2.5" fill="${BS_CAFE_OSCURO}" opacity="0.45"/>` +
+  `<path d="M-24,-18 Q0,-9 24,-18 L24,-11 Q0,-2 -24,-11 Z" fill="${BS_MIEL_CLARO}"/>` +
+  `<ellipse cx="0" cy="10" rx="17" ry="9" fill="${BS_CREMA}"/>` +
+  `<text x="0" y="14" text-anchor="middle" font-family="Georgia, serif" font-size="12" ` +
+  `font-weight="bold" fill="${BS_CAFE_OSCURO}">MIEL</text>` +
+  `<path d="M14,-14 q6,10 1,19 q-5,8 1,14" stroke="${BS_MIEL}" stroke-width="4" fill="none" ` +
+  'stroke-linecap="round" opacity="0.85"/></g>';
+
+/** Osito color miel con panuelo rojo, sentado. */
+const osito = (x, y, s) =>
+  `<g transform="translate(${x},${y}) scale(${n2(s)})">` +
+  '<circle cx="-31" cy="-36" r="13" fill="#E3A244"/><circle cx="31" cy="-36" r="13" fill="#E3A244"/>' +
+  '<circle cx="-31" cy="-36" r="6.8" fill="#F7CE8C"/><circle cx="31" cy="-36" r="6.8" fill="#F7CE8C"/>' +
+  '<path d="M-33,14 Q-40,54 -29,70 L29,70 Q40,54 33,14 Z" fill="#E8AC4E"/>' +
+  '<ellipse cx="0" cy="44" rx="20" ry="22" fill="#F8D89B"/>' +
+  '<ellipse cx="-39" cy="34" rx="11" ry="17" fill="#E3A244" transform="rotate(14,-39,34)"/>' +
+  '<ellipse cx="39" cy="34" rx="11" ry="17" fill="#E3A244" transform="rotate(-14,39,34)"/>' +
+  '<ellipse cx="-18" cy="72" rx="15" ry="10.5" fill="#E3A244"/>' +
+  '<ellipse cx="18" cy="72" rx="15" ry="10.5" fill="#E3A244"/>' +
+  '<ellipse cx="-18" cy="73" rx="8" ry="5" fill="#F7CE8C"/><ellipse cx="18" cy="73" rx="8" ry="5" fill="#F7CE8C"/>' +
+  `<path d="M-26,17 Q0,31 26,17 L29,30 Q0,45 -29,30 Z" fill="${BS_ROJO}"/>` +
+  `<path d="M-29,27 L-43,46 L-31,43 L-26,33 Z" fill="${BS_ROJO}"/>` +
+  `<path d="M-26,17 Q0,31 26,17" stroke="#A8331F" stroke-width="1.6" fill="none" opacity="0.5"/>` +
+  '<circle cx="0" cy="-10" r="34" fill="#F0B855"/>' +
+  '<ellipse cx="0" cy="5" rx="17.5" ry="13" fill="#FBE4B2"/>' +
+  '<ellipse cx="0" cy="-2" rx="5.6" ry="4.2" fill="#6A4524"/>' +
+  '<path d="M0,2 L0,8 M0,8 Q-6,13.5 -11.5,8 M0,8 Q6,13.5 11.5,8" stroke="#6A4524" ' +
+  'stroke-width="2.1" fill="none" stroke-linecap="round"/>' +
+  '<circle cx="-13.5" cy="-14" r="3.7" fill="#4A3018"/><circle cx="13.5" cy="-14" r="3.7" fill="#4A3018"/>' +
+  '<circle cx="-12.2" cy="-15.4" r="1.35" fill="#FFFFFF"/><circle cx="14.8" cy="-15.4" r="1.35" fill="#FFFFFF"/>' +
+  '<ellipse cx="-23" cy="0" rx="6.5" ry="4.4" fill="#EE9A8E" opacity="0.5"/>' +
+  '<ellipse cx="23" cy="0" rx="6.5" ry="4.4" fill="#EE9A8E" opacity="0.5"/></g>';
+
+/** Huellita de osito. */
+const huella = (x, y, s, fill = BS_CAFE, op = 0.35, rot = 0) =>
+  `<g transform="translate(${x},${y}) rotate(${n1(rot)}) scale(${n2(s)})" fill="${fill}" opacity="${n2(op)}">` +
+  '<ellipse cx="0" cy="6" rx="11" ry="9"/><circle cx="-10.5" cy="-5" r="4"/><circle cx="-3.6" cy="-10" r="4.3"/>' +
+  '<circle cx="3.6" cy="-10" r="4.3"/><circle cx="10.5" cy="-5" r="4"/></g>';
+
+/** Banda de miel escurriendo desde arriba. */
+function cintaMiel(y, color, alto = 20, n = 9) {
+  const paso = W / n;
+  let d = `M0,${y} L${W},${y} L${W},${y + alto}`;
+  for (let i = n - 1; i >= 0; i -= 1) {
+    const x1 = i * paso;
+    const mid = x1 + paso / 2;
+    const prof = alto + (i % 2 ? 26 : 13);
+    d += ` C${n1(mid + paso * 0.32)},${n1(y + prof)} ${n1(mid - paso * 0.32)},${n1(y + prof)} ${n1(x1)},${y + alto}`;
+  }
+  return `<path d="${d} Z" fill="${color}"/>` +
+    `<circle cx="${n1(paso * 1.5)}" cy="${y + alto + 54}" r="5" fill="${color}"/>` +
+    `<circle cx="${n1(paso * 5.5)}" cy="${y + alto + 60}" r="6" fill="${color}"/>` +
+    `<circle cx="${n1(paso * 7.5)}" cy="${y + alto + 48}" r="4" fill="${color}"/>`;
+}
+
+// Si existe babyshower_001/ilustracion.png se usa esa imagen (encima del
+// overlay, esquina inferior izquierda) en lugar del osito dibujado. El box
+// debe respetar la proporcion del PNG: el renderer lo estira al tamano dado.
+// Solo arte propio o con licencia: nada de personajes registrados (ver xv_006).
+const BS_OSITO_PNG = { src: 'ilustracion.png', x: 14, y: 1514, width: 186, height: 186 };
+const bsHayPng = fs.existsSync(path.join(ROOT, 'babyshower_001', BS_OSITO_PNG.src));
+
+const bs001Bg = (p) => `
+  <defs>
+    <linearGradient id="${p}bg" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#FFFCF4"/><stop offset="45%" stop-color="#FDF2DC"/>
+      <stop offset="100%" stop-color="#F7E6C6"/>
+    </linearGradient>
+    <radialGradient id="${p}sol" cx="0.5" cy="0.07" r="0.6">
+      <stop offset="0%" stop-color="#FFE9A8" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#FFE9A8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#${p}bg)"/>
+  <rect width="${W}" height="${H}" fill="url(#${p}sol)"/>
+  ${panal(-46, -24, 10, 30, 42, 'none', 0.2, '#EBD2A0', 2)}
+  ${sparkles(4101, [BS_MIEL, '#E3A244'], 90, 0.9, 2.4, 0, H, [0.08, 0.2])}
+  ${huella(500, 300, 1.0, BS_CAFE, 0.1, 20)}
+  ${huella(70, 1120, 1.0, BS_CAFE, 0.1, -16)}`;
+
+const bs001Ov = (p) => `
+  <defs>${goldDefs(p, BS_MIEL_CLARO, BS_MIEL, BS_MIEL_OSCURO)}</defs>
+
+  ${nube(112, 52, 0.95)}
+  ${nube(462, 40, 0.78)}
+  ${nube(300, 86, 0.5, '#FFFFFF', 0.55)}
+  ${panal(-26, -16, 3, 3, 23, [BS_MIEL, BS_MIEL_CLARO], 0.95, BS_MIEL_OSCURO, 1.6, 411)}
+  ${panal(W - 94, -16, 3, 3, 23, [BS_MIEL, BS_MIEL_CLARO], 0.95, BS_MIEL_OSCURO, 1.6, 412)}
+  ${globo(203, 82, 0.8, BS_ROJO, -6)}
+  ${globo(392, 72, 0.74, BS_MIEL, 7)}
+  ${vuelo('M232,126 C268,96 300,140 340,112')}
+  ${abeja(300, 122, 1.0, -10)}
+
+  ${frameLines(LAY_A, `url(#${p}gold)`, 2.4, 0.95, -10)}
+  ${frameLines(LAY_A, BS_ROJO, 1.2, 0.4, -16)}
+
+  ${abeja(19, 660, 0.7, 20)}
+  ${abeja(581, 800, 0.7, -22)}
+  ${abeja(19, 1090, 0.66, -14)}
+  ${abeja(581, 1160, 0.66, 16)}
+  ${hoja(6, 420, 0.55, 28, BS_HOJA, '#5C7A3E')}
+  ${hoja(594, 1010, 0.55, 152, BS_HOJA, '#5C7A3E')}
+
+  ${cintaMiel(1252, BS_MIEL, 20)}
+  <g stroke="${BS_MIEL_OSCURO}" stroke-width="2.2" stroke-linecap="round" opacity="0.85">
+    <line x1="150" y1="1462" x2="252" y2="1462"/><line x1="348" y1="1462" x2="450" y2="1462"/>
+  </g>
+  ${hexa(300, 1462, 11, BS_MIEL, 1, BS_MIEL_OSCURO, 2)}
+
+  ${bsHayPng ? '' : osito(80, 1622, 0.95)}
+  ${tarroMiel(520, 1652, 1.05)}
+  ${panal(474, 1560, 2, 2, 17, [BS_MIEL_CLARO], 0.75, BS_MIEL_OSCURO, 1.3)}
+  ${vuelo('M156,1560 C210,1524 250,1572 300,1546', BS_MIEL_OSCURO, 0.5, 1.8)}
+  ${abeja(172, 1548, 0.62, -18)}
+  ${abeja(468, 1596, 0.6, 14)}
+  ${huella(268, 1662, 0.72, BS_CAFE, 0.28, -12)}
+  ${huella(316, 1678, 0.72, BS_CAFE, 0.28, 8)}
+  ${huella(364, 1660, 0.72, BS_CAFE, 0.28, -6)}`;
+
+add({
+  id: 'babyshower_001',
+  category: 'babyshower',
+  name: 'Baby Shower — Osito y Miel',
+  description: 'Bosque tierno color miel: osito con pañuelo rojo, tarro de miel, abejitas, panales, globos y nubes. Arte original inspirado en el ambiente del bosque de la miel.',
+  rects: LAY_A,
+  bg: bs001Bg,
+  ov: bs001Ov,
+  // ilustracion PNG con transparencia, encima del overlay en la esquina inferior izquierda
+  images: bsHayPng ? [BS_OSITO_PNG] : [],
+  photo: { radius: 0, border: BS_MIEL_OSCURO, borderWidth: 5 },
+  previewStroke: BS_MIEL_OSCURO,
+  logo: { x: 300, y: 1596, width: 108, height: 36 },
+  // todo termina antes de y=1710: la impresora recorta el borde inferior
+  texts: [
+    { binding: 'subtitleText', text: '', x: 300, y: 1356,
+      font: "'Dancing Script', cursive", size: 74, color: BS_CAFE,
+      align: 'center', weight: 'bold', maxWidth: 440, shadow: true },
+    { binding: 'eventLabel', text: 'BABY SHOWER', x: 300, y: 1424,
+      font: "'Playfair Display', Georgia, serif", size: 26, color: BS_ROJO,
+      align: 'center', weight: 'bold', letterSpacing: 6, maxWidth: 420 },
+    { binding: 'date', x: 300, y: 1504,
+      font: "'Playfair Display', Georgia, serif", size: 20, color: BS_TEXTO, align: 'center' },
+    // maxWidth 190 (205..395): deja libre la esquina del osito y la del tarro
+    { binding: 'footerText', text: '', x: 300, y: 1538,
+      font: 'Manrope, Arial, sans-serif', size: 15, color: BS_TEXTO, align: 'center', maxWidth: 190 },
+    { binding: 'footerPhone', text: '', x: 300, y: 1568,
+      font: 'Manrope, Arial, sans-serif', size: 13, color: '#A07A50', align: 'center', maxWidth: 190 },
+  ],
+});
+
+// ---------------------------------------------------------------- BABY SHOWER 002
+// Paleta celeste/dorado con arco blanco, panales en contorno, colmena colgante,
+// abejitas con estelas punteadas y cucharita de miel. Arte propio.
+const B2_AQUA = '#A5DCE3';
+const B2_AQUA_OSC = '#7FC8D2';
+const B2_ORO = '#F4B826';
+const B2_ORO_CLARO = '#FFD65C';
+const B2_ORO_OSC = '#C98A0E';
+const B2_AZUL = '#1B7A9C';
+const B2_AZUL_CLARO = '#3FB3D4';
+const B2_GRIS = '#4A4A4A';
+const B2_CAFE = '#A9762A';
+const B2_CAFE_OSC = '#7A5418';
+const B2_MADERA = '#8B5A2B';
+const B2_VERDE = '#6FA83C';
+
+/** Arco blanco de fondo: rectangulo con las dos esquinas de arriba redondeadas. */
+const arco = (x, y, w, h, r, fill, op = 1) =>
+  `<path d="M${x},${y + h} L${x},${y + r} Q${x},${y} ${x + r},${y} ` +
+  `L${x + w - r},${y} Q${x + w},${y} ${x + w},${y + r} L${x + w},${y + h} Z" ` +
+  `fill="${fill}" opacity="${n2(op)}"/>`;
+
+/** Rama con hojitas de la que cuelga la colmena. */
+function rama(x, y, s, flip = 1) {
+  const hojas = [[42, 4, 0.7, -38], [74, 10, 0.62, 24], [104, -2, 0.66, -22],
+    [132, 12, 0.56, 34], [92, -18, 0.5, -62]];
+  return `<g transform="translate(${x},${y}) scale(${flip * n2(s)},${n2(s)})">` +
+    `<path d="M0,0 C44,8 96,16 158,12" stroke="${B2_MADERA}" stroke-width="9" fill="none" stroke-linecap="round"/>` +
+    `<path d="M62,10 C80,-12 104,-20 122,-16" stroke="${B2_MADERA}" stroke-width="5" fill="none" stroke-linecap="round"/>` +
+    hojas.map(([hx, hy, hs, hr]) => hoja(hx, hy, hs, hr, B2_VERDE, '#4F7D28')).join('') +
+    '</g>';
+}
+
+/** Colmena colgante de capas. */
+const colmena = (x, y, s, cuerda = 46) =>
+  `<g transform="translate(${x},${y}) scale(${n2(s)})">` +
+  `<path d="M0,${-34 - cuerda} L0,-34" stroke="${B2_MADERA}" stroke-width="3"/>` +
+  '<ellipse cx="0" cy="-30" rx="18" ry="9" fill="#C98A3E"/>' +
+  '<ellipse cx="0" cy="-17" rx="27" ry="12" fill="#DCA255"/>' +
+  '<ellipse cx="0" cy="-1" rx="34" ry="14" fill="#C98A3E"/>' +
+  '<ellipse cx="0" cy="16" rx="33" ry="14" fill="#DCA255"/>' +
+  '<ellipse cx="0" cy="31" rx="26" ry="12" fill="#C98A3E"/>' +
+  '<ellipse cx="0" cy="42" rx="16" ry="8" fill="#B87A32"/>' +
+  '<ellipse cx="3" cy="13" rx="11" ry="13" fill="#6B4420"/>' +
+  '<ellipse cx="-14" cy="-4" rx="8" ry="4" fill="#FFFFFF" opacity="0.15"/></g>';
+
+/** Cucharita de miel con el hilo escurriendo. */
+const cucharaMiel = (x, y, s, rot = 0) =>
+  `<g transform="translate(${x},${y}) rotate(${n1(rot)}) scale(${n2(s)})">` +
+  '<rect x="-5" y="-66" width="10" height="56" rx="5" fill="#E8C9A0"/>' +
+  '<circle cx="0" cy="-68" r="7" fill="#E8C9A0"/>' +
+  '<path d="M-16,-12 Q0,-21 16,-12 L14,9 Q0,21 -14,9 Z" fill="#D9A95E"/>' +
+  '<g stroke="#B88434" stroke-width="2" opacity="0.65" stroke-linecap="round">' +
+  '<line x1="-15" y1="-6" x2="15" y2="-6"/><line x1="-14" y1="1" x2="14" y2="1"/>' +
+  '<line x1="-12" y1="9" x2="12" y2="9"/></g>' +
+  `<path d="M0,19 q7,13 0,25 q-6,12 3,21" stroke="${B2_ORO}" stroke-width="7" fill="none" ` +
+  'stroke-linecap="round"/>' +
+  `<circle cx="4" cy="70" r="5.5" fill="${B2_ORO}"/></g>`;
+
+/** Tarrito de miel con etiqueta. */
+const tarroHoney = (x, y, s) =>
+  `<g transform="translate(${x},${y}) scale(${n2(s)})">` +
+  '<path d="M-26,-14 Q-33,10 -22,31 L22,31 Q33,10 26,-14 Z" fill="#C98A3E"/>' +
+  '<path d="M-26,-14 Q-33,10 -22,31 L-10,31 Q-20,8 -14,-14 Z" fill="#DCA255" opacity="0.85"/>' +
+  '<rect x="-30" y="-22" width="60" height="11" rx="5" fill="#B87A32"/>' +
+  `<path d="M-23,-14 Q0,-5 23,-14 L23,-6 Q0,3 -23,-6 Z" fill="${B2_ORO}"/>` +
+  '<ellipse cx="0" cy="13" rx="18" ry="10" fill="#F7EAD2"/>' +
+  '<text x="0" y="17" text-anchor="middle" font-family="Georgia, serif" font-size="11" ' +
+  'font-style="italic" fill="#8A5A1E">Honey</text>' +
+  `<path d="M13,-16 q6,9 1,17" stroke="${B2_ORO}" stroke-width="4" fill="none" stroke-linecap="round"/></g>`;
+
+/** Cubo de bebe con una letra. */
+const bloque = (x, y, s, letra, color, rot = 0) =>
+  `<g transform="translate(${x},${y}) rotate(${n1(rot)}) scale(${n2(s)})">` +
+  `<rect x="-24" y="-24" width="48" height="48" rx="9" fill="${color}"/>` +
+  '<rect x="-24" y="-24" width="48" height="48" rx="9" fill="#FFFFFF" opacity="0.14"/>' +
+  `<rect x="-24" y="10" width="48" height="14" rx="6" fill="#000000" opacity="0.08"/>` +
+  '<text x="0" y="14" text-anchor="middle" font-family="\'Trebuchet MS\', Verdana, sans-serif" ' +
+  `font-size="37" font-weight="bold" fill="#FFFFFF">${letra}</text></g>`;
+
+/** Estela punteada en forma de corazon (el rastro de una abeja). */
+const estelaCorazon = (x, y, s, color = '#8A8A8A', op = 0.65) =>
+  `<g transform="translate(${x},${y}) scale(${n2(s)})" stroke="${color}" stroke-width="2.6" ` +
+  `fill="none" stroke-linecap="round" stroke-dasharray="3 9" opacity="${n2(op)}">` +
+  '<path d="M0,4 C-28,-28 -62,0 -30,26 C-16,37 -5,46 0,54 C5,46 16,37 30,26 C62,0 28,-28 0,4 Z"/></g>';
+
+/** Separador punteado con un adorno al centro. */
+const separador = (y, x0, x1, color, sw = 2.6) =>
+  `<g stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="2 8" opacity="0.85">` +
+  `<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}"/></g>`;
+
+// Igual que en babyshower_001: si existe babyshower_002/ilustracion.png se usa
+// esa imagen en lugar del osito dibujado. El box respeta la proporcion 1:1 del
+// PNG; el renderer lo estira al tamano dado.
+// Solo arte propio o con licencia: nada de personajes registrados (ver xv_006).
+const B2_OSITO_PNG = { src: 'ilustracion.png', x: 20, y: 1512, width: 180, height: 180 };
+const b2HayPng = fs.existsSync(path.join(ROOT, 'babyshower_002', B2_OSITO_PNG.src));
+
+const bs002Bg = (p) => `
+  <defs>
+    <linearGradient id="${p}bg" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0%" stop-color="#B8E5EA"/><stop offset="55%" stop-color="${B2_AQUA}"/>
+      <stop offset="100%" stop-color="${B2_AQUA_OSC}"/>
+    </linearGradient>
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#${p}bg)"/>
+  ${panal(-82, -74, 3, 4, 54, 'none', 1, B2_ORO, 6)}
+  ${panal(486, -58, 2, 2, 46, 'none', 0.9, B2_ORO_CLARO, 5)}
+  ${panal(-74, 1612, 3, 3, 50, 'none', 1, B2_ORO, 6)}
+  ${panal(468, 1660, 3, 2, 50, 'none', 1, B2_ORO, 6)}
+  ${arco(20, 40, 560, 1664, 100, '#FFFFFF')}
+  ${sparkles(4202, [B2_AQUA, B2_ORO_CLARO], 70, 0.9, 2.3, 120, 1660, [0.1, 0.24])}`;
+
+const bs002Ov = (p) => `
+  <defs>${goldDefs(p, B2_ORO_CLARO, B2_ORO, B2_ORO_OSC)}</defs>
+
+  ${rama(600, 26, 0.76, -1)}
+  ${colmena(498, 96, 0.52, 80)}
+  ${bloque(228, 92, 0.72, 'B', B2_ORO, -7)}
+  ${bloque(275, 88, 0.72, 'A', B2_AZUL_CLARO, 4)}
+  ${bloque(322, 92, 0.72, 'B', B2_ORO, -4)}
+  ${bloque(369, 88, 0.72, 'Y', B2_AZUL, 6)}
+  ${abeja(152, 74, 0.68, -14)}
+  ${vuelo('M164,82 C186,104 206,80 214,102', '#8A8A8A', 0.6, 2.2)}
+  ${abeja(452, 134, 0.56, 16)}
+
+  ${frameLines(LAY_A, `url(#${p}gold)`, 2.6, 1, -10)}
+  ${frameLines(LAY_A, B2_AZUL_CLARO, 1.2, 0.5, -16)}
+
+  ${abeja(14, 700, 0.62, 18)}
+  ${abeja(586, 840, 0.62, -20)}
+  ${abeja(14, 1120, 0.58, -12)}
+  ${abeja(586, 1040, 0.58, 14)}
+
+  ${separador(1452, 92, 246, B2_CAFE)}
+  ${separador(1452, 354, 508, B2_CAFE)}
+  ${tarroHoney(300, 1444, 0.78)}
+
+  ${estelaCorazon(196, 1490, 0.46)}
+  ${abeja(196, 1494, 0.55, -18)}
+  ${b2HayPng ? '' : osito(86, 1630, 0.88)}
+  ${cucharaMiel(500, 1598, 0.8, 16)}
+  ${abeja(430, 1666, 0.55, 12)}
+  ${panal(536, 1606, 2, 2, 40, 'none', 0.75, B2_ORO, 4.5)}`;
+
+add({
+  id: 'babyshower_002',
+  category: 'babyshower',
+  name: 'Baby Shower — Panal Celeste',
+  description: 'Celeste y dorado con arco blanco: panales en contorno, colmena colgando de una rama, cubos BABY, abejitas con estelas punteadas, tarrito de miel y cucharita escurriendo.',
+  rects: LAY_A,
+  bg: bs002Bg,
+  ov: bs002Ov,
+  // ilustracion PNG con transparencia, encima del overlay en la esquina inferior izquierda
+  images: b2HayPng ? [B2_OSITO_PNG] : [],
+  photo: { radius: 0, border: B2_ORO, borderWidth: 5 },
+  previewStroke: B2_ORO,
+  logo: { x: 300, y: 1586, width: 108, height: 34 },
+  // todo termina antes de y=1710: la impresora recorta el borde inferior
+  texts: [
+    { binding: 'subtitleText', text: '', x: 300, y: 1336,
+      font: "'Dancing Script', cursive", size: 74, color: B2_CAFE,
+      align: 'center', weight: 'bold', maxWidth: 450, shadow: true },
+    { binding: 'eventLabel', text: 'BABY SHOWER', x: 300, y: 1400,
+      font: "'Playfair Display', Georgia, serif", size: 26, color: B2_GRIS,
+      align: 'center', weight: 'bold', letterSpacing: 6, maxWidth: 430 },
+    { binding: 'date', x: 300, y: 1500,
+      font: "'Playfair Display', Georgia, serif", size: 20, color: B2_AZUL, align: 'center' },
+    // maxWidth 200 (200..400): libra la esquina del osito y la de la cucharita
+    { binding: 'footerText', text: '', x: 300, y: 1532,
+      font: 'Manrope, Arial, sans-serif', size: 15, color: B2_CAFE_OSC, align: 'center', maxWidth: 200 },
+    { binding: 'footerPhone', text: '', x: 300, y: 1560,
+      font: 'Manrope, Arial, sans-serif', size: 13, color: '#8A7A5E', align: 'center', maxWidth: 200 },
+  ],
+});
+
 // ================================================================ ESCRITURA
 const PREVIEW_SAMPLE = {
   subtitleText: 'Nombre',
@@ -782,6 +1443,23 @@ function previewTextNodes(texts) {
   return `<g>${out.join('')}</g>`;
 }
 
+/**
+ * Imágenes PNG de la plantilla incrustadas en el preview (un SVG cargado como
+ * <img> no puede leer archivos externos). Si falta el PNG solo avisa.
+ */
+function previewImageNodes(folder, images = []) {
+  return images.map((im) => {
+    const file = path.join(folder, im.src);
+    if (!fs.existsSync(file)) {
+      console.warn(`  Falta ${path.relative(ROOT, file)}: el preview sale sin esa imagen`);
+      return '';
+    }
+    const data = fs.readFileSync(file).toString('base64');
+    return `<image href="data:image/png;base64,${data}" x="${im.x}" y="${im.y}" ` +
+      `width="${im.width}" height="${im.height}" preserveAspectRatio="xMidYMax meet"/>`;
+  }).join('');
+}
+
 function buildTemplate(t) {
   const folder = path.join(ROOT, t.id);
   fs.mkdirSync(folder, { recursive: true });
@@ -792,6 +1470,7 @@ function buildTemplate(t) {
     t.bg('pa') +
     photoBoxes(t.rects, t.previewStroke, t.photo.borderWidth || 3) +
     t.ov('pb') +
+    previewImageNodes(folder, t.images) +
     previewTextNodes(t.texts),
     200,
     600,
@@ -812,6 +1491,7 @@ function buildTemplate(t) {
     elements.push(el);
   });
   elements.push({ type: 'overlay', src: 'overlay.svg', x: 0, y: 0, width: W, height: H });
+  for (const im of t.images || []) elements.push({ type: 'overlay', ...im });
   if (t.logo) elements.push({ type: 'logo', align: 'center', ...t.logo });
   for (const tx of t.texts) elements.push({ type: 'text', ...tx });
 
@@ -837,7 +1517,7 @@ function updateCatalog(defs) {
       id: d.id, folder: d.id, name: d.name, category: d.category, preview: 'preview.svg',
     });
   }
-  const order = ['xv_anos', 'boda', 'cumpleanos', 'graduacion', 'navidad',
+  const order = ['xv_anos', 'boda', 'cumpleanos', 'babyshower', 'graduacion', 'navidad',
     'halloween', 'neon', 'corporativo', 'general'];
   const rank = (c) => (order.includes(c) ? order.indexOf(c) : 99);
   catalog.templates = [...existing.values()].sort(
