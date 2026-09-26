@@ -4,7 +4,8 @@ import {
   loadBranding,
   saveBranding,
   cheerMessages,
-  finalCheerMessage,
+  finalCheerMessages,
+  pickMessage,
 } from './branding.js';
 import {
   renderStrip,
@@ -23,8 +24,8 @@ import { renderActiveTemplatePreview } from './stripPreview.js';
 import { initTemplatesPanel } from './templatesPanel.js';
 
 const PHOTO_COUNT = 3;
-const COUNTDOWN_STEP_MS = 2000;
-const COUNTDOWN_PREP_MS = 1200;
+const COUNTDOWN_STEP_MS = 3000;
+const COUNTDOWN_PREP_MS = 2500;
 const CAPTURE_PREVIEW_MS = 2500;
 const CHEER_DISPLAY_MS = 2800;
 const PAUSE_BETWEEN_PHOTOS_MS = 600;
@@ -63,6 +64,7 @@ const inputFooterPhone = document.getElementById('input-footer-phone');
 const selectTheme = document.getElementById('select-theme');
 const inputLogo = document.getElementById('input-logo');
 const logoPreview = document.getElementById('logo-preview');
+const logoPreviewWrap = document.getElementById('logo-preview-wrap');
 const configStripPreview = document.getElementById('config-strip-preview');
 const configPreviewStatus = document.getElementById('config-preview-status');
 const photoRail = document.getElementById('photo-rail');
@@ -263,11 +265,16 @@ function applyBrandingToForm() {
   inputFooterPhone.value = branding.footerPhone || '99-92-15-90-77';
   if (selectTheme) selectTheme.value = branding.themeId || 'teatro';
   applyTheme(branding.themeId || 'teatro');
+  showLogoPreview();
+}
+
+function showLogoPreview() {
   if (branding.logoDataUrl) {
     logoPreview.src = branding.logoDataUrl;
-    logoPreview.classList.remove('hidden');
+    logoPreviewWrap.classList.remove('hidden');
   } else {
-    logoPreview.classList.add('hidden');
+    logoPreview.removeAttribute('src');
+    logoPreviewWrap.classList.add('hidden');
   }
 }
 
@@ -378,6 +385,20 @@ async function initCamera() {
       audio: false,
     });
     video.srcObject = mediaStream;
+    // El marco toma la proporción real de la cámara (normalmente 16:9): así
+    // ocupa el ancho disponible y lo que se ve es exactamente lo que se captura.
+    video.addEventListener(
+      'loadedmetadata',
+      () => {
+        if (video.videoWidth && video.videoHeight) {
+          document.documentElement.style.setProperty(
+            '--video-ar',
+            String(video.videoWidth / video.videoHeight)
+          );
+        }
+      },
+      { once: true }
+    );
   } catch (err) {
     console.error(err);
     alert(
@@ -510,14 +531,14 @@ async function capturePhotoSequence() {
     }
 
     if (i < PHOTO_COUNT - 1) {
-      await showCheer(cheerMessages[i]);
+      await showCheer(pickMessage(cheerMessages[i]));
       await sleep(PAUSE_BETWEEN_PHOTOS_MS);
     }
   }
 
   photoProgress.classList.add('hidden');
   setCaptureState('done');
-  await showCheer(finalCheerMessage);
+  await showCheer(pickMessage(finalCheerMessages));
 
   try {
     await buildStrip();
@@ -666,13 +687,22 @@ inputLogo.addEventListener('change', () => {
   const reader = new FileReader();
     reader.onload = () => {
     branding.logoDataUrl = reader.result;
-    logoPreview.src = branding.logoDataUrl;
-    logoPreview.classList.remove('hidden');
+    showLogoPreview();
     saveBranding(branding);
     scheduleStripPreviewRefresh();
     templatesPanelApi?.scheduleLivePreview();
   };
   reader.readAsDataURL(file);
+});
+
+// Quita el logo: el strip se imprime sin logo (hay eventos que no lo quieren)
+document.getElementById('btn-remove-logo')?.addEventListener('click', () => {
+  branding.logoDataUrl = null;
+  inputLogo.value = ''; // permite volver a elegir el mismo archivo
+  showLogoPreview();
+  saveBranding(branding);
+  scheduleStripPreviewRefresh();
+  templatesPanelApi?.scheduleLivePreview();
 });
 
 document.getElementById('btn-start-welcome').addEventListener('click', () => startSession());

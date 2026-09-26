@@ -1,0 +1,151 @@
+{
+  "id": "xv_007",
+  "name": "XV Años — Torre y Linternas",
+  "category": "xv_anos",
+  "description": "Noche lila con linternas flotantes doradas: torre de piedra con techo morado, trenza dorada tejida con florecitas, sol dorado, lago con barquito y espacio para la ilustración de la quinceañera",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#E3B94F",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#E3B94F",
+      "borderWidth": 5
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#E3B94F",
+      "borderWidth": 5
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "overlay",
+      "src": "quinceanera.png",
+      "x": 326,
+      "y": 1362,
+      "width": 270,
+      "height": 340
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 220,
+      "y": 1592,
+      "width": 100,
+      "height": 34
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "",
+      "x": 220,
+      "y": 1326,
+      "font": "'Dancing Script', cursive",
+      "size": 76,
+      "color": "#FFE7A3",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 300,
+      "shadow": true
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "MIS XV AÑOS",
+      "x": 220,
+      "y": 1406,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 26,
+      "color": "#E3B94F",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 6,
+      "maxWidth": 280
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 220,
+      "y": 1490,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 20,
+      "color": "#D9C8F5",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 220,
+      "y": 1520,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 15,
+      "color": "#D9C8F5",
+      "align": "center",
+      "maxWidth": 220
+    },
+    {
+      "type": "text",
+      "binding": "footerHashtag",
+      "text": "",
+      "x": 220,
+      "y": 1546,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 15,
+      "color": "#E3B94F",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 220
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 220,
+      "y": 1572,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#A994DA",
+      "align": "center",
+      "maxWidth": 220
+    }
+  ]
+}

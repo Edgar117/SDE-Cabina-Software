@@ -1414,6 +1414,343 @@ add({
   ],
 });
 
+// ---------------------------------------------------------------- XV 007
+// Temática "torre y linternas": noche lila con linternas flotantes, torre de
+// piedra, trenza dorada con florecitas y lago. Arte propio inspirado en el
+// ambiente del cuento; no usa personajes, escudos ni logos con derechos.
+const XV7_ORO_CLARO = '#FFE7A3';
+const XV7_ORO = '#E3B94F';
+const XV7_ORO_OSCURO = '#9C7420';
+const XV7_LILA = '#D9C8F5';
+const XV7_LILA_OSC = '#A994DA';
+const XV7_FLORES = ['#F6B8D1', '#FFFFFF', '#C7B3F2', '#FFD9E6'];
+
+// La ilustración de la quinceañera es opcional: si existe el PNG se coloca
+// en la esquina inferior derecha; si no, ese espacio queda marcado con un
+// halo suave y un recuadro punteado.
+const XV7_PNG = { src: 'quinceanera.png', x: 326, y: 1362, width: 270, height: 340 };
+const xv7HayPng = fs.existsSync(path.join(ROOT, 'xv_007', XV7_PNG.src));
+
+/** Linterna de papel flotando: halo difuso + cuerpo con varillas. */
+function linterna(p, x, y, s, rot = 0, op = 1) {
+  return `<g transform="translate(${n1(x)},${n1(y)}) rotate(${n1(rot)}) scale(${n2(s)})" opacity="${n2(op)}">` +
+    `<circle cx="0" cy="2" r="30" fill="#FFB84D" opacity="0.45" filter="url(#${p}lf)"/>` +
+    `<path d="M-11,-16 L11,-16 L14,14 L-14,14 Z" fill="url(#${p}lin)"/>` +
+    '<path d="M-4,-16 L-5,14 M4,-16 L5,14" stroke="#C9661E" stroke-width="0.9" opacity="0.55"/>' +
+    '<rect x="-12" y="-18" width="24" height="3" rx="1" fill="#B8551A"/>' +
+    '<rect x="-15" y="13" width="30" height="3" rx="1" fill="#B8551A"/>' +
+    '<ellipse cx="0" cy="11" rx="7" ry="3" fill="#FFF6C8" opacity="0.9"/></g>';
+}
+
+/** Linternas pequeñas repartidas (las lejanas más chicas y tenues), sin tapar fotos. */
+function cieloLinternas(p, seed, count, ymin, ymax, smin, smax, evitar = []) {
+  const r = rng(seed);
+  const out = [];
+  let intentos = 0;
+  while (out.length < count && intentos < count * 20) {
+    intentos += 1;
+    const x = between(r, 10, W - 10);
+    const y = between(r, ymin, ymax);
+    const s = between(r, smin, smax);
+    const rot = between(r, -12, 12);
+    const tapa = evitar.some(([ex, ey, ew, eh]) =>
+      x > ex - 12 && x < ex + ew + 12 && y > ey - 16 && y < ey + eh + 16);
+    if (tapa) continue;
+    out.push(linterna(p, x, y, s, rot, 0.45 + ((s - smin) / (smax - smin)) * 0.55));
+  }
+  return `<g>${out.join('')}</g>`;
+}
+
+/** Torre de piedra con techo cónico y ventana iluminada. */
+function torre(p, x, y, s) {
+  let piedras = '';
+  for (let fila = 0; fila < 9; fila += 1) {
+    for (let c = 0; c < 3; c += 1) {
+      const px = -34 + c * 24 + (fila % 2 ? 12 : 0);
+      if (px > 26) continue;
+      piedras += `<rect x="${px}" y="${40 + fila * 16}" width="20" height="12" rx="3"/>`;
+    }
+  }
+  return `<g transform="translate(${x},${y}) scale(${s})">` +
+    `<rect x="-38" y="36" width="76" height="160" fill="url(#${p}piedra)"/>` +
+    `<g fill="#FFFFFF" opacity="0.07">${piedras}</g>` +
+    '<rect x="-44" y="28" width="88" height="12" rx="3" fill="#6E5E8C"/>' +
+    '<path d="M-50,30 L0,-62 L50,30 Z" fill="#6A3E9A"/>' +
+    '<path d="M0,-62 L50,30 L22,30 Z" fill="#4E2C78"/>' +
+    `<path d="M0,-62 L0,-80" stroke="${XV7_ORO}" stroke-width="2.4"/>` +
+    `<path d="M0,-80 L16,-74 L0,-68 Z" fill="${XV7_ORO}"/>` +
+    `<circle cx="0" cy="82" r="36" fill="#FFD27A" opacity="0.3" filter="url(#${p}lf)"/>` +
+    '<path d="M-14,96 L-14,74 Q0,58 14,74 L14,96 Z" fill="#FFD27A" stroke="#4A3A66" stroke-width="3"/>' +
+    '<line x1="0" y1="66" x2="0" y2="96" stroke="#4A3A66" stroke-width="2"/>' +
+    '<rect x="-18" y="94" width="36" height="5" rx="2" fill="#4A3A66"/></g>';
+}
+
+/** Trenza dorada que cae siguiendo una curva cúbica, con florecitas tejidas. */
+function trenza(x0, y0, c1x, c1y, c2x, c2y, x1, y1, n, flores) {
+  const punto = (t) => {
+    const u = 1 - t;
+    return [
+      u * u * u * x0 + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * x1,
+      u * u * u * y0 + 3 * u * u * t * c1y + 3 * u * t * t * c2y + t * t * t * y1,
+    ];
+  };
+  const mechones = [];
+  const brillos = [];
+  for (let i = 0; i <= n; i += 1) {
+    const t = i / n;
+    const [px, py] = punto(t);
+    const [qx, qy] = punto(Math.min(1, t + 0.005));
+    const ang = (Math.atan2(qy - py, qx - px) * 180) / Math.PI;
+    const giro = ang + (i % 2 ? 34 : -34);
+    const g = 1 - t * 0.35;
+    mechones.push(`<ellipse cx="${n1(px)}" cy="${n1(py)}" rx="${n1(11 * g)}" ry="${n1(6 * g)}" ` +
+      `transform="rotate(${n1(giro)} ${n1(px)} ${n1(py)})"/>`);
+    brillos.push(`<ellipse cx="${n1(px - 1.5)}" cy="${n1(py - 1.5)}" rx="${n1(5 * g)}" ry="${n1(1.6 * g)}" ` +
+      `transform="rotate(${n1(giro)} ${n1(px)} ${n1(py)})"/>`);
+  }
+  let florecitas = '';
+  for (let i = 1; i <= flores; i += 1) {
+    const [fx, fy] = punto(i / (flores + 1));
+    florecitas += flor(n1(fx + (i % 2 ? 3 : -3)), n1(fy), 0.55,
+      XV7_FLORES[i % XV7_FLORES.length], '#FFFFFF', '#F2C94C');
+  }
+  const [ex, ey] = punto(1);
+  return `<g><g fill="${XV7_ORO}" stroke="${XV7_ORO_OSCURO}" stroke-width="1">${mechones.join('')}</g>` +
+    `<g fill="${XV7_ORO_CLARO}" opacity="0.75">${brillos.join('')}</g>` +
+    `<path d="M${n1(ex - 6)},${n1(ey)} Q${n1(ex)},${n1(ey + 26)} ${n1(ex + 2)},${n1(ey + 34)} ` +
+    `Q${n1(ex + 5)},${n1(ey + 20)} ${n1(ex + 7)},${n1(ey)} Z" ` +
+    `fill="${XV7_ORO}" stroke="${XV7_ORO_OSCURO}" stroke-width="1"/>` +
+    `<rect x="${n1(ex - 8)}" y="${n1(ey - 4)}" width="16" height="6" rx="3" fill="#B98AE0"/>${florecitas}</g>`;
+}
+
+/** Sol dorado de rayos ondulados (diseño propio, sin escudos). */
+function solDorado(x, y, s, oro, oroOscuro) {
+  let rayos = '';
+  for (let i = 0; i < 16; i += 1) {
+    const largo = i % 2 ? 30 : 42;
+    rayos += `<path d="M-5,-24 Q-8,${-24 - largo / 2} 0,${-24 - largo} Q8,${-24 - largo / 2} 5,-24 Z" ` +
+      `transform="rotate(${i * 22.5})"/>`;
+  }
+  return `<g transform="translate(${x},${y}) scale(${s})">` +
+    `<g fill="${oro}" stroke="${oroOscuro}" stroke-width="1">${rayos}</g>` +
+    `<circle r="26" fill="${oro}" stroke="${oroOscuro}" stroke-width="1.4"/>` +
+    `<circle r="17" fill="none" stroke="${oroOscuro}" stroke-width="1.2" opacity="0.7"/>` +
+    `<circle r="6" fill="${oroOscuro}" opacity="0.6"/></g>`;
+}
+
+/** Barquito de remos en silueta. */
+const bote = (x, y, s) =>
+  `<g transform="translate(${x},${y}) scale(${s})">` +
+  '<path d="M-52,0 Q0,26 52,0 L44,-6 L-44,-6 Z" fill="#3A2A5C"/>' +
+  '<path d="M-44,-6 L44,-6" stroke="#6D58A0" stroke-width="2"/>' +
+  '<path d="M-20,-4 L-44,18 M22,-4 L46,18" stroke="#2A1E44" stroke-width="3" stroke-linecap="round"/></g>';
+
+const linternaDef = (p) =>
+  `<linearGradient id="${p}lin" x1="0" y1="0" x2="0" y2="1">` +
+  '<stop offset="0%" stop-color="#FFB347"/><stop offset="100%" stop-color="#FFE08A"/></linearGradient>' +
+  blurDef(p, 'lf', 6);
+
+const xv007Bg = (p) => `
+  <defs>
+    <linearGradient id="${p}bg" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0%" stop-color="#15103A"/><stop offset="35%" stop-color="#2E2263"/>
+      <stop offset="70%" stop-color="#4A3585"/><stop offset="100%" stop-color="#231A4D"/>
+    </linearGradient>
+    <radialGradient id="${p}glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0%" stop-color="#B08AE0" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#B08AE0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="${p}lago" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2E2263" stop-opacity="0"/><stop offset="30%" stop-color="#2B2160"/><stop offset="100%" stop-color="#120D30"/>
+    </linearGradient>
+    ${linternaDef(p)}
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#${p}bg)"/>
+  <rect width="${W}" height="${H}" fill="url(#${p}glow)"/>
+  ${stars4(9801, '#FFF3D0', 26, 0, H, 3, 8, 0.7)}
+  ${sparkles(9802, ['#FFFFFF', '#E9DCFF', '#FFE7A3'], 140, 0.6, 2.0, 0, H, [0.2, 0.8])}
+  ${cieloLinternas(p, 9803, 46, 20, 1640, 0.22, 0.5,
+    [...LAY_A, [60, 1270, 320, 300], [XV7_PNG.x, XV7_PNG.y, XV7_PNG.width, XV7_PNG.height]])}
+  <rect x="0" y="1628" width="${W}" height="${H - 1628}" fill="url(#${p}lago)"/>
+  <g stroke="#FFD27A" stroke-width="2" opacity="0.22" stroke-linecap="round">
+    <line x1="60" y1="1700" x2="140" y2="1700"/><line x1="250" y1="1716" x2="360" y2="1716"/>
+    <line x1="420" y1="1690" x2="540" y2="1690"/><line x1="140" y1="1780" x2="280" y2="1780"/>
+  </g>`;
+
+const xv007Ov = (p) => `
+  <defs>${goldDefs(p, XV7_ORO_CLARO, XV7_ORO, XV7_ORO_OSCURO)}${linternaDef(p)}
+    <linearGradient id="${p}piedra" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8A7AA8"/><stop offset="60%" stop-color="#6C5C8C"/><stop offset="100%" stop-color="#4E4070"/>
+    </linearGradient>
+    <radialGradient id="${p}qhalo"><stop offset="0%" stop-color="#FFD27A" stop-opacity="0.3"/><stop offset="100%" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>
+  </defs>
+  ${frameLines(LAY_A, `url(#${p}gold)`, 2.2, 0.9, -10)}
+  ${frameLines(LAY_A, XV7_LILA, 1, 0.45, -16)}
+  ${trenza(34, 92, 16, 300, 14, 800, 20, 1236, 120, 9)}
+  ${torre(p, 34, 44, 0.5)}
+  ${solDorado(300, 76, 0.95, `url(#${p}gold)`, XV7_ORO_OSCURO)}
+  ${linterna(p, 196, 54, 0.9, -8)}${linterna(p, 404, 60, 0.95, 8)}
+  ${linterna(p, 470, 28, 0.7, -4)}${linterna(p, 540, 90, 0.8, 10)}
+  ${flor(566, 520, 0.9, XV7_FLORES[0], '#FFFFFF')}${flor(584, 540, 0.6, XV7_FLORES[2], '#FFFFFF')}
+  ${flor(566, 892, 0.9, XV7_FLORES[2], '#FFFFFF')}${flor(580, 870, 0.6, XV7_FLORES[1], '#E9DCFF')}
+  ${linterna(p, 572, 1290, 0.75, 8)}${linterna(p, 522, 1262, 0.5, -6)}
+  <g stroke="${XV7_ORO}" stroke-width="2.4" stroke-linecap="round">
+    <line x1="90" y1="1452" x2="186" y2="1452"/>
+    <line x1="254" y1="1452" x2="350" y2="1452"/>
+  </g>
+  ${solDorado(220, 1452, 0.42, `url(#${p}gold)`, XV7_ORO_OSCURO)}
+  ${bote(118, 1676, 0.95)}
+  ${linterna(p, 70, 1640, 0.5, -6)}${linterna(p, 166, 1626, 0.45, 6)}
+  <ellipse cx="462" cy="1530" rx="165" ry="225" fill="url(#${p}qhalo)"/>
+  ${xv7HayPng ? '' : `<rect x="${XV7_PNG.x + 10}" y="${XV7_PNG.y + 10}" width="${XV7_PNG.width - 20}" ` +
+    `height="${XV7_PNG.height - 20}" rx="14" fill="none" stroke="${XV7_LILA}" stroke-width="1.5" ` +
+    'stroke-dasharray="6 6" opacity="0.35"/>'}`;
+
+add({
+  id: 'xv_007',
+  category: 'xv_anos',
+  name: 'XV Años — Torre y Linternas',
+  description: 'Noche lila con linternas flotantes doradas: torre de piedra con techo morado, trenza dorada tejida con florecitas, sol dorado, lago con barquito y espacio para la ilustración de la quinceañera',
+  rects: LAY_A,
+  bg: xv007Bg,
+  ov: xv007Ov,
+  // ilustración PNG con transparencia (opcional), encima del overlay en la esquina inferior derecha
+  images: xv7HayPng ? [XV7_PNG] : [],
+  photo: { radius: 0, border: XV7_ORO, borderWidth: 5 },
+  previewStroke: XV7_ORO,
+  logo: { x: 220, y: 1592, width: 100, height: 34 },
+  // todo lo de abajo termina antes de y=1710: la impresora recorta el borde inferior.
+  // texto a la izquierda; la quinceañera ocupa la esquina inferior derecha
+  texts: [
+    { binding: 'subtitleText', text: '', x: 220, y: 1326,
+      font: "'Dancing Script', cursive", size: 76, color: XV7_ORO_CLARO,
+      align: 'center', weight: 'bold', maxWidth: 300, shadow: true },
+    { binding: 'eventLabel', text: 'MIS XV AÑOS', x: 220, y: 1406,
+      font: "'Playfair Display', Georgia, serif", size: 26, color: XV7_ORO,
+      align: 'center', weight: 'bold', letterSpacing: 6, maxWidth: 280 },
+    { binding: 'date', x: 220, y: 1490,
+      font: "'Playfair Display', Georgia, serif", size: 20, color: XV7_LILA, align: 'center' },
+    { binding: 'footerText', text: '', x: 220, y: 1520,
+      font: 'Manrope, Arial, sans-serif', size: 15, color: XV7_LILA, align: 'center', maxWidth: 220 },
+    { binding: 'footerHashtag', text: '', x: 220, y: 1546,
+      font: 'Manrope, Arial, sans-serif', size: 15, color: XV7_ORO, align: 'center', weight: 'bold', maxWidth: 220 },
+    { binding: 'footerPhone', text: '', x: 220, y: 1572,
+      font: 'Manrope, Arial, sans-serif', size: 13, color: XV7_LILA_OSC, align: 'center', maxWidth: 220 },
+  ],
+});
+
+// ---------------------------------------------------------------- XV 008
+// Variante de xv_007 al atardecer: cielo durazno/rosa/lila que oscurece hacia
+// el lago, trenza con flores como guirnalda arriba y castillo en silueta.
+// La quinceañera va abajo a la izquierda y el texto a la derecha.
+const XV8_MORADO = '#7A4FB0';
+
+const XV8_PNG = { src: 'quinceanera.png', x: 4, y: 1362, width: 270, height: 340 };
+const xv8HayPng = fs.existsSync(path.join(ROOT, 'xv_008', XV8_PNG.src));
+
+/** Castillo en silueta: torres con techos cónicos y ventanitas encendidas. */
+function castillo(x, y, s, fill) {
+  const torreC = (tx, ancho, alto) =>
+    `<rect x="${tx - ancho / 2}" y="${-alto}" width="${ancho}" height="${alto}"/>` +
+    `<path d="M${tx - ancho / 2 - 3},${-alto} L${tx},${-alto - ancho * 1.4} L${tx + ancho / 2 + 3},${-alto} Z"/>` +
+    `<path d="M${tx},${-alto - ancho * 1.4} L${tx},${-alto - ancho * 1.4 - 10}" stroke="${fill}" stroke-width="1.5"/>`;
+  const ventanas = [[-40, -40], [-12, -62], [12, -62], [40, -40], [0, -30], [-24, -26], [24, -26]]
+    .map(([vx, vy]) => `<rect x="${vx - 2}" y="${vy}" width="4" height="7" rx="2"/>`).join('');
+  return `<g transform="translate(${x},${y}) scale(${s})">` +
+    `<g fill="${fill}">${torreC(-40, 18, 60)}${torreC(-12, 20, 90)}${torreC(12, 20, 90)}` +
+    `${torreC(40, 18, 60)}${torreC(0, 26, 110)}${torreC(-62, 12, 40)}${torreC(62, 12, 40)}` +
+    '<rect x="-70" y="-30" width="140" height="30"/></g>' +
+    `<g fill="#FFD27A" opacity="0.9">${ventanas}</g></g>`;
+}
+
+const xv008Bg = (p) => `
+  <defs>
+    <linearGradient id="${p}bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FBD3B0"/><stop offset="22%" stop-color="#F4B9C8"/>
+      <stop offset="48%" stop-color="#C9A6E2"/><stop offset="70%" stop-color="#6F55A8"/>
+      <stop offset="100%" stop-color="#2B1E55"/>
+    </linearGradient>
+    <radialGradient id="${p}sol" cx="0.5" cy="0.05" r="0.5">
+      <stop offset="0%" stop-color="#FFF1C9" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFF1C9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="${p}lago" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3A2A6E" stop-opacity="0"/><stop offset="25%" stop-color="#34265F"/><stop offset="100%" stop-color="#150F33"/>
+    </linearGradient>
+    ${linternaDef(p)}
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#${p}bg)"/>
+  <rect width="${W}" height="${H}" fill="url(#${p}sol)"/>
+  ${sparkles(9811, ['#FFFFFF', '#FFF1C9', '#F9D9E6'], 120, 0.6, 2.2, 0, H, [0.25, 0.85])}
+  ${stars4(9812, '#FFFFFF', 22, 0, H, 3, 8, 0.75)}
+  ${cieloLinternas(p, 9813, 40, 20, 1640, 0.22, 0.5,
+    [...LAY_A, [240, 1270, 330, 300], [XV8_PNG.x, XV8_PNG.y, XV8_PNG.width, XV8_PNG.height]])}
+  <rect x="0" y="1628" width="${W}" height="${H - 1628}" fill="url(#${p}lago)"/>
+  <g stroke="#FFD27A" stroke-width="2" opacity="0.25" stroke-linecap="round">
+    <line x1="300" y1="1712" x2="400" y2="1712"/><line x1="440" y1="1726" x2="560" y2="1726"/>
+    <line x1="60" y1="1760" x2="200" y2="1760"/><line x1="360" y1="1784" x2="500" y2="1784"/>
+  </g>`;
+
+const xv008Ov = (p) => `
+  <defs>${goldDefs(p, XV7_ORO_CLARO, XV7_ORO, XV7_ORO_OSCURO)}${linternaDef(p)}
+    <radialGradient id="${p}qhalo"><stop offset="0%" stop-color="#FFD27A" stop-opacity="0.32"/><stop offset="100%" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>
+  </defs>
+  ${frameLines(LAY_A, `url(#${p}gold)`, 2.2, 0.95, -10)}
+  ${frameLines(LAY_A, '#FFFFFF', 1, 0.6, -16)}
+  ${trenza(-20, 36, 150, 150, 450, 150, 620, 36, 110, 11)}
+  ${solDorado(300, 72, 0.8, `url(#${p}gold)`, XV7_ORO_OSCURO)}
+  ${flor(22, 44, 1.2, XV7_FLORES[0], '#FFFFFF')}${flor(52, 22, 0.8, XV7_FLORES[2], '#FFFFFF')}
+  ${flor(578, 44, 1.2, XV7_FLORES[2], '#FFFFFF')}${flor(548, 22, 0.8, XV7_FLORES[0], '#FFFFFF')}
+  ${flor(34, 516, 0.9, XV7_FLORES[3], '#FFFFFF')}${flor(20, 536, 0.6, XV7_FLORES[1], '#F4E6FF')}
+  ${flor(566, 888, 0.9, XV7_FLORES[0], '#FFFFFF')}${flor(582, 868, 0.6, XV7_FLORES[2], '#FFFFFF')}
+  ${flor(34, 1258, 0.9, XV7_FLORES[2], '#FFFFFF')}${flor(566, 1258, 0.9, XV7_FLORES[3], '#FFFFFF')}
+  ${linterna(p, 128, 84, 0.7, -8)}${linterna(p, 472, 84, 0.7, 8)}
+  ${linterna(p, 22, 1300, 0.6, -6)}${linterna(p, 70, 1276, 0.45, 6)}
+  <g stroke="${XV7_ORO}" stroke-width="2.4" stroke-linecap="round">
+    <line x1="270" y1="1452" x2="366" y2="1452"/>
+    <line x1="434" y1="1452" x2="530" y2="1452"/>
+  </g>
+  ${solDorado(400, 1452, 0.42, `url(#${p}gold)`, XV7_ORO_OSCURO)}
+  ${castillo(500, 1690, 0.75, '#7C5BB8')}
+  ${linterna(p, 350, 1650, 0.5, -6)}${linterna(p, 580, 1640, 0.45, 6)}
+  <ellipse cx="138" cy="1530" rx="165" ry="225" fill="url(#${p}qhalo)"/>
+  ${xv8HayPng ? '' : `<rect x="${XV8_PNG.x + 10}" y="${XV8_PNG.y + 10}" width="${XV8_PNG.width - 20}" ` +
+    `height="${XV8_PNG.height - 20}" rx="14" fill="none" stroke="${XV7_LILA}" stroke-width="1.5" ` +
+    'stroke-dasharray="6 6" opacity="0.35"/>'}`;
+
+add({
+  id: 'xv_008',
+  category: 'xv_anos',
+  name: 'XV Años — Atardecer en el Reino',
+  description: 'Atardecer durazno, rosa y lila: trenza dorada con flores como guirnalda, sol dorado, linternas flotantes, castillo en silueta sobre el lago y espacio para la ilustración de la quinceañera a la izquierda',
+  rects: LAY_A,
+  bg: xv008Bg,
+  ov: xv008Ov,
+  // ilustración PNG con transparencia (opcional), encima del overlay en la esquina inferior izquierda
+  images: xv8HayPng ? [XV8_PNG] : [],
+  photo: { radius: 0, border: XV8_MORADO, borderWidth: 5 },
+  previewStroke: XV8_MORADO,
+  logo: { x: 400, y: 1592, width: 100, height: 34 },
+  // todo lo de abajo termina antes de y=1710: la impresora recorta el borde inferior.
+  // texto a la derecha; la quinceañera ocupa la esquina inferior izquierda
+  texts: [
+    { binding: 'subtitleText', text: '', x: 400, y: 1326,
+      font: "'Dancing Script', cursive", size: 76, color: XV7_ORO_CLARO,
+      align: 'center', weight: 'bold', maxWidth: 300, shadow: true },
+    { binding: 'eventLabel', text: 'MIS XV AÑOS', x: 400, y: 1406,
+      font: "'Playfair Display', Georgia, serif", size: 26, color: XV7_ORO,
+      align: 'center', weight: 'bold', letterSpacing: 6, maxWidth: 280 },
+    { binding: 'date', x: 400, y: 1490,
+      font: "'Playfair Display', Georgia, serif", size: 20, color: XV7_LILA, align: 'center' },
+    { binding: 'footerText', text: '', x: 400, y: 1520,
+      font: 'Manrope, Arial, sans-serif', size: 15, color: XV7_LILA, align: 'center', maxWidth: 220 },
+    { binding: 'footerHashtag', text: '', x: 400, y: 1546,
+      font: 'Manrope, Arial, sans-serif', size: 15, color: XV7_ORO, align: 'center', weight: 'bold', maxWidth: 220 },
+    { binding: 'footerPhone', text: '', x: 400, y: 1572,
+      font: 'Manrope, Arial, sans-serif', size: 13, color: XV7_LILA_OSC, align: 'center', maxWidth: 220 },
+  ],
+});
+
 // ================================================================ ESCRITURA
 const PREVIEW_SAMPLE = {
   subtitleText: 'Nombre',

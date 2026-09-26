@@ -90,6 +90,18 @@ Helpers disponibles: `rosa`, `capullo`, `hoja`, `rama` (eucalipto),
 `PALETAS`, y cada una genera 3 degradados radiales (uno por anillo de pétalos),
 que es lo que le da volumen a las flores.
 
+### Juegos extra (Node, sin Python)
+
+```bash
+node tools/generar_deco_extra.mjs
+```
+
+Genera los adornos de los temas extra (XV rosa/azul/esmeralda/reino, boda
+azul/terracota/noche, fiesta globos/glam/mexicana). Trae la misma composición
+floral del `.py` más tres propias: **globos** (arco orgánico), **papel picado**
+y **reino** (trenza dorada, sol, linternas y torre, inspirado en la tira
+`xv_008`). Cada juego se registra en `src/styles.css` con sus 5 `url()`.
+
 > La guirnalda superior tiene **hueco al centro** a propósito: ahí va el título
 > del evento. Si la modificas, respeta ese espacio libre.
 

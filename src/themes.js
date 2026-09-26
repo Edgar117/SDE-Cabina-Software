@@ -485,6 +485,304 @@ export const themes = {
       fontDisplay: SERIF, fontScript: SCRIPT,
     },
   },
+
+  /* ————— Juegos extra (adornos: tools/generar_deco_extra.mjs) ————— */
+
+  'xv-reino': {
+    id: 'xv-reino',
+    name: 'XV Noche en el Reino',
+    headerTextDefault: 'Mis XV Años',
+    footerTextDefault: '¡Gracias por celebrar conmigo!',
+    strip: {
+      headerTop: '#4B2E83', headerBottom: '#2A1848',
+      footerTop: '#2A1848', footerBottom: '#4B2E83',
+      stripBg: '#F8F3FB', photoBg: '#1C1030',
+      borderInner: '#4B2E83', accent: '#E9C46A', dateColor: '#B8A2D8',
+    },
+    ui: {
+      mood: 'dark', deco: 'floral-reino',
+      // Noche de gala: cielo morado profundo, último brillo cálido en el horizonte
+      stageBg:
+        'radial-gradient(ellipse 60% 38% at 50% 0%, rgba(233,196,106,0.16) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 80% 40% at 50% 104%, rgba(255,170,110,0.22) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 36% 30% at 10% 70%, rgba(255,190,106,0.12) 0%, transparent 70%),' +
+        'radial-gradient(ellipse 36% 30% at 90% 64%, rgba(255,190,106,0.10) 0%, transparent 70%),' +
+        'linear-gradient(180deg, #1E1236 0%, #2E1A50 38%, #432667 72%, #5A3272 100%)',
+      curtainDeep: '#170C2A',
+      gold: '#E9C46A', goldLight: '#FFEDBE',
+      ink: '#FBF4FF', inkSoft: 'rgba(236,224,248,0.72)',
+      frameBorder: '#F3E2B4', frameGlow: 'rgba(233,196,106,0.46)',
+      scrim: 'rgba(24,12,44,0.85)', slotIdle: 'rgba(30,16,54,0.62)',
+      btnInner: '#8E6CC4', btnOuter: '#2E1A50',
+      foldOpacity: 0.30, vignette: 0.32,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'xv-rosa-oro': {
+    id: 'xv-rosa-oro',
+    name: 'XV Rosa Palo & Oro',
+    headerTextDefault: 'Mis XV Años',
+    footerTextDefault: '¡Gracias por celebrar conmigo!',
+    strip: {
+      headerTop: '#E79AAF', headerBottom: '#B0607A',
+      footerTop: '#B0607A', footerBottom: '#E79AAF',
+      stripBg: '#FDF5F6', photoBg: '#3A1E28',
+      borderInner: '#C97790', accent: '#D4AF37', dateColor: '#B07A8A',
+    },
+    ui: {
+      mood: 'light', deco: 'floral-rosa-oro',
+      stageBg:
+        'radial-gradient(ellipse 70% 48% at 50% 0%, rgba(255,255,255,0.96) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 58% 42% at 6% 96%, rgba(245,194,207,0.60) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 58% 42% at 94% 96%, rgba(245,194,207,0.54) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 50% 34% at 50% 52%, rgba(255,253,252,0.9) 0%, transparent 70%),' +
+        'linear-gradient(152deg, #FFFAFA 0%, #FCEDEF 30%, #F7DCE2 62%, #EFC6D1 100%)',
+      curtainDeep: '#F8E4E8',
+      gold: '#A4801C', goldLight: '#F6E4AE',
+      ink: '#5A2E3C', inkSoft: 'rgba(90,46,60,0.68)',
+      frameBorder: '#ffffff', frameGlow: 'rgba(164,128,28,0.36)',
+      scrim: 'rgba(70,36,48,0.80)', slotIdle: 'rgba(255,255,255,0.66)',
+      btnInner: '#EFA3BA', btnOuter: '#B0607A',
+      foldOpacity: 0.10, vignette: 0.16,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'xv-azul': {
+    id: 'xv-azul',
+    name: 'XV Azul Cielo & Plata',
+    headerTextDefault: 'Mis XV Años',
+    footerTextDefault: '¡Gracias por celebrar conmigo!',
+    strip: {
+      headerTop: '#98C2E6', headerBottom: '#5A86B4',
+      footerTop: '#5A86B4', footerBottom: '#98C2E6',
+      stripBg: '#F4F8FD', photoBg: '#1E2C40',
+      borderInner: '#6F9FCC', accent: '#9AA6B4', dateColor: '#6A86A6',
+    },
+    ui: {
+      mood: 'light', deco: 'floral-azul-xv',
+      stageBg:
+        'radial-gradient(ellipse 70% 48% at 50% 0%, rgba(255,255,255,0.96) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 58% 42% at 6% 96%, rgba(194,221,243,0.62) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 58% 42% at 94% 96%, rgba(194,221,243,0.56) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 50% 34% at 50% 52%, rgba(253,254,255,0.9) 0%, transparent 70%),' +
+        'linear-gradient(152deg, #FAFCFF 0%, #EAF3FB 30%, #D8E8F6 62%, #C1D9EF 100%)',
+      curtainDeep: '#E2EEF8',
+      gold: '#4F6F94', goldLight: '#E6EEF7',
+      ink: '#233B58', inkSoft: 'rgba(35,59,88,0.68)',
+      frameBorder: '#ffffff', frameGlow: 'rgba(79,111,148,0.34)',
+      scrim: 'rgba(30,48,72,0.80)', slotIdle: 'rgba(255,255,255,0.68)',
+      btnInner: '#8DBBE3', btnOuter: '#3F6C9C',
+      foldOpacity: 0.10, vignette: 0.16,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'xv-esmeralda': {
+    id: 'xv-esmeralda',
+    name: 'XV Esmeralda & Oro',
+    headerTextDefault: 'Mis XV Años',
+    footerTextDefault: '¡Gracias por celebrar conmigo!',
+    strip: {
+      headerTop: '#1F6B53', headerBottom: '#0C3B2D',
+      footerTop: '#0C3B2D', footerBottom: '#1F6B53',
+      stripBg: '#F4F8F4', photoBg: '#06231A',
+      borderInner: '#16553F', accent: '#E2C25C', dateColor: '#5E8C79',
+    },
+    ui: {
+      mood: 'dark', deco: 'floral-esmeralda',
+      stageBg:
+        'radial-gradient(ellipse 70% 50% at 50% 4%, rgba(226,194,92,0.20) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 60% 46% at 8% 96%, rgba(31,107,83,0.55) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 60% 46% at 92% 96%, rgba(31,107,83,0.50) 0%, transparent 66%),' +
+        'linear-gradient(166deg, #0E3F31 0%, #082A20 46%, #041812 100%)',
+      curtainDeep: '#041A13',
+      gold: '#E2C25C', goldLight: '#FBEEC2',
+      ink: '#F3FAF5', inkSoft: 'rgba(222,240,230,0.70)',
+      frameBorder: '#F0DFB4', frameGlow: 'rgba(226,194,92,0.48)',
+      scrim: 'rgba(4,26,19,0.85)', slotIdle: 'rgba(8,40,30,0.66)',
+      btnInner: '#2F8C6B', btnOuter: '#0C3B2D',
+      foldOpacity: 0.40, vignette: 0.34,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'boda-azul': {
+    id: 'boda-azul',
+    name: 'Boda Azul Polvo',
+    headerTextDefault: 'Nuestra Boda',
+    footerTextDefault: 'Gracias por acompañarnos',
+    strip: {
+      headerTop: '#A5BDD3', headerBottom: '#6786A4',
+      footerTop: '#6786A4', footerBottom: '#A5BDD3',
+      stripBg: '#F7F9FB', photoBg: '#26323F',
+      borderInner: '#7F9CB8', accent: '#B9A36A', dateColor: '#6F8AA4',
+    },
+    ui: {
+      mood: 'light', deco: 'floral-azul',
+      stageBg:
+        'radial-gradient(ellipse 70% 48% at 50% 0%, rgba(255,255,255,0.96) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 55% 40% at 4% 96%, rgba(201,216,230,0.60) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 55% 40% at 96% 96%, rgba(201,216,230,0.54) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 50% 34% at 50% 52%, rgba(254,255,255,0.9) 0%, transparent 70%),' +
+        'linear-gradient(152deg, #FBFCFD 0%, #EEF3F7 30%, #DDE7EF 62%, #C8D6E3 100%)',
+      curtainDeep: '#E6EDF3',
+      gold: '#8C7432', goldLight: '#EEE3BE',
+      ink: '#2E3F52', inkSoft: 'rgba(46,63,82,0.68)',
+      frameBorder: '#ffffff', frameGlow: 'rgba(140,116,50,0.32)',
+      scrim: 'rgba(36,50,66,0.80)', slotIdle: 'rgba(255,255,255,0.68)',
+      btnInner: '#A5BDD3', btnOuter: '#4F6E8E',
+      foldOpacity: 0.10, vignette: 0.16,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'boda-terracota': {
+    id: 'boda-terracota',
+    name: 'Boda Boho Terracota',
+    headerTextDefault: 'Nuestra Boda',
+    footerTextDefault: 'Gracias por acompañarnos',
+    strip: {
+      headerTop: '#DE8B66', headerBottom: '#94482A',
+      footerTop: '#94482A', footerBottom: '#DE8B66',
+      stripBg: '#FCF6EE', photoBg: '#3A2218',
+      borderInner: '#C0673F', accent: '#CFA04B', dateColor: '#A8704F',
+    },
+    ui: {
+      mood: 'light', deco: 'floral-terracota',
+      stageBg:
+        'radial-gradient(ellipse 70% 48% at 50% 0%, rgba(255,252,246,0.96) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 55% 40% at 4% 96%, rgba(222,139,102,0.40) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 55% 40% at 96% 96%, rgba(232,192,116,0.40) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 50% 34% at 50% 52%, rgba(255,250,242,0.9) 0%, transparent 70%),' +
+        'linear-gradient(152deg, #FFFAF3 0%, #F8EBDD 30%, #F0D8C2 62%, #E4C0A0 100%)',
+      curtainDeep: '#F2E2D2',
+      gold: '#9A5A2C', goldLight: '#F4DDB8',
+      ink: '#4E2E1E', inkSoft: 'rgba(78,46,30,0.68)',
+      frameBorder: '#ffffff', frameGlow: 'rgba(192,103,63,0.32)',
+      scrim: 'rgba(66,38,24,0.80)', slotIdle: 'rgba(255,255,255,0.62)',
+      btnInner: '#E39A74', btnOuter: '#94482A',
+      foldOpacity: 0.10, vignette: 0.16,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'boda-noche': {
+    id: 'boda-noche',
+    name: 'Boda Noche Azul & Oro',
+    headerTextDefault: 'Nuestra Boda',
+    footerTextDefault: 'Gracias por acompañarnos',
+    strip: {
+      headerTop: '#1E2F55', headerBottom: '#0C162E',
+      footerTop: '#0C162E', footerBottom: '#1E2F55',
+      stripBg: '#F7F5EF', photoBg: '#070D1C',
+      borderInner: '#23386A', accent: '#E2C25C', dateColor: '#8C9AC0',
+    },
+    ui: {
+      mood: 'dark', deco: 'floral-noche',
+      stageBg:
+        'radial-gradient(ellipse 70% 50% at 50% 4%, rgba(226,194,92,0.18) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 60% 46% at 8% 96%, rgba(44,66,120,0.55) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 60% 46% at 92% 96%, rgba(44,66,120,0.50) 0%, transparent 66%),' +
+        'linear-gradient(166deg, #17264A 0%, #0D1834 46%, #070E20 100%)',
+      curtainDeep: '#070E20',
+      gold: '#E2C25C', goldLight: '#FBEEC2',
+      ink: '#F4F6FB', inkSoft: 'rgba(222,228,244,0.70)',
+      frameBorder: '#F0DFB4', frameGlow: 'rgba(226,194,92,0.46)',
+      scrim: 'rgba(7,14,32,0.86)', slotIdle: 'rgba(14,24,52,0.66)',
+      btnInner: '#3A5494', btnOuter: '#0C162E',
+      foldOpacity: 0.40, vignette: 0.34,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'fiesta-globos': {
+    id: 'fiesta-globos',
+    name: 'Fiesta Globos Rosa & Oro',
+    headerTextDefault: '¡Fiesta!',
+    footerTextDefault: '¡Gracias por festejar con nosotros!',
+    strip: {
+      headerTop: '#EE9DB5', headerBottom: '#C98A72',
+      footerTop: '#C98A72', footerBottom: '#EE9DB5',
+      stripBg: '#FFF8F8', photoBg: '#3A2228',
+      borderInner: '#CF7A95', accent: '#C9A227', dateColor: '#B07A88',
+    },
+    ui: {
+      mood: 'light', deco: 'globos-rosa',
+      stageBg:
+        'radial-gradient(ellipse 70% 48% at 50% 0%, rgba(255,255,255,0.96) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 58% 42% at 6% 96%, rgba(249,196,212,0.55) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 58% 42% at 94% 96%, rgba(239,207,106,0.30) 0%, transparent 66%),' +
+        'linear-gradient(152deg, #FFFCFB 0%, #FDEFF2 34%, #F8E0E6 66%, #F1CFD8 100%)',
+      curtainDeep: '#FBE8EC',
+      gold: '#A87E14', goldLight: '#F7E3A6',
+      ink: '#5A2A3A', inkSoft: 'rgba(90,42,58,0.68)',
+      frameBorder: '#ffffff', frameGlow: 'rgba(201,162,39,0.38)',
+      scrim: 'rgba(72,34,48,0.80)', slotIdle: 'rgba(255,255,255,0.66)',
+      btnInner: '#F2A9BF', btnOuter: '#C0587A',
+      foldOpacity: 0.06, vignette: 0.14,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'fiesta-glam': {
+    id: 'fiesta-glam',
+    name: 'Fiesta Glam (globos negro y oro)',
+    headerTextDefault: '¡Fiesta!',
+    footerTextDefault: '¡Gracias por festejar con nosotros!',
+    strip: {
+      headerTop: '#2A2418', headerBottom: '#0D0B07',
+      footerTop: '#0D0B07', footerBottom: '#2A2418',
+      stripBg: '#141210', photoBg: '#050505',
+      borderInner: '#5A4A18', accent: '#F0C64E', dateColor: '#BFA35A',
+    },
+    ui: {
+      mood: 'dark', deco: 'globos-glam',
+      stageBg:
+        'radial-gradient(ellipse 62% 44% at 50% 2%, rgba(255,214,102,0.22) 0%, transparent 60%),' +
+        'radial-gradient(ellipse 70% 46% at 50% 100%, rgba(160,120,30,0.22) 0%, transparent 64%),' +
+        'linear-gradient(170deg, #1F1B14 0%, #110F0B 44%, #070709 100%)',
+      curtainDeep: '#0A0906',
+      gold: '#F0C64E', goldLight: '#FFF0BE',
+      ink: '#FCF5E2', inkSoft: 'rgba(245,235,208,0.68)',
+      frameBorder: '#F7E7BC', frameGlow: 'rgba(240,198,78,0.50)',
+      scrim: 'rgba(10,9,6,0.86)', slotIdle: 'rgba(26,22,12,0.70)',
+      btnInner: '#F0C64E', btnOuter: '#6E5210',
+      foldOpacity: 0.30, vignette: 0.34,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
+
+  'fiesta-mexicana': {
+    id: 'fiesta-mexicana',
+    name: 'Fiesta Mexicana (papel picado)',
+    headerTextDefault: '¡Fiesta!',
+    footerTextDefault: '¡Gracias por festejar con nosotros!',
+    strip: {
+      headerTop: '#F0288A', headerBottom: '#9D1E6A',
+      footerTop: '#9D1E6A', footerBottom: '#F0288A',
+      stripBg: '#FFF9EE', photoBg: '#2A1030',
+      borderInner: '#C8106A', accent: '#FF9A1F', dateColor: '#2FA35A',
+    },
+    ui: {
+      mood: 'light', deco: 'floral-mexicana',
+      stageBg:
+        'radial-gradient(ellipse 70% 46% at 50% 0%, rgba(255,255,255,0.94) 0%, transparent 62%),' +
+        'radial-gradient(ellipse 58% 44% at 4% 94%, rgba(240,40,138,0.22) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 58% 44% at 96% 94%, rgba(255,154,31,0.28) 0%, transparent 66%),' +
+        'radial-gradient(ellipse 50% 34% at 50% 52%, rgba(255,253,246,0.92) 0%, transparent 70%),' +
+        'linear-gradient(150deg, #FFFCF4 0%, #FFF1DC 34%, #FDE3E8 68%, #F4D6F0 100%)',
+      curtainDeep: '#FDEDE4',
+      gold: '#C8106A', goldLight: '#FFE0A8',
+      ink: '#4A1838', inkSoft: 'rgba(74,24,56,0.68)',
+      frameBorder: '#ffffff', frameGlow: 'rgba(240,40,138,0.32)',
+      scrim: 'rgba(66,20,50,0.80)', slotIdle: 'rgba(255,255,255,0.66)',
+      btnInner: '#FF6FA8', btnOuter: '#B30F63',
+      foldOpacity: 0.06, vignette: 0.14,
+      fontDisplay: SERIF, fontScript: SCRIPT,
+    },
+  },
 };
 
 const LEGACY_THEME_MAP = {

@@ -80,10 +80,21 @@ body.app-welcome #app {
   }
 }
 
-.logo-preview:not(.hidden) {
+.logo-preview-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.logo-preview-wrap.hidden {
+  display: none;
+}
+
+.logo-preview-wrap .logo-preview {
   max-height: 64px;
   max-width: 160px;
-  margin-top: 0.75rem;
+  margin-top: 0;
   border-radius: 8px;
   border: 1px solid #d0c5b4;
 }

@@ -276,7 +276,17 @@
                         id="input-logo"
                         accept="image/png,image/jpeg,image/webp"
                       />
-                      <img id="logo-preview" class="logo-preview hidden" alt="Logo" />
+                      <div id="logo-preview-wrap" class="logo-preview-wrap hidden">
+                        <img id="logo-preview" class="logo-preview" alt="Logo" />
+                        <button
+                          type="button"
+                          id="btn-remove-logo"
+                          class="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface-variant hover:text-error hover:border-error transition-colors font-label-sm text-label-sm"
+                        >
+                          <span class="material-symbols-outlined text-[18px]">delete</span>
+                          Quitar logo
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </section>

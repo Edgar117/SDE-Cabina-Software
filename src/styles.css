@@ -144,7 +144,8 @@ body[data-deco="bokeh"] .theme-deco::before {
    tools/generar_deco_pantalla.py
    ══════════════════════════════════════════════════════════════ */
 body[data-deco^="floral"] .theme-deco,
-body[data-deco="tropical"] .theme-deco {
+body[data-deco="tropical"] .theme-deco,
+body[data-deco^="globos"] .theme-deco {
   background-image:
     var(--deco-garland),
     var(--deco-tl),
@@ -164,7 +165,8 @@ body[data-deco="tropical"] .theme-deco {
 
 /* Luz de fondo cálida detrás de las flores */
 body[data-deco^="floral"] .theme-deco::before,
-body[data-deco="tropical"] .theme-deco::before {
+body[data-deco="tropical"] .theme-deco::before,
+body[data-deco^="globos"] .theme-deco::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -178,7 +180,8 @@ body[data-deco="tropical"] .theme-deco::before {
 
 /* Hilo metálico que enmarca la pantalla: el detalle "premium" */
 body[data-deco^="floral"] .theme-deco::after,
-body[data-deco="tropical"] .theme-deco::after {
+body[data-deco="tropical"] .theme-deco::after,
+body[data-deco^="globos"] .theme-deco::after {
   content: "";
   position: absolute;
   inset: clamp(10px, 1.4vw, 20px);
@@ -189,7 +192,8 @@ body[data-deco="tropical"] .theme-deco::after {
 }
 
 body[data-deco^="floral"] .preview-frame,
-body[data-deco="tropical"] .preview-frame {
+body[data-deco="tropical"] .preview-frame,
+body[data-deco^="globos"] .preview-frame {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--gold) 60%, transparent),
     0 0 0 7px color-mix(in srgb, var(--frame-border) 78%, transparent),
@@ -198,7 +202,8 @@ body[data-deco="tropical"] .preview-frame {
 }
 
 body[data-deco^="floral"] .rail-slot,
-body[data-deco="tropical"] .rail-slot {
+body[data-deco="tropical"] .rail-slot,
+body[data-deco^="globos"] .rail-slot {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--gold) 38%, transparent),
     0 6px 18px rgba(20, 12, 6, 0.22);
@@ -251,6 +256,108 @@ body[data-deco="tropical"] {
   --deco-br: url("/deco/tropical-bottom-right.svg");
   --deco-glow-a: rgba(255, 209, 102, 0.34);
   --deco-glow-b: rgba(47, 169, 138, 0.28);
+}
+
+/* —— Juegos extra (tools/generar_deco_extra.mjs) —— */
+body[data-deco="floral-rosa-oro"] {
+  --deco-garland: url("/deco/xv-rosa-oro-garland.svg");
+  --deco-tl: url("/deco/xv-rosa-oro-top-left.svg");
+  --deco-tr: url("/deco/xv-rosa-oro-top-right.svg");
+  --deco-bl: url("/deco/xv-rosa-oro-bottom-left.svg");
+  --deco-br: url("/deco/xv-rosa-oro-bottom-right.svg");
+  --deco-glow-a: rgba(245, 194, 207, 0.42);
+  --deco-glow-b: rgba(255, 236, 190, 0.45);
+}
+
+body[data-deco="floral-azul-xv"] {
+  --deco-garland: url("/deco/xv-azul-garland.svg");
+  --deco-tl: url("/deco/xv-azul-top-left.svg");
+  --deco-tr: url("/deco/xv-azul-top-right.svg");
+  --deco-bl: url("/deco/xv-azul-bottom-left.svg");
+  --deco-br: url("/deco/xv-azul-bottom-right.svg");
+  --deco-glow-a: rgba(194, 221, 243, 0.45);
+  --deco-glow-b: rgba(255, 255, 255, 0.55);
+}
+
+body[data-deco="floral-esmeralda"] {
+  --deco-garland: url("/deco/xv-esmeralda-garland.svg");
+  --deco-tl: url("/deco/xv-esmeralda-top-left.svg");
+  --deco-tr: url("/deco/xv-esmeralda-top-right.svg");
+  --deco-bl: url("/deco/xv-esmeralda-bottom-left.svg");
+  --deco-br: url("/deco/xv-esmeralda-bottom-right.svg");
+  --deco-glow-a: rgba(226, 194, 92, 0.24);
+  --deco-glow-b: rgba(109, 181, 152, 0.24);
+}
+
+body[data-deco="floral-reino"] {
+  --deco-garland: url("/deco/xv-reino-garland.svg");
+  --deco-tl: url("/deco/xv-reino-top-left.svg");
+  --deco-tr: url("/deco/xv-reino-top-right.svg");
+  --deco-bl: url("/deco/xv-reino-bottom-left.svg");
+  --deco-br: url("/deco/xv-reino-bottom-right.svg");
+  /* luz de linterna */
+  --deco-glow-a: rgba(255, 186, 104, 0.30);
+  --deco-glow-b: rgba(255, 214, 150, 0.22);
+}
+
+body[data-deco="floral-azul"] {
+  --deco-garland: url("/deco/boda-azul-garland.svg");
+  --deco-tl: url("/deco/boda-azul-top-left.svg");
+  --deco-tr: url("/deco/boda-azul-top-right.svg");
+  --deco-bl: url("/deco/boda-azul-bottom-left.svg");
+  --deco-br: url("/deco/boda-azul-bottom-right.svg");
+  --deco-glow-a: rgba(201, 216, 230, 0.45);
+  --deco-glow-b: rgba(255, 255, 255, 0.55);
+}
+
+body[data-deco="floral-terracota"] {
+  --deco-garland: url("/deco/boda-terracota-garland.svg");
+  --deco-tl: url("/deco/boda-terracota-top-left.svg");
+  --deco-tr: url("/deco/boda-terracota-top-right.svg");
+  --deco-bl: url("/deco/boda-terracota-bottom-left.svg");
+  --deco-br: url("/deco/boda-terracota-bottom-right.svg");
+  --deco-glow-a: rgba(244, 193, 160, 0.42);
+  --deco-glow-b: rgba(255, 240, 214, 0.50);
+}
+
+body[data-deco="floral-noche"] {
+  --deco-garland: url("/deco/boda-noche-garland.svg");
+  --deco-tl: url("/deco/boda-noche-top-left.svg");
+  --deco-tr: url("/deco/boda-noche-top-right.svg");
+  --deco-bl: url("/deco/boda-noche-bottom-left.svg");
+  --deco-br: url("/deco/boda-noche-bottom-right.svg");
+  --deco-glow-a: rgba(226, 194, 92, 0.24);
+  --deco-glow-b: rgba(157, 174, 214, 0.22);
+}
+
+body[data-deco="floral-mexicana"] {
+  --deco-garland: url("/deco/fiesta-mexicana-garland.svg");
+  --deco-tl: url("/deco/fiesta-mexicana-top-left.svg");
+  --deco-tr: url("/deco/fiesta-mexicana-top-right.svg");
+  --deco-bl: url("/deco/fiesta-mexicana-bottom-left.svg");
+  --deco-br: url("/deco/fiesta-mexicana-bottom-right.svg");
+  --deco-glow-a: rgba(255, 154, 31, 0.30);
+  --deco-glow-b: rgba(240, 40, 138, 0.22);
+}
+
+body[data-deco="globos-rosa"] {
+  --deco-garland: url("/deco/globos-rosa-garland.svg");
+  --deco-tl: url("/deco/globos-rosa-top-left.svg");
+  --deco-tr: url("/deco/globos-rosa-top-right.svg");
+  --deco-bl: url("/deco/globos-rosa-bottom-left.svg");
+  --deco-br: url("/deco/globos-rosa-bottom-right.svg");
+  --deco-glow-a: rgba(249, 196, 212, 0.42);
+  --deco-glow-b: rgba(255, 236, 180, 0.45);
+}
+
+body[data-deco="globos-glam"] {
+  --deco-garland: url("/deco/globos-glam-garland.svg");
+  --deco-tl: url("/deco/globos-glam-top-left.svg");
+  --deco-tr: url("/deco/globos-glam-top-right.svg");
+  --deco-bl: url("/deco/globos-glam-bottom-left.svg");
+  --deco-br: url("/deco/globos-glam-bottom-right.svg");
+  --deco-glow-a: rgba(240, 198, 78, 0.26);
+  --deco-glow-b: rgba(255, 244, 208, 0.16);
 }
 
 /* —— disco: fiesta dorada, destellos y rayos —— */
@@ -788,7 +895,10 @@ body[data-mood="light"] .rail-slot.empty {
   height: 100%;
   width: auto;
   max-width: 100%;
-  aspect-ratio: 4 / 3;
+  /* Proporción real de la cámara (la fija main.js; 16:9 es lo que se pide),
+     un 8% más ancha para aprovechar los lados. El video recorta un poco
+     arriba/abajo en pantalla, pero la foto guardada trae el cuadro completo. */
+  aspect-ratio: calc(var(--video-ar, 1.7778) * 1.08);
   background: #0b0b0b;
   border-radius: 8px;
   border: 4px solid var(--frame-border);
