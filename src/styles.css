@@ -854,10 +854,13 @@ body[data-mood="light"] .rail-slot.empty {
   animation: checkPop 0.4s 0.1s ease both;
 }
 
+/* La foto se ve COMPLETA (contain): el slot es casi cuadrado y la cámara
+   es 16:9, así que con cover se perdía un tercio del ancho (manos, gente
+   en las orillas) aunque la foto guardada sí lo trae. */
 .rail-slot img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -1669,8 +1672,9 @@ body[data-capture="counting"] .stage-watermark {
 }
 
 .individual-photos img {
-  width: 100px;
-  height: 75px;
+  width: 128px;
+  height: auto;
+  aspect-ratio: var(--video-ar, 1.7778);
   object-fit: cover;
   border: 2px solid rgba(255, 255, 255, 0.85);
   box-shadow: 0 0 0 1px var(--gold);
