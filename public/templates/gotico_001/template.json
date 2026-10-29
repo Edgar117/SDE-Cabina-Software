@@ -1,0 +1,155 @@
+{
+  "id": "gotico_001",
+  "name": "Cumpleaños 18 — Gótico Rosas Negras",
+  "category": "cumpleanos",
+  "description": "Gótico negro y vino con oro viejo: rosetón de catedral, rosas negras con espinas, candelabros encendidos, ventanal ojival y un gran 18",
+  "canvas": {
+    "width": 600,
+    "height": 1800
+  },
+  "elements": [
+    {
+      "type": "background",
+      "src": "background.svg"
+    },
+    {
+      "type": "photo",
+      "id": "photo1",
+      "x": 45,
+      "y": 150,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A45C",
+      "borderWidth": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo2",
+      "x": 45,
+      "y": 522,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A45C",
+      "borderWidth": 4
+    },
+    {
+      "type": "photo",
+      "id": "photo3",
+      "x": 45,
+      "y": 894,
+      "width": 510,
+      "height": 352,
+      "fit": "cover",
+      "radius": 0,
+      "border": "#C9A45C",
+      "borderWidth": 4
+    },
+    {
+      "type": "overlay",
+      "src": "overlay.svg",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 1800
+    },
+    {
+      "type": "logo",
+      "align": "center",
+      "x": 300,
+      "y": 1668,
+      "width": 100,
+      "height": 32
+    },
+    {
+      "type": "text",
+      "binding": "subtitleText",
+      "text": "",
+      "x": 300,
+      "y": 1318,
+      "font": "'Dancing Script', cursive",
+      "size": 68,
+      "color": "#E9D29A",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 440,
+      "shadow": true
+    },
+    {
+      "type": "text",
+      "text": "18",
+      "x": 300,
+      "y": 1436,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 150,
+      "color": "#C9A45C",
+      "align": "center",
+      "weight": "bold",
+      "shadow": true
+    },
+    {
+      "type": "text",
+      "binding": "eventLabel",
+      "text": "AÑOS",
+      "x": 300,
+      "y": 1514,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 26,
+      "color": "#C7485C",
+      "align": "center",
+      "weight": "bold",
+      "letterSpacing": 12,
+      "maxWidth": 260
+    },
+    {
+      "type": "text",
+      "binding": "date",
+      "x": 300,
+      "y": 1576,
+      "font": "'Playfair Display', Georgia, serif",
+      "size": 19,
+      "color": "#D9B8B0",
+      "align": "center"
+    },
+    {
+      "type": "text",
+      "binding": "footerText",
+      "text": "",
+      "x": 300,
+      "y": 1604,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 14,
+      "color": "#D9B8B0",
+      "align": "center",
+      "maxWidth": 360
+    },
+    {
+      "type": "text",
+      "binding": "footerHashtag",
+      "text": "",
+      "x": 300,
+      "y": 1628,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 14,
+      "color": "#C9A45C",
+      "align": "center",
+      "weight": "bold",
+      "maxWidth": 360
+    },
+    {
+      "type": "text",
+      "binding": "footerPhone",
+      "text": "",
+      "x": 300,
+      "y": 1652,
+      "font": "Manrope, Arial, sans-serif",
+      "size": 13,
+      "color": "#9C7F78",
+      "align": "center",
+      "maxWidth": 300
+    }
+  ]
+}

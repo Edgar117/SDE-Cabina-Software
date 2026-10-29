@@ -1751,6 +1751,333 @@ add({
   ],
 });
 
+// ---------------------------------------------------------------- GOTICO (18 años)
+// Dos versiones góticas para cumpleaños de 18: rosas negras con vino y oro
+// viejo, y luna de plata con lavanda. El "18" grande es texto fijo (sin
+// binding) para que no dependa de lo que traiga "Etiqueta del evento".
+
+/** Rosa estilizada: 5 pétalos exteriores, 4 interiores y espiral al centro. */
+function rosaNegra(x, y, s, rot = 0, petalo = '#14060A', borde = '#8E1A2E', luz = '#2E0A13') {
+  const ext = [0, 72, 144, 216, 288].map((a) =>
+    `<path transform="rotate(${a})" d="M0,0 C-14,-6 -16,-24 0,-28 C16,-24 14,-6 0,0Z"/>`).join('');
+  const med = [36, 126, 216, 306].map((a) =>
+    `<path transform="rotate(${a})" d="M0,0 C-9,-4 -11,-17 0,-19 C11,-17 9,-4 0,0Z"/>`).join('');
+  return `<g transform="translate(${x},${y}) rotate(${n1(rot)}) scale(${n2(s)})" stroke="${borde}" ` +
+    'stroke-width="1.4" stroke-linejoin="round">' +
+    `<g fill="${petalo}">${ext}</g><g fill="${luz}">${med}</g>` +
+    `<circle r="7.5" fill="${petalo}"/>` +
+    '<path d="M-4,1 C-4,-5 4,-6 5,-1 C6,4 -1,6 -2,2 C-3,-1 1,-2 1.5,0" fill="none"/></g>';
+}
+
+/** Tallo curvo con espinas alternadas (y hojas cada tres espinas si se pide). */
+function ramaEspinas(x0, y0, x1, y1, curva, color, n = 10, sw = 2.4, hojaFill = null) {
+  const dx = x1 - x0;
+  const dy = y1 - y0;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len;
+  const ny = dx / len;
+  const c1x = x0 + dx * 0.33 + nx * curva;
+  const c1y = y0 + dy * 0.33 + ny * curva;
+  const c2x = x0 + dx * 0.66 - nx * curva;
+  const c2y = y0 + dy * 0.66 - ny * curva;
+  const punto = (t) => {
+    const u = 1 - t;
+    return [
+      u * u * u * x0 + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * x1,
+      u * u * u * y0 + 3 * u * u * t * c1y + 3 * u * t * t * c2y + t * t * t * y1,
+    ];
+  };
+  let out = `<path d="M${x0},${y0} C${n1(c1x)},${n1(c1y)} ${n1(c2x)},${n1(c2y)} ${x1},${y1}" ` +
+    `stroke="${color}" stroke-width="${sw}" fill="none" stroke-linecap="round"/>`;
+  for (let i = 1; i <= n; i += 1) {
+    const t = i / (n + 1);
+    const [px, py] = punto(t);
+    const [qx, qy] = punto(t + 0.01);
+    const ang = (Math.atan2(qy - py, qx - px) * 180) / Math.PI;
+    const lado = i % 2 ? 1 : -1;
+    out += `<path transform="translate(${n1(px)},${n1(py)}) rotate(${n1(ang + lado * 60)})" ` +
+      `d="M0,-2.2 L10,0 L0,2.2Z" fill="${color}"/>`;
+    if (hojaFill && i % 3 === 0) out += hoja(n1(px), n1(py), 0.7, ang - lado * 48, hojaFill, color);
+  }
+  return `<g>${out}</g>`;
+}
+
+/** Rosetón de catedral: aros, 8 lóbulos, rayos y cuatrifolio central. */
+function roseton(x, y, r, color, sw = 2, vidrio = 'none') {
+  const out = [`<circle r="${r}" fill="${vidrio}"/>`, `<circle r="${n1(r * 0.86)}"/>`,
+    `<circle r="${n1(r * 0.26)}"/>`];
+  for (let i = 0; i < 8; i += 1) {
+    const a = rad(i * 45);
+    const b = rad(i * 45 + 22.5);
+    out.push(`<circle cx="${n1(r * 0.56 * Math.cos(a))}" cy="${n1(r * 0.56 * Math.sin(a))}" r="${n1(r * 0.25)}"/>`);
+    out.push(`<line x1="${n1(r * 0.26 * Math.cos(b))}" y1="${n1(r * 0.26 * Math.sin(b))}" ` +
+      `x2="${n1(r * 0.86 * Math.cos(b))}" y2="${n1(r * 0.86 * Math.sin(b))}"/>`);
+    out.push(`<circle cx="${n1(r * 0.93 * Math.cos(b))}" cy="${n1(r * 0.93 * Math.sin(b))}" r="${n1(r * 0.04)}" fill="${color}"/>`);
+  }
+  for (let i = 0; i < 4; i += 1) {
+    const a = rad(i * 90 + 45);
+    out.push(`<circle cx="${n1(r * 0.11 * Math.cos(a))}" cy="${n1(r * 0.11 * Math.sin(a))}" r="${n1(r * 0.1)}"/>`);
+  }
+  return `<g transform="translate(${x},${y})" fill="none" stroke="${color}" stroke-width="${sw}">${out.join('')}</g>`;
+}
+
+/** Arco ojival (equilátero): ancho w, desde el vértice en y hasta y+h. */
+const arcoOjival = (x, y, w, h) => {
+  const ya = n1(y + w * 0.866);
+  return `M${x},${y + h} L${x},${ya} A${w},${w} 0 0 1 ${x + w / 2},${y} ` +
+    `A${w},${w} 0 0 1 ${x + w},${ya} L${x + w},${y + h}`;
+};
+
+/** Candelabro de tres brazos con velas encendidas. */
+const candelabro = (x, y, s, metal, wax, wax2, flame) =>
+  `<g transform="translate(${x},${y}) scale(${s})">` +
+  `<g fill="none" stroke="${metal}" stroke-width="4" stroke-linecap="round">` +
+  '<path d="M0,-12 L0,-76"/>' +
+  '<path d="M-44,-62 C-44,-36 -20,-30 0,-30 C20,-30 44,-36 44,-62"/></g>' +
+  `<g fill="${metal}">` +
+  '<path d="M-28,4 L28,4 C24,-4 12,-8 5,-16 L-5,-16 C-12,-8 -24,-4 -28,4Z"/>' +
+  '<circle cy="-30" r="5.5"/><circle cy="-52" r="4"/>' +
+  '<rect x="-53" y="-67" width="18" height="6" rx="2"/>' +
+  '<rect x="35" y="-67" width="18" height="6" rx="2"/>' +
+  '<rect x="-9" y="-81" width="18" height="6" rx="2"/></g>' +
+  candle(-44, -74, 0.85, wax, wax2, flame) +
+  candle(44, -74, 0.85, wax, wax2, flame) +
+  candle(0, -88, 0.95, wax, wax2, flame) +
+  '</g>';
+
+/** Vitral ojival: ventana con dos lancetas y un rosetón chico arriba. */
+function vitral(cx, top, w, h, color, vidrio, sw = 2.2) {
+  const x = cx - w / 2;
+  const lw = Math.round(w * 0.34);
+  const ly = Math.round(top + w * 0.55);
+  const lh = Math.round(h - w * 0.55 - 6);
+  return `<g fill="${vidrio}" stroke="${color}" stroke-width="${sw}" stroke-linejoin="round">` +
+    `<path d="${arcoOjival(x, top, w, h)}Z"/>` +
+    `<path d="${arcoOjival(Math.round(x + w * 0.12), ly, lw, lh)}Z" stroke-width="${sw * 0.7}"/>` +
+    `<path d="${arcoOjival(Math.round(x + w * 0.54), ly, lw, lh)}Z" stroke-width="${sw * 0.7}"/>` +
+    `<line x1="${x}" y1="${top + h - 4}" x2="${x + w}" y2="${top + h - 4}"/></g>` +
+    roseton(cx, n1(top + w * 0.4), n1(w * 0.14), color, sw * 0.6);
+}
+
+/** Silueta de catedral (torres con aguja) desde y hasta el borde inferior. */
+function siluetaCatedral(y, fill) {
+  const torres = [[0, 46, 40, 34], [40, 96, 18, 48], [96, 150, 46, 30], [150, 214, 30, 40],
+    [214, 262, 54, 26], [262, 338, 6, 70], [338, 386, 54, 26], [386, 450, 30, 40],
+    [450, 504, 46, 30], [504, 560, 18, 48], [560, 600, 40, 34]];
+  const d = torres.map(([x0, x1, alto, aguja]) => {
+    const t = y + alto;
+    return `M${x0},${H} L${x0},${t} L${(x0 + x1) / 2},${t - aguja} L${x1},${t} L${x1},${H}Z`;
+  }).join(' ');
+  return `<path d="${d}" fill="${fill}"/>`;
+}
+
+const halo = (p, color, id = 'halo') =>
+  `<radialGradient id="${p}${id}" cx="0.5" cy="0.5" r="0.5">` +
+  `<stop offset="0%" stop-color="${color}" stop-opacity="0.55"/>` +
+  `<stop offset="100%" stop-color="${color}" stop-opacity="0"/></radialGradient>`;
+
+// ---------------------------------------------------------------- GOTICO 001
+const GO1_VINO = '#6E0F22';
+const GO1_VINO_OSC = '#3A0812';
+const GO1_CARMESI = '#C7485C';
+const GO1_ORO_CLARO = '#E9D29A';
+const GO1_ORO = '#C9A45C';
+const GO1_ORO_OSC = '#8A6A2E';
+const GO1_ROSA_PALIDO = '#D9B8B0';
+
+const gotico001Bg = (p) => `
+  <defs>
+    <radialGradient id="${p}bg" cx="0.5" cy="0.45" r="0.8">
+      <stop offset="0%" stop-color="#2A0912"/><stop offset="55%" stop-color="#160509"/>
+      <stop offset="100%" stop-color="#080304"/>
+    </radialGradient>
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#${p}bg)"/>
+  <g fill="none" stroke="${GO1_VINO}" stroke-width="2.4" opacity="0.6">
+    <path d="${arcoOjival(150, 1272, 300, 520)}"/>
+    <path d="${arcoOjival(166, 1300, 268, 500)}" stroke-width="1.2"/>
+  </g>
+  ${sparkles(9701, [GO1_CARMESI, GO1_ORO, GO1_VINO], 120, 0.6, 2.2, 0, H, [0.12, 0.5])}`;
+
+const gotico001Ov = (p) => `
+  <defs>${goldDefs(p, GO1_ORO_CLARO, GO1_ORO, GO1_ORO_OSC)}${halo(p, '#F5B93A')}</defs>
+  ${ramaEspinas(22, 60, 24, 1290, 12, '#4A0D18', 24, 2.2, '#2A1A14')}
+  ${ramaEspinas(578, 60, 576, 1290, -12, '#4A0D18', 24, 2.2, '#2A1A14')}
+  ${frameLines(LAY_A, `url(#${p}gold)`, 2.2, 0.9, -10)}
+  ${frameLines(LAY_A, GO1_VINO, 1.2, 0.8, -16)}
+  ${roseton(300, 72, 58, `url(#${p}gold)`, 2, GO1_VINO_OSC)}
+  <g stroke="url(#${p}gold)" stroke-width="2" stroke-linecap="round">
+    <line x1="132" y1="72" x2="232" y2="72"/><line x1="368" y1="72" x2="468" y2="72"/>
+  </g>
+  <g fill="url(#${p}gold)">
+    <path d="M124,72 l8,-6 l8,6 l-8,6Z"/><path d="M460,72 l8,-6 l8,6 l-8,6Z"/>
+  </g>
+  ${bat(186, 112, 0.7, GO1_ORO, -10, 0.6)}${bat(414, 112, 0.7, GO1_ORO, 10, 0.6)}
+  ${hoja(60, 40, 0.9, 20, '#2A1A14', GO1_VINO)}${hoja(540, 40, 0.9, 160, '#2A1A14', GO1_VINO)}
+  ${rosaNegra(42, 38, 1.3, 10)}${rosaNegra(88, 18, 0.85, -20)}
+  ${rosaNegra(558, 38, 1.3, -10)}${rosaNegra(512, 18, 0.85, 20)}
+  ${rosaNegra(32, 512, 0.95, 15)}${rosaNegra(568, 512, 0.65, -30)}
+  ${rosaNegra(568, 884, 0.95, -15)}${rosaNegra(32, 884, 0.65, 30)}
+  ${rosaNegra(36, 1258, 1.0, 0)}${rosaNegra(564, 1258, 1.0, 40)}
+  <circle cx="96" cy="1396" r="78" fill="url(#${p}halo)"/>
+  <circle cx="504" cy="1396" r="78" fill="url(#${p}halo)"/>
+  ${candelabro(96, 1500, 1.0, `url(#${p}gold)`, '#EDE3CF', '#CBBFA6', '#F5B93A')}
+  ${candelabro(504, 1500, 1.0, `url(#${p}gold)`, '#EDE3CF', '#CBBFA6', '#F5B93A')}
+  <g stroke="url(#${p}gold)" stroke-width="1.8" stroke-linecap="round">
+    <line x1="196" y1="1546" x2="274" y2="1546"/><line x1="326" y1="1546" x2="404" y2="1546"/>
+  </g>
+  ${rosaNegra(300, 1546, 0.45, 0, '#14060A', GO1_CARMESI)}
+  ${ramaEspinas(-10, 1752, 610, 1752, -16, '#4A0D18', 30, 2.2, '#2A1A14')}
+  ${hoja(80, 1700, 1.0, -30, '#2A1A14', GO1_VINO)}${hoja(520, 1700, 1.0, 210, '#2A1A14', GO1_VINO)}
+  ${rosaNegra(36, 1716, 1.45, 0)}${rosaNegra(98, 1748, 1.0, 30)}${rosaNegra(150, 1772, 0.7, -15)}
+  ${rosaNegra(564, 1716, 1.45, 20)}${rosaNegra(502, 1748, 1.0, -30)}${rosaNegra(450, 1772, 0.7, 15)}`;
+
+add({
+  id: 'gotico_001',
+  category: 'cumpleanos',
+  name: 'Cumpleaños 18 — Gótico Rosas Negras',
+  description: 'Gótico negro y vino con oro viejo: rosetón de catedral, rosas negras con espinas, candelabros encendidos, ventanal ojival y un gran 18',
+  rects: LAY_A,
+  bg: gotico001Bg,
+  ov: gotico001Ov,
+  photo: { radius: 0, border: GO1_ORO, borderWidth: 4 },
+  previewStroke: GO1_ORO,
+  logo: { x: 300, y: 1668, width: 100, height: 32 },
+  // todo lo de abajo termina antes de y=1710: la impresora recorta el borde inferior
+  texts: [
+    { binding: 'subtitleText', text: '', x: 300, y: 1318,
+      font: "'Dancing Script', cursive", size: 68, color: GO1_ORO_CLARO,
+      align: 'center', weight: 'bold', maxWidth: 440, shadow: true },
+    { text: '18', x: 300, y: 1436,
+      font: "'Playfair Display', Georgia, serif", size: 150, color: GO1_ORO,
+      align: 'center', weight: 'bold', shadow: true },
+    { binding: 'eventLabel', text: 'AÑOS', x: 300, y: 1514,
+      font: "'Playfair Display', Georgia, serif", size: 26, color: GO1_CARMESI,
+      align: 'center', weight: 'bold', letterSpacing: 12, maxWidth: 260 },
+    { binding: 'date', x: 300, y: 1576,
+      font: "'Playfair Display', Georgia, serif", size: 19, color: GO1_ROSA_PALIDO, align: 'center' },
+    { binding: 'footerText', text: '', x: 300, y: 1604,
+      font: 'Manrope, Arial, sans-serif', size: 14, color: GO1_ROSA_PALIDO, align: 'center', maxWidth: 360 },
+    { binding: 'footerHashtag', text: '', x: 300, y: 1628,
+      font: 'Manrope, Arial, sans-serif', size: 14, color: GO1_ORO, align: 'center', weight: 'bold', maxWidth: 360 },
+    { binding: 'footerPhone', text: '', x: 300, y: 1652,
+      font: 'Manrope, Arial, sans-serif', size: 13, color: '#9C7F78', align: 'center', maxWidth: 300 },
+  ],
+});
+
+// ---------------------------------------------------------------- GOTICO 002
+// Misma línea que gotico_001 (negro, rosas, candelabros) pero en carmesí y
+// plata: vitral ojival arriba, luna llena con murciélagos tras el "18" y
+// catedral en silueta al pie.
+const GO2_CARMESI = '#D2475E';
+const GO2_ROJO = '#8E1A2E';
+const GO2_ROJO_OSC = '#4A0A16';
+const GO2_PLATA_CLARO = '#F4F5F8';
+const GO2_PLATA = '#D3D6DE';
+const GO2_PLATA_OSC = '#7E8494';
+const GO2_GRIS_ROSA = '#C9B3B8';
+
+/** Rosa roja con borde plateado (variante de rosaNegra). */
+const rosaRoja = (x, y, s, rot = 0) => rosaNegra(x, y, s, rot, GO2_ROJO, GO2_PLATA_OSC, '#B5233C');
+
+const gotico002Bg = (p) => `
+  <defs>
+    <radialGradient id="${p}bg" cx="0.5" cy="0.5" r="0.8">
+      <stop offset="0%" stop-color="#22070E"/><stop offset="55%" stop-color="#110407"/>
+      <stop offset="100%" stop-color="#060203"/>
+    </radialGradient>
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#${p}bg)"/>
+  ${sparkles(9801, [GO2_PLATA, GO2_CARMESI, GO2_PLATA_OSC], 120, 0.6, 2.2, 0, H, [0.12, 0.5])}
+  ${stars4(9802, GO2_PLATA_CLARO, 26, 0, H, 3, 7, 0.45)}`;
+
+const gotico002Ov = (p) => `
+  <defs>
+    ${goldDefs(p, GO2_PLATA_CLARO, GO2_PLATA, GO2_PLATA_OSC)}
+    ${halo(p, '#F5B93A')}${halo(p, GO2_PLATA_OSC, 'luna')}
+    <linearGradient id="${p}vidrio" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B5233C"/><stop offset="100%" stop-color="${GO2_ROJO_OSC}"/>
+    </linearGradient>
+    <radialGradient id="${p}disco" cx="0.42" cy="0.4" r="0.6">
+      <stop offset="0%" stop-color="${GO2_PLATA}" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="${GO2_PLATA_OSC}" stop-opacity="0.06"/>
+    </radialGradient>
+  </defs>
+  ${ramaEspinas(22, 60, 24, 1290, -12, GO2_PLATA_OSC, 24, 2, '#2A1418')}
+  ${ramaEspinas(578, 60, 576, 1290, 12, GO2_PLATA_OSC, 24, 2, '#2A1418')}
+  ${frameLines(LAY_A, `url(#${p}gold)`, 2.2, 0.9, -10)}
+  ${frameLines(LAY_A, GO2_ROJO, 1.2, 0.8, -16)}
+  ${vitral(300, 10, 92, 122, `url(#${p}gold)`, `url(#${p}vidrio)`)}
+  <g stroke="url(#${p}gold)" stroke-width="2" stroke-linecap="round">
+    <line x1="132" y1="76" x2="236" y2="76"/><line x1="364" y1="76" x2="468" y2="76"/>
+    <line x1="168" y1="90" x2="236" y2="90" stroke-width="1" opacity="0.6"/>
+    <line x1="364" y1="90" x2="432" y2="90" stroke-width="1" opacity="0.6"/>
+  </g>
+  <g fill="url(#${p}gold)">
+    <path d="M124,76 l8,-6 l8,6 l-8,6Z"/><path d="M460,76 l8,-6 l8,6 l-8,6Z"/>
+  </g>
+  ${bat(190, 40, 0.75, GO2_PLATA, -12, 0.65)}${bat(410, 40, 0.75, GO2_PLATA, 12, 0.65)}
+  ${bat(214, 116, 0.5, GO2_PLATA, 8, 0.45)}${bat(386, 116, 0.5, GO2_PLATA, -8, 0.45)}
+  ${hoja(60, 40, 0.9, 20, '#2A1418', GO2_PLATA_OSC)}${hoja(540, 40, 0.9, 160, '#2A1418', GO2_PLATA_OSC)}
+  ${rosaRoja(42, 38, 1.3, 10)}${rosaRoja(88, 18, 0.85, -20)}
+  ${rosaRoja(558, 38, 1.3, -10)}${rosaRoja(512, 18, 0.85, 20)}
+  ${rosaRoja(32, 512, 0.95, 15)}${rosaRoja(568, 512, 0.65, -30)}
+  ${rosaRoja(568, 884, 0.95, -15)}${rosaRoja(32, 884, 0.65, 30)}
+  ${rosaRoja(36, 1258, 1.0, 0)}${rosaRoja(564, 1258, 1.0, 40)}
+  <circle cx="300" cy="1426" r="150" fill="url(#${p}luna)"/>
+  <circle cx="300" cy="1426" r="98" fill="url(#${p}disco)"/>
+  <circle cx="300" cy="1426" r="106" fill="none" stroke="url(#${p}gold)" stroke-width="1.4" opacity="0.7"/>
+  <circle cx="300" cy="1426" r="112" fill="none" stroke="${GO2_ROJO}" stroke-width="1" opacity="0.8"
+    stroke-dasharray="2 6"/>
+  ${bat(372, 1346, 0.8, '#0B0507', 14, 0.9)}${bat(214, 1372, 0.6, '#0B0507', -10, 0.85)}
+  ${bat(392, 1496, 0.5, '#0B0507', 6, 0.8)}
+  <circle cx="96" cy="1396" r="78" fill="url(#${p}halo)"/>
+  <circle cx="504" cy="1396" r="78" fill="url(#${p}halo)"/>
+  ${candelabro(96, 1500, 1.0, `url(#${p}gold)`, '#9E1E34', '#6A0E1E', '#F5B93A')}
+  ${candelabro(504, 1500, 1.0, `url(#${p}gold)`, '#9E1E34', '#6A0E1E', '#F5B93A')}
+  <g stroke="url(#${p}gold)" stroke-width="1.8" stroke-linecap="round">
+    <line x1="196" y1="1550" x2="274" y2="1550"/><line x1="326" y1="1550" x2="404" y2="1550"/>
+  </g>
+  ${rosaRoja(300, 1550, 0.45, 0)}
+  ${siluetaCatedral(1690, '#26080F')}
+  ${ramaEspinas(-10, 1756, 610, 1756, -14, GO2_PLATA_OSC, 30, 2, '#2A1418')}
+  ${hoja(80, 1700, 1.0, -30, '#2A1418', GO2_PLATA_OSC)}${hoja(520, 1700, 1.0, 210, '#2A1418', GO2_PLATA_OSC)}
+  ${rosaRoja(36, 1716, 1.45, 0)}${rosaRoja(98, 1748, 1.0, 30)}${rosaRoja(150, 1772, 0.7, -15)}
+  ${rosaRoja(564, 1716, 1.45, 20)}${rosaRoja(502, 1748, 1.0, -30)}${rosaRoja(450, 1772, 0.7, 15)}`;
+
+add({
+  id: 'gotico_002',
+  category: 'cumpleanos',
+  name: 'Cumpleaños 18 — Gótico Carmesí y Plata',
+  description: 'Gótico negro con rosas rojas y plata: vitral ojival, murciélagos, candelabros con velas rojas, luna llena tras un gran 18 y catedral en silueta',
+  rects: LAY_A,
+  bg: gotico002Bg,
+  ov: gotico002Ov,
+  photo: { radius: 0, border: GO2_PLATA, borderWidth: 4 },
+  previewStroke: GO2_PLATA,
+  logo: { x: 300, y: 1668, width: 100, height: 32 },
+  // todo lo de abajo termina antes de y=1710: la impresora recorta el borde inferior
+  texts: [
+    { binding: 'subtitleText', text: '', x: 300, y: 1318,
+      font: "'Dancing Script', cursive", size: 68, color: GO2_PLATA_CLARO,
+      align: 'center', weight: 'bold', maxWidth: 440, shadow: true },
+    { text: '18', x: 300, y: 1436,
+      font: "'Playfair Display', Georgia, serif", size: 150, color: GO2_PLATA,
+      align: 'center', weight: 'bold', shadow: true },
+    { binding: 'eventLabel', text: 'AÑOS', x: 300, y: 1516,
+      font: "'Playfair Display', Georgia, serif", size: 26, color: GO2_CARMESI,
+      align: 'center', weight: 'bold', letterSpacing: 12, maxWidth: 260 },
+    { binding: 'date', x: 300, y: 1580,
+      font: "'Playfair Display', Georgia, serif", size: 19, color: GO2_GRIS_ROSA, align: 'center' },
+    { binding: 'footerText', text: '', x: 300, y: 1606,
+      font: 'Manrope, Arial, sans-serif', size: 14, color: GO2_GRIS_ROSA, align: 'center', maxWidth: 360 },
+    { binding: 'footerHashtag', text: '', x: 300, y: 1630,
+      font: 'Manrope, Arial, sans-serif', size: 14, color: GO2_CARMESI, align: 'center', weight: 'bold', maxWidth: 360 },
+    { binding: 'footerPhone', text: '', x: 300, y: 1654,
+      font: 'Manrope, Arial, sans-serif', size: 13, color: '#8E8790', align: 'center', maxWidth: 300 },
+  ],
+});
+
 // ================================================================ ESCRITURA
 const PREVIEW_SAMPLE = {
   subtitleText: 'Nombre',

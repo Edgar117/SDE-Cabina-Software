@@ -93,6 +93,20 @@
       "preview": "preview.svg"
     },
     {
+      "id": "gotico_001",
+      "folder": "gotico_001",
+      "name": "Cumpleaños 18 — Gótico Rosas Negras",
+      "category": "cumpleanos",
+      "preview": "preview.svg"
+    },
+    {
+      "id": "gotico_002",
+      "folder": "gotico_002",
+      "name": "Cumpleaños 18 — Gótico Carmesí y Plata",
+      "category": "cumpleanos",
+      "preview": "preview.svg"
+    },
+    {
       "id": "babyshower_001",
       "folder": "babyshower_001",
       "name": "Baby Shower — Osito y Miel",
